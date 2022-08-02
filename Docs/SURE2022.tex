@@ -1,0 +1,165 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage{amssymb}
+\usepackage{mathptmx}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage[all]{xy}
+\usepackage{stmaryrd}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+
+\usepackage{pgf, tikz}
+\usetikzlibrary{arrows, automata}
+
+\usepackage{tikz-cd}
+\usepackage{cite}
+\usepackage{amsmath,amsfonts}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{array}
+\usepackage{amsthm}
+\usepackage{amsmath,amsthm,amssymb,hyperref}
+\usepackage{exercise}
+
+\usepackage{enumerate}
+\usepackage{tikz}
+\pagestyle{plain}
+\usepackage[left=1.2in, right=1.2in, top=1in, bottom=1in]{geometry}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+\patchcmd{\section}{\scshape}{\bfseries}{}{}
+\makeatletter
+\renewcommand{\@secnumfont}{\bfseries}
+\makeatother
+\xyoption{all}
+\thispagestyle{empty}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Spv}{Spv}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Img}{Img}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\dv}{Div}
+\DeclareMathOperator{\Deg}{deg}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\CSpec}{Cspec}
+\newcommand{\angles}[1]{\langle #1 \rangle}
+\newcommand{\Jac}{\textrm{Jac}}{}
+\newcommand{\R}{\mathbb{R}}  
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\I}{\mathbf{I}}
+
+\input xy
+\xyoption{all}
+\thispagestyle{empty}
+
+
+%\usepackage{secdot} 
+
+\theoremstyle{definition}
+\newtheorem{mydef}{\textbf{Definition}}[section]
+\newtheorem{myeg}[mydef]{\textbf{Example}}
+\newtheorem{conj}[mydef]{\textbf{Conjecture}}
+\newtheorem*{noconj}{\textbf{Conjecture}}
+\newtheorem{observ}[mydef]{\textbf{Observation}}
+\newtheorem{question}[mydef]{\textbf{Question}}
+\newtheorem{rmk}[mydef]{\textbf{Remark}}
+\newtheorem*{que}{\textbf{Question}}
+\newtheorem*{goal}{\textbf{Goal}}
+
+\theoremstyle{plain}
+\newtheorem{mythm}[mydef]{\textbf{Theorem}}
+\newtheorem*{nothm}{\textbf{Theorem}}
+\newtheorem*{nomainthm}{\textbf{Main Theorem}}
+\newtheorem*{nothma}{\textbf{Theorem A}}
+\newtheorem*{nothmb}{\textbf{Theorem B}}
+\newtheorem*{nothmc}{\textbf{Theorem C}}
+\newtheorem*{nothmd}{\textbf{Theorem D}}
+\newtheorem*{nothme}{\textbf{Theorem E}}
+\newtheorem*{nothmf}{\textbf{Theorem F}}
+\newtheorem*{nothmg}{\textbf{Theorem G}}
+\newtheorem{mytheorem}[mydef]{\textbf{Theorem}}
+\newtheorem{lem}[mydef]{\textbf{Lemma}}
+\newtheorem{pro}[mydef]{\textbf{Proposition}}
+\newtheorem{claim}[mydef]{\textbf{Claim}}
+\newtheorem{cor}[mydef]{\textbf{Corollary}}
+\newtheorem{con}[mydef]{\textbf{Construction}}
+
+
+\patchcmd{\abstract}{\scshape\abstractname}{\normalsize{\textbf{\abstractname}}}{}{}
+\begin{document}
+
+
+\title{Summer project}
+%
+
+\author{Jaiung Jun}
+\address{Department of Mathematics, State University of New York at New Paltz, NY 12561, USA}
+\email{junj@newpaltz.edu}
+
+\author{Matthew Pisano}
+\address{State University of New York at Binghamton, NY 13902, USA}
+\email{pisanom1@newpaltz.edu}
+
+
+%
+
+%
+\makeatletter
+\@namedef{subjclassname@2020}{%
+	\textup{2020} Mathematics Subject Classification}
+\makeatother
+
+\subjclass[2020]{05C50, 05C76}
+\keywords{Jacobian of a graph, sandpile group, critical group, chip-firing game, gluing graphs, cycle graph, Tutte polynomial, Tutte's rotor construction}
+%\thanks{}
+
+\begin{abstract}
+
+\end{abstract}
+
+\maketitle
+
+
+\section{Introduction}
+
+
+We will focus on Research Project 11 in \cite{glass2020chip}. The following are more specific directions that we plan to pursue. 
+
+
+\begin{goal}[8/1/2022]$ $
+	\begin{enumerate}
+\item 
+Prove/disprove: for an oriented graph $G$, one always has $\Pic(G)=\mathbb{Z} \times \Jac(G)$, i.e., as a finitely generated abelian group, the rank of $\Pic(G)$ is $1$.
+		\item 
+Prove/disprove: for $C_n$, and $0 \leq m \leq n$, one can always find an orientation of $C_n$ so that $\Jac(C_n)=\mathbb{Z}_m$ (with the orientation). 
+\item 
+Prove/disprove: for an oriented graph $G$, if $v_0 \in V(G)$ is a sink (or a source) and $G'$ is the graph obtained by reserving the direction for all arrows adjacent to $v_0$ from $G$, then $\Jac(G)=\Jac(G')$. (Note: we believe that this should be true for at least some classes of graphs such as cyclic graphs.)
+\item 
+Prove/disprove: for an oriented planar graph $G$ and its planar dual (should be defined) $\hat{G}$, one has $\Jac(G)=\Jac(\hat{G})$. 
+\item 
+Prove/disprove: for oriented graphs $G_1,G_2$, let $G$ be the graph obtained by gluing $G_1$ and $G_2$ along one vertex. Then $\Jac(G)=\Jac(G_1) \times \Jac(G_2)$. 
+\item 
+
+	\end{enumerate}
+\end{goal}
+
+
+\section{Preliminaries}
+
+\section{Propositions}
+
+
+
+
+
+\bibliography{Jacobian}\bibliographystyle{alpha}
+
+
+\end{document}
