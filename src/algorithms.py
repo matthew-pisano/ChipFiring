@@ -184,8 +184,12 @@ class Utils:
 
 
 class Graph:
-    def __init__(self, adjacency):
-        self.matrix = adjacency
+    BIDIRECTIONAL = 0
+    FORWARD = 1
+    BACKWARDS = 2
+
+    def __init__(self, adjacency: list[list[int]]):
+        self.matrix = adjacency.copy()
         self.laplacian = self._makeLaplacian()
 
     def _makeLaplacian(self):
@@ -199,14 +203,27 @@ class Graph:
     def reducedLaplacian(self, vertex):
         return np.delete(np.delete(self.laplacian, vertex, axis=0), vertex, axis=1)
 
-    def edgeSet(self, vertex=-1):
+    def edgeSet(self, vertex=-1, directed=True):
         """Returns either the edge set for a vertex or the edge set for the whole graph"""
+        edgeSet = set()
         if vertex < 0:
-            return [(v, w, self.matrix[v][w]) for w in range(0, len(self.matrix))
-                    for v in range(0, len(self.matrix)) if v != w and self.matrix[v][w] > 0]
-
-        return [(vertex, w, self.matrix[vertex][w])
-                for w in range(0, len(self.matrix)) if vertex != w and self.matrix[vertex][w] > 0]
+            """return [(v, w, self.matrix[v][w]) for w in range(0, len(self.matrix))
+                        for v in range(0, len(self.matrix)) if v != w and self.matrix[v][w] > 0]"""
+            for v in range(0, len(self.matrix)):
+                for w in range(0, len(self.matrix)):
+                    if not directed and v > w:
+                        continue
+                    if self.matrix[v][w] > 0 or (not directed and self.matrix[w][v] > 0):
+                        edgeSet.add((v, w, self.matrix[v][w]))
+        else:
+            for w in range(0, len(self.matrix)):
+                if not directed and vertex > w:
+                    continue
+                if self.matrix[vertex][w] > 0 or (not directed and self.matrix[w][vertex] > 0):
+                    edgeSet.add((vertex, w, self.matrix[vertex][w]))
+        return edgeSet
+        """return [(vertex, w, self.matrix[vertex][w])
+                for w in range(0, len(self.matrix)) if vertex != w and self.matrix[vertex][w] > 0]"""
 
     def commonEdges(self, v, w):
         return self.matrix[v][w]
@@ -215,9 +232,9 @@ class Graph:
         """Return the number of vertices"""
         return len(self.matrix[0])
 
-    def adjacencySet(self, vertex):
+    def adjacencySet(self, vertex, directed=True):
         """Return the set of vertices that are adjacent to the given vertex"""
-        return [edge[1] for edge in self.edgeSet(vertex)]
+        return [edge[1] for edge in self.edgeSet(vertex, directed)]
 
     def degree(self, vertex=-1):
         """Returns either the degree of vertex or the degree of the whole graph"""
@@ -226,10 +243,31 @@ class Graph:
         else:
             return len(self.adjacencySet(vertex))
 
-    def hasEdge(self, v, w):
+    def hasEdge(self, v, w, directed=True):
         """Return whether two vertices share an edge"""
-        edges = self.edgeSet(v)
-        return (v, w) in edges or (w, v) in edges
+        edges = self.edgeSet(v, directed)
+        return (v, w) in edges
+
+    def setEdgeStates(self, config: list[int]):
+        edgeDict = {i: edge for i, edge in enumerate(self.edgeSet(directed=False))}
+        for idx, state in enumerate(config):
+            self.setEdgeState(edgeDict[idx][0], edgeDict[idx][1], state, refreshLaplacian=False)
+            self.laplacian = self._makeLaplacian()
+
+    def setEdgeState(self, v: int, w: int, state: int, refreshLaplacian=True):
+        """Sets as an edge as directed or undirected or change the direction of the edge"""
+        weight = max(self.matrix[v][w], self.matrix[w][v])
+        if state == 0:
+            self.matrix[v][w] = weight
+            self.matrix[w][v] = weight
+        elif state == 1:
+            self.matrix[v][w] = weight
+            self.matrix[w][v] = 0
+        elif state == 2:
+            self.matrix[v][w] = 0
+            self.matrix[w][v] = weight
+        if refreshLaplacian:
+            self.laplacian = self._makeLaplacian()
 
     def lend(self, divisor: Divisor, vertexes: list | np.ndarray | int, amount, forceLegal=False):
         """Lend from a vertex amount number of times.
@@ -284,8 +322,49 @@ class Graph:
         nx.draw_networkx(G, pos, labels=labels, node_size=700)
         plt.show()
 
+    def copy(self):
+        return Graph(self.matrix)
+
     def __len__(self):
         return len(self.matrix)
+
+
+def allGraphs(graph: Graph):
+    permutations = []
+    current = [0]*len(graph)
+
+    def checkRotations():
+        """Checks if the current permutation has been logged or if any of its rotations have"""
+        if current in permutations:
+            return False
+        currCopy = current.copy()
+        for _ in range(0, len(graph)-1):
+            # Rotate by one vertex increment
+            first = currCopy.pop(0)
+            currCopy.append(first)
+            if currCopy in permutations:
+                return False
+        return True
+
+    def increment():
+        current[-1] += 1
+        pointer = len(current)-1
+        while current[pointer] == 3 and pointer > 0:
+            current[pointer] = 0
+            pointer -= 1
+            current[pointer] += 1
+
+    for i in range(0, 3**len(graph)):
+        if not checkRotations():
+            increment()
+            continue
+        permutations.append(current.copy())
+        copy = graph.copy()
+        copy.setEdgeStates(current)
+        yield copy
+        increment()
+
+    print("Finished")
 
 
 def fireCycle(graph: Graph, divisor: Divisor, mutate=False):
