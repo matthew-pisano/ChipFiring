@@ -15,8 +15,14 @@ if __name__ == "__main__":
     ]
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)"""
-    for i in range(3, 6):
-        bruteCheckGraphs(Graph.cycle(i))
+    graph = Graph.cycle(5)
+    graph.forceFlow(0)
+    graph.visualize()
+    print(graph.jac(vertex=0))
+    graph.forceFlow(0, makeSink=False)
+    graph.visualize()
+    print(graph.jac(vertex=0))
+    # print({i: bruteCheckGraphs(Graph.cycle(i)) for i in range(3, 60)})
     # graph.visualize()
         # print(f"Graph {idx}", graph.jac())
         # current.visualize()
