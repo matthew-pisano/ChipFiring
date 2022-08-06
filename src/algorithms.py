@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -159,7 +161,7 @@ class Utils:
     def coKernel(cls, matrix: np.ndarray, divisor: Divisor | np.ndarray = None):
         """Returns the polynomial, invariant factors, and rank of the coKernel of the given matrix"""
         smith, p, q = cls.smithNormalForm(matrix)
-        print(smith)
+        # print(smith)
         if not divisor:
             product = p
         else:
@@ -188,8 +190,8 @@ class Graph:
     FORWARD = 1
     BACKWARDS = 2
 
-    def __init__(self, adjacency: list[list[int]]):
-        self.matrix = adjacency.copy()
+    def __init__(self, adjacency: list[list[int]] | np.ndarray):
+        self.matrix = np.copy(adjacency)
         self.laplacian = self._makeLaplacian()
 
     def _makeLaplacian(self):
@@ -207,23 +209,19 @@ class Graph:
         """Returns either the edge set for a vertex or the edge set for the whole graph"""
         edgeSet = set()
         if vertex < 0:
-            """return [(v, w, self.matrix[v][w]) for w in range(0, len(self.matrix))
-                        for v in range(0, len(self.matrix)) if v != w and self.matrix[v][w] > 0]"""
             for v in range(0, len(self.matrix)):
                 for w in range(0, len(self.matrix)):
-                    if not directed and v > w:
+                    if (not directed and v > w) or v == w:
                         continue
                     if self.matrix[v][w] > 0 or (not directed and self.matrix[w][v] > 0):
                         edgeSet.add((v, w, self.matrix[v][w]))
         else:
             for w in range(0, len(self.matrix)):
-                if not directed and vertex > w:
+                if vertex == w:
                     continue
                 if self.matrix[vertex][w] > 0 or (not directed and self.matrix[w][vertex] > 0):
                     edgeSet.add((vertex, w, self.matrix[vertex][w]))
         return edgeSet
-        """return [(vertex, w, self.matrix[vertex][w])
-                for w in range(0, len(self.matrix)) if vertex != w and self.matrix[vertex][w] > 0]"""
 
     def commonEdges(self, v, w):
         return self.matrix[v][w]
@@ -328,10 +326,16 @@ class Graph:
     def __len__(self):
         return len(self.matrix)
 
+    @classmethod
+    def cycle(cls, size):
+        adjacency = np.ones((size, size)) - np.identity(size)
+        return Graph(adjacency)
 
-def allGraphs(graph: Graph):
+
+def allGraphs(graph: Graph, skipRotations=True):
     permutations = []
     current = [0]*len(graph)
+    # timer = time.time()
 
     def checkRotations():
         """Checks if the current permutation has been logged or if any of its rotations have"""
@@ -355,7 +359,7 @@ def allGraphs(graph: Graph):
             current[pointer] += 1
 
     for i in range(0, 3**len(graph)):
-        if not checkRotations():
+        if skipRotations and not checkRotations():
             increment()
             continue
         permutations.append(current.copy())
@@ -364,7 +368,35 @@ def allGraphs(graph: Graph):
         yield copy
         increment()
 
-    print("Finished")
+    """print(f"Finished after checking {len(permutations)} permutations of {3 ** len(graph)} permutations"
+          f", ({round(len(permutations) / (3 ** len(graph)) * 100, 2)}%) "
+          f"after {round((time.time() - timer), 3)}s")"""
+
+
+def bruteCheckGraphs(graph: Graph):
+    timer = time.time()
+    sets = {}
+    checked = 0
+    for idx, current in enumerate(allGraphs(graph, skipRotations=False)):
+        checked += 1
+        jac = current.jac(vertex=0)
+        # Account for trivial set if invariant factors are empty
+        if len(jac[1]) == 0:
+            jac[1].append(1)
+        if len(jac[1]) == 1 and len(graph) >= jac[1][0] > 0 and jac[1][0] not in sets.keys():
+            sets[jac[1][0]] = current
+            if len(sets) == len(graph):
+                print(f"Found sets from trivial through Z_{len(graph)}")
+                print(f"Finished after checking {checked} permutations of {3 ** len(graph)} permutations"
+                      f", ({round(checked/(3 ** len(graph))*100, 2)}%) "
+                      f"after {round((time.time()-timer), 3)}s")
+                return True
+
+    print(f"Failed to find sets from trivial through Z_{len(graph)}, only found {list(sets.keys())}")
+    print(f"Finished after checking {checked} permutations of {3 ** len(graph)} permutations"
+          f", ({round(checked / (3 ** len(graph)) * 100, 2)}%) "
+          f"after {round((time.time() - timer), 3)}s")
+    return False
 
 
 def fireCycle(graph: Graph, divisor: Divisor, mutate=False):

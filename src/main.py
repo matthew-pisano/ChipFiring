@@ -8,16 +8,17 @@ if __name__ == "__main__":
         [0, 0, 0, 1],
         [0, 0, 1, 0],
     ]"""
-    adjacency = [
+    """adjacency = [
         [0, 1, 1],
         [0, 0, 1],
         [1, 0, 0],
     ]
     divisor = Divisor([16, -4, -5, 0])
-    graph = Graph(adjacency)
-    graph.visualize()
-    for idx, current in enumerate(allGraphs(graph)):
-        print(f"Graph {idx}", graph.jac())
+    graph = Graph(adjacency)"""
+    for i in range(3, 6):
+        bruteCheckGraphs(Graph.cycle(i))
+    # graph.visualize()
+        # print(f"Graph {idx}", graph.jac())
         # current.visualize()
     # graph.visualize()
     # cyclediv = fireCycle(graph, divisor)
