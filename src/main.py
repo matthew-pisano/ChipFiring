@@ -1,7 +1,27 @@
+import datetime
+
 from algorithms import *
+from utils import logger
+
+
+def testSrcSnk():
+    graph = Graph.cycle(4)
+    graph.forceFlow(0)
+    graph.visualize()
+    print(graph.jac(2))
+    graph.forceFlow(0, makeSink=False)
+    graph.visualize()
+    print(graph.jac(2))
+
+
+def testBruteForce(rng=(3, 10)):
+    cokDict = {i: bruteCheckGraphs(Graph.cycle(i), skipDefault=False) for i in range(*rng)}
+    logger.info(cokDict)
 
 
 if __name__ == "__main__":
+    start = time.time()
+    logger.info(f"=====\nEntering program at {datetime.datetime.fromtimestamp(start).strftime('%H:%M:%S')}\n=====")
     """adjacency = [
         [0, 1, 1, 1],
         [0, 0, 1, 0],
@@ -15,14 +35,35 @@ if __name__ == "__main__":
     ]
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)"""
-    graph = Graph.cycle(5)
-    graph.forceFlow(0)
-    graph.visualize()
-    print(graph.jac(vertex=0))
-    graph.forceFlow(0, makeSink=False)
-    graph.visualize()
-    print(graph.jac(vertex=0))
-    # print({i: bruteCheckGraphs(Graph.cycle(i)) for i in range(3, 60)})
+    testBruteForce((13, 19))
+    """graph = Graph.cycle(5)
+    graph.setEdgeState(0, 1, 1)
+    for i in range(0, len(graph)):
+        print(graph.pic()[1])"""
+    """print(Utils.coKernel(
+        np.copy(
+            [[1, -1, 0, 0],
+            [0, 0, 0, 0],
+             [-1, 0, 1, 0],
+             [0, -1, -1, 2]]
+        )
+    ))
+    print(Utils.coKernel(
+        np.copy(
+            [[1, -1, 0, 0],
+             [0, 1, 0, -1],
+             [-1, 0, 2, -1],
+             [0, 0, 0, 0]]
+        )
+    ))
+    print(Utils.coKernel(
+        np.copy(
+            [[2, -1, -1, 0],
+             [0, 1, 0, -1],
+             [0, 0, 1, -1],
+             [0, 0, 0, 0]]
+        )
+    ))"""
     # graph.visualize()
         # print(f"Graph {idx}", graph.jac())
         # current.visualize()
@@ -41,3 +82,7 @@ if __name__ == "__main__":
     """for v in range(len(graph)):
         print(f"Jacobian at vertex {v}:", graph.jac(vertex=v))
     print("Picard Group:", graph.pic())"""
+    end = time.time()
+    logger.info(f"=====\nExiting program at {datetime.datetime.fromtimestamp(end).strftime('%H:%M:%S')}"
+          f"\nElapsed time: {round(end-start, 3)}s\n=====")
+

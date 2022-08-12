@@ -1,4 +1,3 @@
-Question 2.  C9 is the first graph to not have all the invariant factors and the only one to be confirmed.
-It is likely that C15, 18-20, 22, 24-26, 28-32, 34-59 ... also do not.  The number of missing factors do seem to
-increase slightly as the graph gets larger.  The number of edge permutations before a complete configuration is found
-may also increase slightly, but also varies greatly, never exceeding 700 regardless of how large the graph is.
+Find using picard group Zn x Z
+
+Matrix tree theorem directed graphs

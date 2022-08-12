@@ -3,6 +3,7 @@ import time
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+from utils import logger, Utils
 
 
 class Divisor:
@@ -14,10 +15,10 @@ class Divisor:
 
     def deg(self):
         """Return the degree of the divisor"""
-        vsum = 0
+        vSum = 0
         for v in self.divisor:
-            vsum += v[0]
-        return vsum
+            vSum += v[0]
+        return vSum
 
     def isEffective(self):
         """If the divisor is winning"""
@@ -27,9 +28,11 @@ class Divisor:
         return True
 
     def config(self, vertex):
+        """Creates a configuration of a divisor by removing an element"""
         return np.delete(self.divisor, vertex, axis=0)
 
     def copy(self):
+        """Creates a copy of this divisor"""
         return Divisor(self.rawChips.copy())
 
     def __int__(self):
@@ -71,151 +74,41 @@ class Divisor:
         return True
 
 
-class Utils:
-    @classmethod
-    def smithNormalForm(cls, matrix: np.ndarray):
-        smith = matrix.copy()
-
-        def exchangeRows(other: np.ndarray, i: int, j: int):
-            smith[[i, j]] = smith[[j, i]]
-            other[[i, j]] = other[[j, i]]
-
-        def exchangeCols(other: np.ndarray, i: int, j: int):
-            smith[:, [i, j]] = smith[:, [j, i]]
-            other[:, [i, j]] = other[:, [j, i]]
-
-        def addRows(other: np.ndarray, i: int, j: int, scale=1):
-            smith[i, :] = (smith[i, :] + scale * smith[j, :])
-            other[i, :] = (other[i, :] + scale * other[j, :])
-
-        def addCols(other: np.ndarray, i: int, j: int, scale=1):
-            smith[:, i] = (smith[:, i] + scale * smith[:, j])
-            other[:, i] = (other[:, i] + scale * other[:, j])
-
-        def scaleRow(other: np.ndarray, i: int, scale):
-            smith[i, :] = scale * smith[i, :]
-            other[i, :] = scale * other[i, :]
-
-        def scaleCol(other: np.ndarray, i: int, scale=1):
-            smith[:, i] = scale * smith[:, i]
-            other[:, i] = scale * other[:, i]
-
-        m, n = smith.shape
-
-        def minAij(s):
-            """Find the minimum non-zero element below and to the right of matrix[s][s]"""
-            element = [s, s]
-            globalMin = max(max([abs(x) for x in smith[j][s:]]) for j in range(s, m))
-            for i in (range(s, m)):
-                for j in (range(s, n)):
-                    if smith[i][j] != 0 and abs(smith[i][j]) <= globalMin:
-                        element = [i, j]
-                        globalMin = abs(smith[i][j])
-            return element
-
-        def isLone(s):
-            """Checks if matrix[s][s] is the only non-zero in col s below matrix[s][s] and the only
-            non-zero in row s to the right of matrix[s][s]"""
-            if [smith[s][x] for x in range(s + 1, n) if smith[s][x] != 0] + [smith[y][s]
-                    for y in range(s + 1, m) if smith[y][s] != 0] == []:
-                return True
-            else:
-                return False
-
-        def findNonDivisible(s):
-            """Finds the first element which is not divisible by matrix[s][s]"""
-            for x in range(s + 1, m):
-                for y in range(s + 1, n):
-                    if smith[x][y] % smith[s][s] != 0:
-                        return x, y
-            return None
-
-        p = np.identity(m)
-        q = np.identity(n)
-        for s in range(min(m, n)):
-            while not isLone(s):
-                # Get min location
-                i, j = minAij(s)
-                exchangeRows(p, s, i)
-                exchangeCols(q, s, j)
-                for x in range(s + 1, m):
-                    if smith[x][s] != 0:
-                        k = smith[x][s] // smith[s][s]
-                        addRows(p, x, s, -k)
-                for x in range(s + 1, n):
-                    if smith[s][x] != 0:
-                        k = smith[s][x] // smith[s][s]
-                        addCols(q, x, s, -k)
-                if isLone(s):
-                    res = findNonDivisible(s)
-                    if res:
-                        x, y = res
-                        addRows(p, s, x, 1)
-                    else:
-                        if smith[s][s] < 0:
-                            scaleRow(p, s, -1)
-            if smith[s][s] < 0:
-                scaleRow(p, s, -1)
-
-        return smith, p, q
-
-    @classmethod
-    def coKernel(cls, matrix: np.ndarray, divisor: Divisor | np.ndarray = None):
-        """Returns the polynomial, invariant factors, and rank of the coKernel of the given matrix"""
-        smith, p, q = cls.smithNormalForm(matrix)
-        # print(smith)
-        if not divisor:
-            product = p
-        else:
-            product = np.matmul(p, divisor)
-        infs = []
-        invFactors = []
-        delModifier = 0
-        for i in range(len(smith)):
-            if smith[i][i] == 1 or np.all((smith[i] == 0)):
-                product = np.delete(product, i + delModifier, axis=0)
-                delModifier -= 1
-                if np.all((smith[i] == 0)):
-                    infs.append(float("inf"))
-            else:
-                invFactors.append(smith[i][i])
-        product = [np.atleast_1d(layer).tolist() for layer in product]
-        if len(infs) > 0:
-            product.append(infs)
-
-        # polynomial, invariant factors, rank
-        return product, invFactors, len(infs)
-
-
 class Graph:
+    """Class representing a graph for chip firing games"""
     BI = 0
+    """A bidirectional edge state"""
     FWD = 1
+    """A forward edge state"""
     REV = 2
-    _undirectedEdges = None
-    _directedEdges = None
+    """A reverse edge state"""
 
     def __init__(self, adjacency: list[list[int]] | np.ndarray):
         self.matrix = np.copy(adjacency)
-        self._undirectedEdges = self.edgeSet(directed=False)
-        self._directedEdges = self.edgeSet()
-        self._refreshLaplacian()
+        self._undirectedEdges = None
+        self._directedEdges = None
+        self._refreshState()
 
-    def _refreshLaplacian(self):
-        """Create the laplacian matrix for the graph"""
+    def _refreshState(self):
+        """Refresh edge sets and create the laplacian matrix for the graph"""
+        self._undirectedEdges = self.edgeSet(directed=False, refresh=True)
+        self._directedEdges = self.edgeSet(refresh=True)
+
         self.laplacian = np.zeros((len(self.matrix),)*2)
         for i in range(0, len(self.laplacian)):
             for j in range(0, len(self.laplacian)):
-                self.laplacian[i][j] = self.degree(i) if i == j else -self.commonEdges(i, j)
+                self.laplacian[i][j] = self.degree(i) if i == j else -self.matrix[i][j]
 
     def reducedLaplacian(self, vertex):
+        """Creates the reduced laplacian for the given edge"""
         return np.delete(np.delete(self.laplacian, vertex, axis=0), vertex, axis=1)
 
-    def edgeSet(self, vertex=-1, directed=True):
+    def edgeSet(self, vertex=-1, directed=True, refresh=False):
         """Returns either the edge set for a vertex or the edge set for the whole graph"""
-        # Undirected edges do not change, save calculations if requesting this
-        if self._undirectedEdges and vertex < 0 and not directed:
+        # Return saved calculations for edges by default
+        if not refresh and vertex < 0 and not directed:
             return self._undirectedEdges
-        if self._directedEdges and vertex < 0 and directed:
+        if not refresh and vertex < 0 and directed:
             return self._directedEdges
 
         edgeSet = set()
@@ -233,9 +126,6 @@ class Graph:
                 if self.matrix[vertex][w] > 0 or (not directed and self.matrix[w][vertex] > 0):
                     edgeSet.add((vertex, w, self.matrix[vertex][w]))
         return edgeSet
-
-    def commonEdges(self, v, w):
-        return self.matrix[v][w]
 
     def size(self):
         """Return the number of vertices"""
@@ -260,48 +150,52 @@ class Graph:
         return None
 
     def setEdgeStates(self, config: list[int]):
+        """Set the direction of each edge of the graph using the configuration"""
         edgeSet = list(self.edgeSet(directed=False))
         for idx, state in enumerate(config):
-            self.setEdgeState(edgeSet[idx][0], edgeSet[idx][1], state, refreshLaplacian=False)
-        self._refreshLaplacian()
+            self.setEdgeState(edgeSet[idx][0], edgeSet[idx][1], state, refreshState=False)
+        self._refreshState()
 
-    def addEdge(self, v: int, w: int, weight: int = 1, refreshLaplacian=True):
-        self.setEdgeState(v, w, weight=weight, refreshLaplacian=refreshLaplacian)
+    def getEdgeStates(self):
+        """Returns a list of edges and their state"""
+        edgeConfig = []
+        for i in range(0, len(self.matrix)):
+            for j in range(0, len(self.matrix[0])):
+                if i > j:
+                    continue
+                if self.matrix[i][j] != 0 and self.matrix[j][i] != 0:
+                    edgeConfig.append((i, j, self.BI))
+                elif self.matrix[i][j] != 0:
+                    edgeConfig.append((i, j, self.FWD))
+                elif self.matrix[j][i] != 0:
+                    edgeConfig.append((i, j, self.REV))
+        return edgeConfig
 
-    def setEdgeState(self, v: int, w: int, state: int = 0, weight: int = None, refreshLaplacian=True):
+    def addEdge(self, v: int, w: int, weight: int = 1, refreshState=True):
+        """Adds an edge between two vertices"""
+        self.setEdgeState(v, w, weight=weight, refreshState=refreshState)
+
+    def setEdgeState(self, v: int, w: int, state: int = 0, weight: int = None, refreshState=True):
         """Sets as an edge as directed or undirected or change the direction of the edge"""
         weight = max(self.matrix[v][w], self.matrix[w][v]) if weight is None else weight
-        # If the weight is different, modify the undirected edges
-        if weight is not None and (self.matrix[v][w] != weight or self.matrix[w][v] != weight):
-            edgeFwd = self.getEdge(v, w)
-            edgeRev = self.getEdge(w, v)
-            if (state == self.BI or state == self.FWD) and edgeFwd:
-                self._undirectedEdges.remove(edgeFwd)
-            if (state == self.BI or state == self.REV) and edgeRev:
-                self._undirectedEdges.remove(edgeRev)
-            if weight != 0:
-                if state == self.BI or state == self.FWD:
-                    self._undirectedEdges.add((v, w, weight))
-                if state == self.BI or state == self.REV:
-                    self._undirectedEdges.add((w, v, weight))
 
-        if state == 0:
+        if state == self.BI:
             self.matrix[v][w] = weight
             self.matrix[w][v] = weight
-        elif state == 1:
+        elif state == self.FWD:
             self.matrix[v][w] = weight
             self.matrix[w][v] = 0
-        elif state == 2:
+        elif state == self.REV:
             self.matrix[v][w] = 0
             self.matrix[w][v] = weight
-        if refreshLaplacian:
-            self._refreshLaplacian()
+        if refreshState:
+            self._refreshState()
 
     def forceFlow(self, v: int, makeSink=True):
         """Force all connections to a vertex to flow in one direction"""
         for edge in self.edgeSet(v, directed=False):
-            self.setEdgeState(edge[0], edge[1], 2 if makeSink else 1, refreshLaplacian=False)
-        self._refreshLaplacian()
+            self.setEdgeState(edge[0], edge[1], 2 if makeSink else 1, refreshState=False)
+        self._refreshState()
 
     def lend(self, divisor: Divisor, vertexes: list | np.ndarray | int, amount, forceLegal=False):
         """Lend from a vertex amount number of times.
@@ -357,6 +251,7 @@ class Graph:
         plt.show()
 
     def copy(self):
+        """Returns a copy of this graph"""
         return Graph(self.matrix)
 
     def __len__(self):
@@ -364,31 +259,35 @@ class Graph:
 
     @classmethod
     def cycle(cls, size):
+        """Returns a cycle graph of the given size"""
         graph = cls.empty(size)
         for i in range(0, size-1):
-            graph.addEdge(i, i+1, refreshLaplacian=False)
+            graph.addEdge(i, i + 1, refreshState=False)
         graph.addEdge(0, size-1)
         return graph
 
     @classmethod
     def complete(cls, size):
+        """Returns a complete graph of the given size"""
         return Graph(np.ones((size, size))-np.identity(size))
 
     @classmethod
     def empty(cls, size):
+        """Returns an empty graph of the given size"""
         return Graph(np.zeros((size, size)))
 
 
-def allGraphs(graph: Graph, skipRotations=True):
+def allCyclics(graph: Graph, skipRotations=True):
+    """Generates all oriented permutations of a cyclic graph"""
     permutations = []
-    current = [0]*len(graph)
-    # timer = time.time()
+    config = [0]*len(graph)
+    idx = 0
 
     def checkRotations():
         """Checks if the current permutation has been logged or if any of its rotations have"""
-        if current in permutations:
+        if config in permutations:
             return False
-        currCopy = current.copy()
+        currCopy = config.copy()
         for _ in range(0, len(graph)-1):
             # Rotate by one vertex increment
             first = currCopy.pop(0)
@@ -398,63 +297,72 @@ def allGraphs(graph: Graph, skipRotations=True):
         return True
 
     def increment():
-        current[-1] += 1
-        pointer = len(current)-1
-        while current[pointer] == 3 and pointer > 0:
-            current[pointer] = 0
+        """Increments the trinary number representing the configuration"""
+        config[-1] += 1
+        pointer = len(config)-1
+        while config[pointer] == 3 and pointer > 0:
+            config[pointer] = 0
             pointer -= 1
-            current[pointer] += 1
+            config[pointer] += 1
 
     for i in range(0, 3**len(graph)):
         if skipRotations and not checkRotations():
             increment()
+            idx += 1
             continue
-        permutations.append(current.copy())
+        permutations.append(config.copy())
         copy = graph.copy()
-        copy.setEdgeStates(current)
-        yield copy, current
+        copy.setEdgeStates(config)
+        yield idx, config, copy
         increment()
-
-    """print(f"Finished after checking {len(permutations)} permutations of {3 ** len(graph)} permutations"
-          f", ({round(len(permutations) / (3 ** len(graph)) * 100, 2)}%) "
-          f"after {round((time.time() - timer), 3)}s")"""
+        idx += 1
 
 
-def bruteCheckGraphs(graph: Graph):
+def bruteCheckGraphs(graph: Graph, skipDefault=False):
+    """Checks manually to see if the cyclic graph of the given
+    size has the appropriate invariant factors"""
     timer = time.time()
-    sets = {}
+
+    sets = [None]*len(graph)
+    globalIdx = 0
     checked = 0
-    for idx, (current, config) in enumerate(allGraphs(graph, skipRotations=True)):
-        if checked > 1000:
-            break
+    found = []
+    # guesses = list(range(len(graph)+1, 2*len(graph)+1))
+    for idx, config, current in allCyclics(graph, skipRotations=True):
         for i in range(0, len(graph)):
+            globalIdx += 1
+            if skipDefault and 0 < globalIdx < len(graph)+1:
+                continue
             checked += 1
-            jac = current.jac(vertex=i)
+            if globalIdx % 5000 == 0:
+                logger.info(f"Checked up to {globalIdx} items...")
+            cok = current.pic()
             # Account for trivial set if invariant factors are empty
-            if len(jac[1]) == 0:
-                jac[1].append(1)
-            if len(jac[1]) == 1 and len(graph) >= jac[1][0] > 0 and jac[1][0] not in sets.keys():
-                sets[jac[1][0]] = current
-                if len(sets) == len(graph):
-                    print(f"Found sets from trivial through Z_{len(graph)}")
-                    print(f"Finished after checking {checked} permutations of {3 ** len(graph)} permutations"
+            if len(cok[1]) == 0:
+                cok[1].append(1)
+            if sets[cok[1][0]-1] is None:
+                if len(cok[1]) != 1:
+                    logger.warning("===> Large!")
+                sets[cok[1][0]-1] = config
+                found.append(globalIdx)
+                logger.info(f"Found at: {globalIdx}, {config}")
+                if len([elem for elem in sets if elem is not None]) == len(graph):
+                    # logger.info(f"Matches Guess: {set(guesses)==set(found)}")
+                    logger.info(f"Found sets from trivial through Z_{len(graph)}")
+                    logger.info(f"Finished after checking {checked} permutations of {3 ** len(graph)} permutations"
                           f", ({round(checked/(3 ** len(graph))*100, 2)}%) "
                           f"after {round((time.time()-timer), 3)}s")
-                    print(f"Sets check: {list(sets.keys())}")
-                    print("--------")
+                    logger.info("--------")
                     return True
 
-    print(f"Failed to find sets from trivial through Z_{len(graph)}, only found {list(sets.keys())}."
+    """logger.info(f"Failed to find sets from trivial through Z_{len(graph)}, only found "
+                f"{[idx for idx, elem in enumerate(sets) if elem is not None]}."
           f"\n{len(graph)-len(list(sets.keys()))} missing ({set(range(1, len(graph)+1))-set(sets.keys())})")
-    print(f"Finished after checking {checked} permutations of {3 ** len(graph)} permutations"
+    logger.info(f"Finished after checking {checked} permutations of {3 ** len(graph)} permutations"
           f", ({round(checked / (3 ** len(graph)) * 100, 2)}%) "
-          f"after {round((time.time() - timer), 3)}s")
-    print("--------")
+          f"after {round((time.time() - timer), 3)}s")"""
+    logger.info("--------")
     return False
-# {3: True, 4: True, 5: True, 6: True, 7: True, 8: True, 9: False, 10: True, 11: True,
-# 12: True, 13: True, 14: True, 15: False, 16: True, 17: True, 18: False, 19: False, 20: False,
-# 21: True, 22: False, 23: True, 24: False, 25: False, 26: False, 27: True, 28: False, 29: False,
-# 30: False, 31: False, 32: False, 33: True, 34: False, 35: False, 36: False, 37: False, 38: False, 39: False}
 
 
 def fireCycle(graph: Graph, divisor: Divisor, mutate=False):
@@ -550,6 +458,7 @@ def qReduced(graph: Graph, divisor: Divisor, q=0, mutate=False):
 
 
 def debtReduction(graph: Graph, divisor: Divisor, q=0, mutate=False):
+    """Employs the debt reduction trick to reduce the overall debt of a graph"""
     if not mutate:
         divisor = divisor.copy()
     firingScript = np.floor(np.matmul(np.linalg.inv(graph.reducedLaplacian(q)), divisor.config(q)))
@@ -561,37 +470,3 @@ def debtReduction(graph: Graph, divisor: Divisor, q=0, mutate=False):
     divisor[q] = oldDeg - np.sum(firedCfg)
 
     return divisor
-
-"""
-lIdx = 0
-        while lIdx < len(legals):
-            adjSet = graph.adjacencySet(legals[lIdx])
-            count = 0
-            for i in adjSet:
-                if i not in legals:
-                    count += 1
-            if count > divisor[legals[lIdx]]:
-                legals.pop(lIdx)
-                lIdx = 0
-            else:
-                lIdx += 1"""
-
-
-"""
-
-        def choosePivot(lastJ):
-            for j in range(0, len(matrix[0])):
-                for k in range(0 if lastJ == -1 else lastJ + 1, len(matrix)):
-                    if k != 0:
-                        return k, j
-        # Step One
-        lastJ = -1
-        for t in range(0, len(matrix)):
-            j, k = choosePivot(lastJ)
-            if matrix[t][lastJ] == 0:
-                # Exchange rows
-                exchangeRows(t, k)
-            lastJ = j
-            for k in range(0, len(matrix)):
-                if matrix[t][j] % matrix[k][j] != 0:
-                    gcd = math.gcd(matrix[t][j], matrix[k][j])"""
