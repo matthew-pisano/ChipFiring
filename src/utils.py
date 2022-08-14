@@ -56,14 +56,15 @@ class Utils:
             smith[:, i] = scale * smith[:, i]
             other[:, i] = scale * other[:, i]
 
-        m, n = smith.shape
+        matrixSize = len(matrix)
 
         def minAij(s):
             """Find the minimum non-zero element below and to the right of matrix[s][s]"""
             element = [s, s]
-            globalMin = max(max([abs(x) for x in smith[j][s:]]) for j in range(s, m))
-            for i in (range(s, m)):
-                for j in (range(s, n)):
+            # globalMin = max(max([abs(x) for x in smith[j][s:]]) for j in range(s, matrixSize))
+            globalMin = float('inf')
+            for i in (range(s, matrixSize)):
+                for j in (range(s, matrixSize)):
                     if smith[i][j] != 0 and abs(smith[i][j]) <= globalMin:
                         element = [i, j]
                         globalMin = abs(smith[i][j])
@@ -72,33 +73,33 @@ class Utils:
         def isLone(s):
             """Checks if matrix[s][s] is the only non-zero in col s below matrix[s][s] and the only
             non-zero in row s to the right of matrix[s][s]"""
-            if [smith[s][x] for x in range(s + 1, n) if smith[s][x] != 0] + [smith[y][s]
-                    for y in range(s + 1, m) if smith[y][s] != 0] == []:
+            if [smith[s][x] for x in range(s + 1, matrixSize) if smith[s][x] != 0] + [smith[y][s]
+                    for y in range(s + 1, matrixSize) if smith[y][s] != 0] == []:
                 return True
             else:
                 return False
 
         def findNonDivisible(s):
             """Finds the first element which is not divisible by matrix[s][s]"""
-            for x in range(s + 1, m):
-                for y in range(s + 1, n):
+            for x in range(s + 1, matrixSize):
+                for y in range(s + 1, matrixSize):
                     if smith[x][y] % smith[s][s] != 0:
                         return x, y
             return None
 
-        p = np.identity(m)
-        q = np.identity(n)
-        for s in range(min(m, n)):
+        p = np.identity(matrixSize)
+        q = np.identity(matrixSize)
+        for s in range(0, matrixSize):
             while not isLone(s):
                 # Get min location
                 i, j = minAij(s)
                 exchangeRows(p, s, i)
                 exchangeCols(q, s, j)
-                for x in range(s + 1, m):
+                for x in range(s + 1, matrixSize):
                     if smith[x][s] != 0:
                         k = smith[x][s] // smith[s][s]
                         addRows(p, x, s, -k)
-                for x in range(s + 1, n):
+                for x in range(s + 1, matrixSize):
                     if smith[s][x] != 0:
                         k = smith[s][x] // smith[s][s]
                         addCols(q, x, s, -k)

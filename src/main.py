@@ -19,6 +19,14 @@ def testBruteForce(rng=(3, 10)):
     logger.info(cokDict)
 
 
+def testSinkSource(graph: Graph):
+    print(prettyCok(graph.pic()))
+    graph.forceFlow(0, makeSink=True)
+    print(prettyCok(graph.pic()))
+    graph.forceFlow(0, makeSink=False)
+    print(prettyCok(graph.pic()))
+
+
 if __name__ == "__main__":
     start = time.time()
     logger.info(f"=====\nEntering program at {datetime.datetime.fromtimestamp(start).strftime('%H:%M:%S')}\n=====")
@@ -35,11 +43,9 @@ if __name__ == "__main__":
     ]
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)"""
-    testBruteForce((13, 19))
-    """graph = Graph.cycle(5)
-    graph.setEdgeState(0, 1, 1)
-    for i in range(0, len(graph)):
-        print(graph.pic()[1])"""
+    # testBruteForce((13, 19))
+    graph = Graph.complete(3)
+    testSinkSource(graph)
     """print(Utils.coKernel(
         np.copy(
             [[1, -1, 0, 0],

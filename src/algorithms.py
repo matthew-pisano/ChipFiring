@@ -1,3 +1,4 @@
+import random
 import time
 
 import numpy as np
@@ -197,6 +198,32 @@ class Graph:
             self.setEdgeState(edge[0], edge[1], 2 if makeSink else 1, refreshState=False)
         self._refreshState()
 
+    def spanningTree(self):
+        size = len(self.matrix)
+        selected_node = [0]*size
+        no_edge = 0
+        selected_node[0] = True
+        tree = self.empty(size)
+
+        while no_edge < size - 1:
+            minimum = float('inf')
+            a = 0
+            b = 0
+            for m in range(size):
+                if selected_node[m]:
+                    for n in range(size):
+                        if not selected_node[n] and self.matrix[m][n]:
+                            # not in selected and there is an edge
+                            if minimum > self.matrix[m][n]:
+                                minimum = self.matrix[m][n]
+                                a = m
+                                b = n
+            tree.addEdge(a, b, self.matrix[a][b], refreshState=False)
+            selected_node[b] = True
+            no_edge += 1
+        tree._refreshState()
+        return tree
+
     def lend(self, divisor: Divisor, vertexes: list | np.ndarray | int, amount, forceLegal=False):
         """Lend from a vertex amount number of times.
         Borrows if amount is negative"""
@@ -267,6 +294,19 @@ class Graph:
         return graph
 
     @classmethod
+    def random(cls, size):
+        """Returns a random graph of the given size"""
+        graph = cls.empty(size)
+        for i in range(0, size):
+            for j in range(0, size):
+                if i != j and not graph.getEdge(i, j, directed=False) \
+                        and random.randint(0, 1) == 0:
+                    graph.addEdge(i, j, refreshState=False)
+                    graph.setEdgeState(i, j, random.randint(0, 2), refreshState=False)
+        graph._refreshState()
+        return graph
+
+    @classmethod
     def complete(cls, size):
         """Returns a complete graph of the given size"""
         return Graph(np.ones((size, size))-np.identity(size))
@@ -277,11 +317,23 @@ class Graph:
         return Graph(np.zeros((size, size)))
 
 
+def prettyCok(coKernel: tuple):
+    cokStr = ""
+    for factor in coKernel[1]:
+        cokStr += f"\u2124_{factor} x "
+    if coKernel[2] > 0:
+        cokStr += "\u2124"+(f"^{coKernel[2]}" if coKernel[2] > 1 else "")
+    else:
+        cokStr = cokStr[:-2]
+    return cokStr
+
+
 def allCyclics(graph: Graph, skipRotations=True):
     """Generates all oriented permutations of a cyclic graph"""
     permutations = []
     config = [0]*len(graph)
     idx = 0
+    lastYield = time.time()
 
     def checkRotations():
         """Checks if the current permutation has been logged or if any of its rotations have"""
@@ -313,55 +365,48 @@ def allCyclics(graph: Graph, skipRotations=True):
         permutations.append(config.copy())
         copy = graph.copy()
         copy.setEdgeStates(config)
-        yield idx, config, copy
+        yield idx, config, copy, time.time()-lastYield
+        lastYield = time.time()
         increment()
         idx += 1
 
 
-def bruteCheckGraphs(graph: Graph, skipDefault=False):
+def bruteCheckGraphs(graph: Graph):
     """Checks manually to see if the cyclic graph of the given
     size has the appropriate invariant factors"""
     timer = time.time()
 
     sets = [None]*len(graph)
     globalIdx = 0
-    checked = 0
     found = []
-    # guesses = list(range(len(graph)+1, 2*len(graph)+1))
-    for idx, config, current in allCyclics(graph, skipRotations=True):
-        for i in range(0, len(graph)):
-            globalIdx += 1
-            if skipDefault and 0 < globalIdx < len(graph)+1:
-                continue
-            checked += 1
-            if globalIdx % 5000 == 0:
-                logger.info(f"Checked up to {globalIdx} items...")
-            cok = current.pic()
-            # Account for trivial set if invariant factors are empty
-            if len(cok[1]) == 0:
-                cok[1].append(1)
-            if sets[cok[1][0]-1] is None:
-                if len(cok[1]) != 1:
-                    logger.warning("===> Large!")
-                sets[cok[1][0]-1] = config
-                found.append(globalIdx)
-                logger.info(f"Found at: {globalIdx}, {config}")
-                if len([elem for elem in sets if elem is not None]) == len(graph):
-                    # logger.info(f"Matches Guess: {set(guesses)==set(found)}")
-                    logger.info(f"Found sets from trivial through Z_{len(graph)}")
-                    logger.info(f"Finished after checking {checked} permutations of {3 ** len(graph)} permutations"
-                          f", ({round(checked/(3 ** len(graph))*100, 2)}%) "
-                          f"after {round((time.time()-timer), 3)}s")
-                    logger.info("--------")
-                    return True
+    picAvg = 0
+    yieldAvg = 0
+    for idx, config, current, lastYield in allCyclics(graph, skipRotations=True):
+        globalIdx += 1
+        if globalIdx % 5000 == 0:
+            logger.info(f"Checked up to {globalIdx} items...")
+        chk = time.time()
+        cok = current.pic()
+        picAvg = (picAvg*(globalIdx-1)+time.time()-chk)/globalIdx
+        yieldAvg = (yieldAvg*(globalIdx-1)+lastYield)/globalIdx
+        # Account for trivial set if invariant factors are empty
+        if len(cok[1]) == 0:
+            cok[1].append(1)
+        if sets[cok[1][0]-1] is None:
+            if len(cok[1]) != 1:
+                logger.warning("===> Large!")
+            sets[cok[1][0]-1] = config
+            found.append(globalIdx)
+            logger.info(f"Found at: {globalIdx}, {config}")
+            if len([elem for elem in sets if elem is not None]) == len(graph):
+                # logger.info(f"Matches Guess: {set(guesses)==set(found)}")
+                logger.info(f"Found sets from trivial through Z_{len(graph)}")
+                logger.info(f"Finished after checking {globalIdx} permutations of {3 ** len(graph)} permutations"
+                      f", ({round(globalIdx/(3 ** len(graph))*100, 2)}%) "
+                      f"after {round((time.time()-timer), 3)}s")
+                logger.info("--------")
+                return True
 
-    """logger.info(f"Failed to find sets from trivial through Z_{len(graph)}, only found "
-                f"{[idx for idx, elem in enumerate(sets) if elem is not None]}."
-          f"\n{len(graph)-len(list(sets.keys()))} missing ({set(range(1, len(graph)+1))-set(sets.keys())})")
-    logger.info(f"Finished after checking {checked} permutations of {3 ** len(graph)} permutations"
-          f", ({round(checked / (3 ** len(graph)) * 100, 2)}%) "
-          f"after {round((time.time() - timer), 3)}s")"""
-    logger.info("--------")
     return False
 
 
