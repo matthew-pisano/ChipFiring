@@ -15,7 +15,7 @@ def testSrcSnk():
 
 
 def testBruteForce(rng=(3, 10)):
-    cokDict = {i: bruteCheckGraphs(Graph.cycle(i), skipDefault=False) for i in range(*rng)}
+    cokDict = {i: bruteCheckGraphs(Graph.cycle(i)) for i in range(*rng)}
     logger.info(cokDict)
 
 
@@ -31,10 +31,10 @@ if __name__ == "__main__":
     start = time.time()
     logger.info(f"=====\nEntering program at {datetime.datetime.fromtimestamp(start).strftime('%H:%M:%S')}\n=====")
     """adjacency = [
-        [0, 1, 1, 1],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1],
-        [0, 0, 1, 0],
+        [0, 1, 0, 1],
+        [1, 0, 0, 0],
+        [1, 1, 0, 1],
+        [0, 0, 0, 0],
     ]"""
     """adjacency = [
         [0, 1, 1],
@@ -43,9 +43,31 @@ if __name__ == "__main__":
     ]
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)"""
-    # testBruteForce((13, 19))
-    graph = Graph.complete(3)
-    testSinkSource(graph)
+    # testBruteForce((3, 14))
+    # graph = Graph(adjacency)
+    # graph.visualize()
+    # print(graph.auditEdges())
+    cycle = Graph.cycle(7)
+    cycle.setEdgeState(3, 4, 2)
+    cycle.setEdgeState(2, 3, 1)
+    cycle.setEdgeState(1, 2, 2)
+    cycle.setEdgeState(0, 1, 1)
+    cycle.setEdgeState(5, 6, 2)
+    cycle.setEdgeState(4, 5, 1)
+    print(cycle.pic())
+    adjacency = [
+        [0, 0, 0],
+        [1, 0, 1],
+        [0, 0, 0],
+    ]
+    stick = Graph(adjacency)
+    print(stick.pic())
+    glued = Graph.glue(cycle, stick, 3, 0)
+    glued.visualize()
+    print(glued.auditEdges())
+    print(glued.pic())
+    """graph = Graph.complete(3)
+    testSinkSource(graph)"""
     """print(Utils.coKernel(
         np.copy(
             [[1, -1, 0, 0],
@@ -70,6 +92,39 @@ if __name__ == "__main__":
              [0, 0, 0, 0]]
         )
     ))"""
+    """print(prettyCok(Utils.coKernel(
+        np.copy(
+            [[0, 0, 0, 0],
+             [-1, 2, -1, 0],
+             [0, 0, 1, -1],
+             [0, 0, 0, 0]]
+        )
+    )))
+    print(prettyCok(Utils.coKernel(
+        np.copy(
+            [[0, 0, 0, 0, 0],
+             [-1, 2, -1, 0, 0],
+             [0, 0, 1, -1, 0],
+             [0, 0, 0, 1, -1],
+             [0, 0, 0, 0, 0]]
+        )
+    )))
+    print(prettyCok(Utils.coKernel(
+        np.copy(
+            [[0, 0, 0, 0, 0],
+             [-1, 2, -1, 0, 0],
+             [0, 0, 1, -1, 0],
+             [0, 0, 0, 0, 0],
+             [0, 0, 0, -1, 1]]
+        )
+    )))
+    print(prettyCok(Utils.coKernel(
+        np.copy(
+            [[0, 0, 0],
+             [-1, 2, -1],
+             [0, 0, 0]]
+        )
+    )))"""
     # graph.visualize()
         # print(f"Graph {idx}", graph.jac())
         # current.visualize()
