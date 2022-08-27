@@ -1,6 +1,6 @@
+from __future__ import annotations
 import random
 import time
-
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -119,13 +119,17 @@ class Graph:
                     if (not directed and v > w) or v == w:
                         continue
                     if self.matrix[v][w] > 0 or (not directed and self.matrix[w][v] > 0):
-                        edgeSet.add((v, w, self.matrix[v][w]))
+                        edgeState = self.BI if self.matrix[v][w] > 0 and self.matrix[w][v] > 0 else \
+                            self.FWD if self.matrix[v][w] > 0 else self.REV
+                        edgeSet.add((v, w, edgeState))
         else:
             for w in range(0, len(self.matrix)):
                 if vertex == w:
                     continue
                 if self.matrix[vertex][w] > 0 or (not directed and self.matrix[w][vertex] > 0):
-                    edgeSet.add((vertex, w, self.matrix[vertex][w]))
+                    edgeState = self.BI if self.matrix[vertex][w] > 0 and self.matrix[w][vertex] > 0 else \
+                        self.FWD if self.matrix[vertex][w] > 0 else self.REV
+                    edgeSet.add((vertex, w, edgeState))
         return edgeSet
 
     def size(self):
@@ -150,6 +154,22 @@ class Graph:
                 return edge
         return None
 
+    def auditEdges(self):
+        sources = 0
+        sinks = 0
+        for v in range(0, len(self.matrix)):
+            edgeSet = list(self.edgeSet(vertex=v, directed=False))
+            isSink = True
+            isSource = True
+            for edge in edgeSet:
+                if edge[2] == self.FWD or edge[2] == self.BI:
+                    isSink = False
+                if edge[2] == self.REV or edge[2] == self.BI:
+                    isSource = False
+            sources += 1 if isSource else 0
+            sinks += 1 if isSink else 0
+        return sources, sinks
+
     def setEdgeStates(self, config: list[int]):
         """Set the direction of each edge of the graph using the configuration"""
         edgeSet = list(self.edgeSet(directed=False))
@@ -172,9 +192,14 @@ class Graph:
                     edgeConfig.append((i, j, self.REV))
         return edgeConfig
 
-    def addEdge(self, v: int, w: int, weight: int = 1, refreshState=True):
+    def addEdge(self, v: int, w: int, weight: int = 1, state: int = 0, refreshState=True):
         """Adds an edge between two vertices"""
-        self.setEdgeState(v, w, weight=weight, refreshState=refreshState)
+        if v >= len(self.matrix) and w >= len(self.matrix):
+            raise AttributeError("Both vertices cannot be new!")
+        elif v >= len(self.matrix) or w >= len(self.matrix):
+            np.append(self.matrix, [[0]*len(self.matrix)], 0)
+            np.append(self.matrix, [[0] * (len(self.matrix)+1)], 1)
+        self.setEdgeState(v, w, weight=weight, state=state, refreshState=refreshState)
 
     def setEdgeState(self, v: int, w: int, state: int = 0, weight: int = None, refreshState=True):
         """Sets as an edge as directed or undirected or change the direction of the edge"""
@@ -316,6 +341,25 @@ class Graph:
         """Returns an empty graph of the given size"""
         return Graph(np.zeros((size, size)))
 
+    @classmethod
+    def glue(cls, graph1: Graph, graph2: Graph, vertex1: int, vertex2: int):
+        matrix1 = np.copy(graph1.matrix)
+        matrix2 = np.copy(graph2.matrix)
+        # Make desired rows and columns last and first for easy connection
+        if vertex1 != len(matrix1)-1:
+            matrix1[:, [len(matrix1)-1, vertex1]] = matrix1[:, [vertex1, len(matrix1)-1]]
+            matrix1[[len(matrix1)-1, vertex1]] = matrix1[[vertex1, len(matrix1)-1]]
+        if vertex2 != 0:
+            matrix2[:, [0, vertex2]] = matrix2[:, [vertex2, 0]]
+            matrix2[[0, vertex2]] = matrix2[[vertex2, 0]]
+
+        m1Len = len(matrix1)
+        glued = np.zeros((m1Len+len(matrix2)-1, m1Len+len(matrix2)-1))
+        glued[0:0 + matrix1.shape[0], 0:0 + matrix1.shape[1]] = matrix1
+        glued[m1Len-1:m1Len-1 + matrix2.shape[0], m1Len-1:m1Len-1 + matrix2.shape[1]] += matrix2
+
+        return Graph(glued)
+
 
 def prettyCok(coKernel: tuple):
     cokStr = ""
@@ -397,12 +441,13 @@ def bruteCheckGraphs(graph: Graph):
                 logger.warning("===> Large!")
             sets[cok[1][0]-1] = config
             found.append(globalIdx)
-            logger.info(f"Found at: {globalIdx}, {config}")
+            logger.info(f"Found \u2124_{cok[1][0]} at: {globalIdx} {len(found)}/{len(graph)} "
+                        f"({round(len(found)/len(graph)*100)}%), {config}")
             if len([elem for elem in sets if elem is not None]) == len(graph):
                 # logger.info(f"Matches Guess: {set(guesses)==set(found)}")
                 logger.info(f"Found sets from trivial through Z_{len(graph)}")
                 logger.info(f"Finished after checking {globalIdx} permutations of {3 ** len(graph)} permutations"
-                      f", ({round(globalIdx/(3 ** len(graph))*100, 2)}%) "
+                      f", ({round(globalIdx/(3 ** len(graph))*100, 5)}%) "
                       f"after {round((time.time()-timer), 3)}s")
                 logger.info("--------")
                 return True
