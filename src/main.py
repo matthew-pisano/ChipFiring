@@ -1,6 +1,7 @@
 import datetime
 
 from algorithms import *
+from src import results
 from utils import logger
 
 
@@ -27,6 +28,39 @@ def testSinkSource(graph: Graph):
     print(prettyCok(graph.pic()))
 
 
+def testPseudoTree(glueByVertex=True):
+    cycle = Graph.cycle(8)
+    cycle.setEdgeState(3, 4, 1)
+    cycle.setEdgeState(2, 3, 2)
+    cycle.setEdgeState(1, 2, 2)
+    cycle.setEdgeState(0, 1, 2)
+    cycle.setEdgeState(7, 6, 1)
+    cycle.setEdgeState(0, 7, 2)
+    cycle.setEdgeState(5, 6, 1)
+    cycle.setEdgeState(4, 5, 2)
+    # cycle.visualize()
+    audit = cycle.auditEdges()
+    print(f"Cycle sources: {audit[0]}, Cycle sinks: {audit[1]}")
+    print(f"Cycle Picard: {prettyCok(cycle.pic())}")
+    adjacency = [
+        [0, 1, 1],
+        [0, 0, 0],
+        [0, 0, 0],
+    ]
+    stick = Graph(adjacency)
+    audit = stick.auditEdges()
+    print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
+    print(f"Tree picard: {prettyCok(stick.pic())}")
+    if glueByVertex:
+        glued = Graph.glueByVertex(cycle, stick, 3, 0)
+    else:
+        glued = Graph.glueByEdge(cycle, stick, 3, 0, state=2)
+    glued.visualize()
+    audit = glued.auditEdges()
+    print(f"Pseudo-tree sources: {audit[0]}, Pseudo-tree sinks: {audit[1]}")
+    print(f"Pseudo-tree picard: {prettyCok(glued.pic())}")
+
+
 if __name__ == "__main__":
     start = time.time()
     logger.info(f"=====\nEntering program at {datetime.datetime.fromtimestamp(start).strftime('%H:%M:%S')}\n=====")
@@ -47,25 +81,18 @@ if __name__ == "__main__":
     # graph = Graph(adjacency)
     # graph.visualize()
     # print(graph.auditEdges())
-    cycle = Graph.cycle(7)
-    cycle.setEdgeState(3, 4, 2)
-    cycle.setEdgeState(2, 3, 1)
-    cycle.setEdgeState(1, 2, 2)
-    cycle.setEdgeState(0, 1, 1)
-    cycle.setEdgeState(5, 6, 2)
-    cycle.setEdgeState(4, 5, 1)
-    print(cycle.pic())
+    # testPseudoTree(glueByVertex=False)
     adjacency = [
-        [0, 0, 0],
-        [1, 0, 1],
-        [0, 0, 0],
+        [0, 1, 1, 1],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
     ]
     stick = Graph(adjacency)
-    print(stick.pic())
-    glued = Graph.glue(cycle, stick, 3, 0)
-    glued.visualize()
-    print(glued.auditEdges())
-    print(glued.pic())
+    stick.visualize()
+    audit = stick.auditEdges()
+    print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
+    print(f"Tree picard: {prettyCok(stick.pic())}")
     """graph = Graph.complete(3)
     testSinkSource(graph)"""
     """print(Utils.coKernel(

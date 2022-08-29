@@ -295,7 +295,9 @@ class Graph:
             labels[i] = f"{i}"+(f": {divisor[i]}" if divisor else "")
         G = nx.DiGraph()
         G.add_weighted_edges_from(self.edgeSet())
-        pos = nx.circular_layout(G)
+        # pos = nx.circular_layout(G)
+        pos = nx.planar_layout(G)
+        # pos = nx.kamada_kawai_layout(G)
         if withWeights:
             edgeLabels = nx.get_edge_attributes(G, 'weight')
             nx.draw_networkx_edge_labels(G, pos, edge_labels=edgeLabels)
@@ -342,7 +344,7 @@ class Graph:
         return Graph(np.zeros((size, size)))
 
     @classmethod
-    def glue(cls, graph1: Graph, graph2: Graph, vertex1: int, vertex2: int):
+    def _glue(cls, graph1: Graph, graph2: Graph, vertex1: int, vertex2: int, byVertex: bool, edgeState: int = BI):
         matrix1 = np.copy(graph1.matrix)
         matrix2 = np.copy(graph2.matrix)
         # Make desired rows and columns last and first for easy connection
@@ -354,17 +356,34 @@ class Graph:
             matrix2[[0, vertex2]] = matrix2[[vertex2, 0]]
 
         m1Len = len(matrix1)
-        glued = np.zeros((m1Len+len(matrix2)-1, m1Len+len(matrix2)-1))
+        offset = 1 if byVertex else 0
+        glued = np.zeros((m1Len+len(matrix2)-offset, m1Len+len(matrix2)-offset))
         glued[0:0 + matrix1.shape[0], 0:0 + matrix1.shape[1]] = matrix1
-        glued[m1Len-1:m1Len-1 + matrix2.shape[0], m1Len-1:m1Len-1 + matrix2.shape[1]] += matrix2
+        glued[m1Len-offset:m1Len-offset + matrix2.shape[0], m1Len-offset:m1Len-offset + matrix2.shape[1]] += matrix2
+
+        if not byVertex:
+            if edgeState == cls.BI or edgeState == cls.FWD:
+                glued[m1Len-1][m1Len] = 1
+            if edgeState == cls.BI or edgeState == cls.REV:
+                glued[m1Len][m1Len-1] = 1
 
         return Graph(glued)
+
+    @classmethod
+    def glueByVertex(cls, graph1: Graph, graph2: Graph, vertex1: int, vertex2: int):
+        return cls._glue(graph1, graph2, vertex1, vertex2, byVertex=True)
+
+    @classmethod
+    def glueByEdge(cls, graph1: Graph, graph2: Graph, vertex1: int, vertex2: int, state=0):
+        return cls._glue(graph1, graph2, vertex1, vertex2, byVertex=False, edgeState=state)
 
 
 def prettyCok(coKernel: tuple):
     cokStr = ""
     for factor in coKernel[1]:
         cokStr += f"\u2124_{factor} x "
+    if len(coKernel[1]) == 0:
+        cokStr += f"\u2124 x "
     if coKernel[2] > 0:
         cokStr += "\u2124"+(f"^{coKernel[2]}" if coKernel[2] > 1 else "")
     else:

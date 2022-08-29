@@ -124,37 +124,57 @@
 
 \section{Introduction}
 
+	We will focus on Research Project 11 in~\cite{glass2020chip}.
+	The following are more specific directions that we plan to pursue.
 
-We will focus on Research Project 11 in \cite{glass2020chip}. The following are more specific directions that we plan to pursue.
+	\begin{goal}[8/1/2022]$ $
+		\begin{enumerate}
+			\item
+			Prove/disprove: for an oriented graph $G$, one always has $\Pic(G)=\mathbb{Z} \times \Jac(G)$,
+			i.e., as a finitely generated abelian group, the rank of $\Pic(G)$ is $1$.
+			\item
+			Prove/disprove: for $C_n$, and $0 \leq m \leq n$, one can always find an orientation
+			of $C_n$ so that $\Jac(C_n)=\mathbb{Z}_m$ (with the orientation).
+			\item
+			Prove/disprove: for an oriented graph $G$, if $v_0 \in V(G)$ is a sink (or a source)
+			and $G'$ is the graph obtained by reserving the direction for all arrows adjacent
+			to $v_0$ from $G$, then $\Jac(G)=\Jac(G')$. (Note: we believe that this should be true
+			for at least some classes of graphs such as cyclic graphs.)
+			\item
+			Prove/disprove: for an oriented planar graph $G$ and its planar dual (should be defined)
+			$\hat{G}$, one has $\Jac(G)=\Jac(\hat{G})$.
+			\item
+			Prove/disprove: for oriented graphs $G_1,G_2$, let $G$ be the graph obtained by
+			gluing $G_1$ and $G_2$ along one vertex. Then $\Jac(G)=\Jac(G_1) \times \Jac(G_2)$.
+		\end{enumerate}
+	\end{goal}
 
+\section{Background}
+	\subsection{Chip Firing}
+		The game at the heart of this paper is the Chip-Firing game. When a game is started, each vertex on
+		a graph is assigned a certain number of chips.  During play, chips can be lent or borrowed at each
+		node where one or more chips are either sent or received along each outgoing edge equally.  In the
+		case of a directed graph, vertices can only interact with another along an outgoing or
+		bidirectional edge.  The game is won once every vertex has a positive number of chips (i.e., this
+		vertex is not in debt).
 
-\begin{goal}[8/1/2022]$ $
-	\begin{enumerate}
-\item 
-Prove/disprove: for an oriented graph $G$, one always has $\Pic(G)=\mathbb{Z} \times \Jac(G)$, i.e., as a finitely generated abelian group, the rank of $\Pic(G)$ is $1$.
-		\item 
-Prove/disprove: for $C_n$, and $0 \leq m \leq n$, one can always find an orientation of $C_n$ so that $\Jac(C_n)=\mathbb{Z}_m$ (with the orientation). 
-\item 
-Prove/disprove: for an oriented graph $G$, if $v_0 \in V(G)$ is a sink (or a source) and $G'$ is the graph obtained by reserving the direction for all arrows adjacent to $v_0$ from $G$, then $\Jac(G)=\Jac(G')$. (Note: we believe that this should be true for at least some classes of graphs such as cyclic graphs.)
-\item 
-Prove/disprove: for an oriented planar graph $G$ and its planar dual (should be defined) $\hat{G}$, one has $\Jac(G)=\Jac(\hat{G})$. 
-\item 
-Prove/disprove: for oriented graphs $G_1,G_2$, let $G$ be the graph obtained by gluing $G_1$ and $G_2$ along one vertex. Then $\Jac(G)=\Jac(G_1) \times \Jac(G_2)$. 
-\item 
+	\subsection{Divisors and Equivalence Relations}
+		In the study of this game a \textbf{Divisor} of a graph ($\Div(G)$) is an integer vector $v\in\mathbb{Z}^n$
+		where \textit{n} is the number of vertices in the graph.  The $i^{th}$ of element of the vector \textit{v}
+		is the number of chips on the $i^{th}$ vertex of the graph.  Two divisors have an \textbf{Equivalence Relation}
+		($\sim$) if one divisor can be gotten from the other by a finite series of lending or borrowing moves
+		$D_1 \sim D_2 \xleftrightarrow{} (D_1 \xleftrightarrow{\text{moves}} D_2)$.  An \textbf{Equivalence Class} \textit{[D]}
+		is the set of all divisors that are equivalent to each other, $[D] = \{D_i~|~D_i \sim D\}$.
 
-	\end{enumerate}
-\end{goal}
-
-
+	\subsection{The Picard Group and The Jacobian}
+		The \textbf{Picard Group} of a graph $\Pic(G)$ is the set of all equivalence classes that the divisors of that graph can be a
+		part of. The \textbf{Jacobian} of a graph  $\Jac(G)$ is a subset of $\Pic(G)$ such that every divisor in each
+		equivalency class has a degree of $0$ where the degree of a divisor $\Deg(D)$ is the sum of each of the divisor's elements.
+		If a divisor is in one of the Jacobian's classes, it can be made winning after a finite series of moves.
 \section{Preliminaries}
-
 \section{Propositions}
 
-
-
-
-
-\bibliography{Jacobian}\bibliographystyle{alpha}
-
+\bibliography{Jacobian}
+\bibliographystyle{alpha}
 
 \end{document}
