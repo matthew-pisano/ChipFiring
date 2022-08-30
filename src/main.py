@@ -82,7 +82,7 @@ if __name__ == "__main__":
     # graph.visualize()
     # print(graph.auditEdges())
     # testPseudoTree(glueByVertex=False)
-    adjacency = [
+    """adjacency = [
         [0, 1, 1, 1],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -92,7 +92,8 @@ if __name__ == "__main__":
     stick.visualize()
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
-    print(f"Tree picard: {prettyCok(stick.pic())}")
+    print(f"Tree picard: {prettyCok(stick.pic())}")"""
+    testBruteForce((17, 20))
     """graph = Graph.complete(3)
     testSinkSource(graph)"""
     """print(Utils.coKernel(

@@ -155,6 +155,7 @@ class Graph:
         return None
 
     def auditEdges(self):
+        # TODO: rewrite using induction
         sources = 0
         sinks = 0
         for v in range(0, len(self.matrix)):
