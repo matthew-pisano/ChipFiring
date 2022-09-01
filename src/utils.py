@@ -6,7 +6,7 @@ import typing
 import numpy as np
 import sys
 
-DEBUG = {"debug_out": False, "log_file": "loggy.log"}
+DEBUG = {"debug_out": False, "log_file": "loggy.log", "snfDepth": None}
 
 
 loglevel = logging.INFO
@@ -56,7 +56,7 @@ class Utils:
             smith[:, i] = scale * smith[:, i]
             other[:, i] = scale * other[:, i]
 
-        matrixSize = len(matrix)
+        matrixSize = len(smith) if not DEBUG["snfDepth"] else DEBUG["snfDepth"]
 
         def minAij(s):
             """Find the minimum non-zero element below and to the right of matrix[s][s]"""

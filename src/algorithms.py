@@ -198,8 +198,8 @@ class Graph:
         if v >= len(self.matrix) and w >= len(self.matrix):
             raise AttributeError("Both vertices cannot be new!")
         elif v >= len(self.matrix) or w >= len(self.matrix):
-            np.append(self.matrix, [[0]*len(self.matrix)], 0)
-            np.append(self.matrix, [[0] * (len(self.matrix)+1)], 1)
+            self.matrix = np.append(self.matrix, [[0]*len(self.matrix)], 0)
+            self.matrix = np.append(self.matrix, [[0]] * (len(self.matrix)), 1)
         self.setEdgeState(v, w, weight=weight, state=state, refreshState=refreshState)
 
     def setEdgeState(self, v: int, w: int, state: int = 0, weight: int = None, refreshState=True):
@@ -392,10 +392,10 @@ def prettyCok(coKernel: tuple):
     return cokStr
 
 
-def allCyclics(graph: Graph, skipRotations=True):
+def allCyclics(graph: Graph, skipRotations=True, includeBi=True):
     """Generates all oriented permutations of a cyclic graph"""
     permutations = []
-    config = [0]*len(graph)
+    config = [0 if includeBi else 1]*len(graph)
     idx = 0
     lastYield = time.time()
 
@@ -417,11 +417,11 @@ def allCyclics(graph: Graph, skipRotations=True):
         config[-1] += 1
         pointer = len(config)-1
         while config[pointer] == 3 and pointer > 0:
-            config[pointer] = 0
+            config[pointer] = 0 if includeBi else 1
             pointer -= 1
             config[pointer] += 1
 
-    for i in range(0, 3**len(graph)):
+    for i in range(0, (3 if includeBi else 2)**len(graph)):
         if skipRotations and not checkRotations():
             increment()
             idx += 1
@@ -435,7 +435,7 @@ def allCyclics(graph: Graph, skipRotations=True):
         idx += 1
 
 
-def bruteCheckGraphs(graph: Graph):
+def bruteCheckGraphs(graph: Graph, includeBi=True):
     """Checks manually to see if the cyclic graph of the given
     size has the appropriate invariant factors"""
     timer = time.time()
@@ -445,7 +445,7 @@ def bruteCheckGraphs(graph: Graph):
     found = []
     picAvg = 0
     yieldAvg = 0
-    for idx, config, current, lastYield in allCyclics(graph, skipRotations=True):
+    for idx, config, current, lastYield in allCyclics(graph, skipRotations=False, includeBi=includeBi):
         globalIdx += 1
         if globalIdx % 5000 == 0:
             logger.info(f"Checked up to {globalIdx} items...")
@@ -466,12 +466,18 @@ def bruteCheckGraphs(graph: Graph):
             if len([elem for elem in sets if elem is not None]) == len(graph):
                 # logger.info(f"Matches Guess: {set(guesses)==set(found)}")
                 logger.info(f"Found sets from trivial through Z_{len(graph)}")
-                logger.info(f"Finished after checking {globalIdx} permutations of {3 ** len(graph)} permutations"
+                logger.info(f"Finished after checking {globalIdx} permutations of {(3 if includeBi else 2) ** len(graph)} permutations"
                       f", ({round(globalIdx/(3 ** len(graph))*100, 5)}%) "
                       f"after {round((time.time()-timer), 3)}s")
                 logger.info("--------")
                 return True
 
+    logger.info(f"Failed to find sets from trivial through Z_{len(graph)}, only found "
+        f"{[idx for idx, elem in enumerate(sets) if elem is not None]}")
+    logger.info(f"Failed after checking all {(3 if includeBi else 2) ** len(graph)} permutations"
+        f", ({round(globalIdx / (3 ** len(graph)) * 100, 5)}%) "
+        f"after {round((time.time() - timer), 3)}s")
+    logger.info("--------")
     return False
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  30 AUG 2022 11:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  31 AUG 2022 19:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1103,86 +1103,89 @@ LaTeX Info: Redefining \nameref on input line 91.
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 215.
+(hyperref)                removing `math shift' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathop' on input line 215.
+(hyperref)                removing `\mathop' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 215.
+(hyperref)                removing `\mathcode' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 215.
+(hyperref)                removing `\mathcode' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 215.
+(hyperref)                removing `\mathcode' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathchardef' on input line 215.
+(hyperref)                removing `\mathchardef' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\std@minus' on input line 215.
+(hyperref)                removing `\std@minus' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 215.
+(hyperref)                removing `\mathcode' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 215.
+(hyperref)                removing `\mathcode' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 215.
+(hyperref)                removing `\mathcode' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 215.
+(hyperref)                removing `\mathcode' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 215.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.43306pt
-(hyperref)                removed on input line 215.
+(hyperref)                removed on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathgroup' on input line 215.
+(hyperref)                removing `\mathgroup' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\symoperators' on input line 215.
+(hyperref)                removing `\symoperators' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 215.
+(hyperref)                removing `\@ifnextchar' on input line 214.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 215.
+(hyperref)                removing `math shift' on input line 214.
 
 (/home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.bbl [2]) [3]
 (/home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `SURE2022.out' has not changed.
-(rerunfilecheck)             Checksum: F0DD838016311EE32E89CEBA9E656CD6;2203.
+(rerunfilecheck)             Checksum: 169143A23287CA3E1891CA669F816858;2091.
  ) 
 Here is how much of TeX's memory you used:
- 27888 strings out of 480171
- 518790 string characters out of 5894489
- 833437 words of memory out of 5000000
+ 27887 strings out of 480171
+ 518794 string characters out of 5894489
+ 833496 words of memory out of 5000000
  45110 multiletter control sequences out of 15000+600000
  506548 words of font info for 121 fonts, out of 8000000 for 9000
  220 hyphenation exceptions out of 8191
- 85i,12n,90p,3240b,503s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 85i,12n,90p,3240b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
@@ -1192,10 +1195,10 @@ ublic/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
 w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 Output written on /home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.pdf (3 
-pages, 98266 bytes).
+pages, 98190 bytes).
 PDF statistics:
- 137 PDF objects out of 1000 (max. 8388607)
- 114 compressed objects within 2 object streams
- 33 named destinations out of 1000 (max. 500000)
- 101 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 134 PDF objects out of 1000 (max. 8388607)
+ 111 compressed objects within 2 object streams
+ 32 named destinations out of 1000 (max. 500000)
+ 93 words of extra memory for PDF output out of 10000 (max. 10000000)
 

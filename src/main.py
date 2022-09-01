@@ -16,7 +16,7 @@ def testSrcSnk():
 
 
 def testBruteForce(rng=(3, 10)):
-    cokDict = {i: bruteCheckGraphs(Graph.cycle(i)) for i in range(*rng)}
+    cokDict = {i: bruteCheckGraphs(Graph.cycle(i), includeBi=False) for i in range(*rng)}
     logger.info(cokDict)
 
 
@@ -29,25 +29,24 @@ def testSinkSource(graph: Graph):
 
 
 def testPseudoTree(glueByVertex=True):
-    cycle = Graph.cycle(8)
+    cycle = Graph.cycle(6)
     cycle.setEdgeState(3, 4, 1)
+    cycle.setEdgeState(5, 0, 1)
     cycle.setEdgeState(2, 3, 2)
     cycle.setEdgeState(1, 2, 2)
     cycle.setEdgeState(0, 1, 2)
-    cycle.setEdgeState(7, 6, 1)
-    cycle.setEdgeState(0, 7, 2)
-    cycle.setEdgeState(5, 6, 1)
     cycle.setEdgeState(4, 5, 2)
-    # cycle.visualize()
+    cycle.visualize()
     audit = cycle.auditEdges()
     print(f"Cycle sources: {audit[0]}, Cycle sinks: {audit[1]}")
     print(f"Cycle Picard: {prettyCok(cycle.pic())}")
     adjacency = [
-        [0, 1, 1],
         [0, 0, 0],
-        [0, 0, 0],
+        [1, 0, 0],
+        [1, 0, 0],
     ]
     stick = Graph(adjacency)
+    stick.addEdge(0, 3, state=2)
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
     print(f"Tree picard: {prettyCok(stick.pic())}")
@@ -82,89 +81,41 @@ if __name__ == "__main__":
     # graph.visualize()
     # print(graph.auditEdges())
     # testPseudoTree(glueByVertex=False)
-    """adjacency = [
+    adjacency = [
         [0, 1, 1, 1],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
     ]
     stick = Graph(adjacency)
-    stick.visualize()
+    # stick.visualize()
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
-    print(f"Tree picard: {prettyCok(stick.pic())}")"""
-    testBruteForce((17, 20))
+    print(f"Tree picard: {prettyCok(stick.pic())}")
+    # testBruteForce((3, 15))
+    """graph = Graph([
+        [0, 1, 0, 0, 0],
+        [1, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 1],
+        [0, 0, 0, 0, 0],
+    ])
+    #graph.addEdge(4, 5, state=1)
+    #graph.addEdge(4, 6, state=1)
+    #graph.addEdge(5, 7, state=2)
+    graph.visualize()
+    print(prettyCok(Utils.coKernel(graph.laplacian)))"""
     """graph = Graph.complete(3)
     testSinkSource(graph)"""
-    """print(Utils.coKernel(
-        np.copy(
-            [[1, -1, 0, 0],
-            [0, 0, 0, 0],
-             [-1, 0, 1, 0],
-             [0, -1, -1, 2]]
-        )
-    ))
-    print(Utils.coKernel(
-        np.copy(
-            [[1, -1, 0, 0],
-             [0, 1, 0, -1],
-             [-1, 0, 2, -1],
-             [0, 0, 0, 0]]
-        )
-    ))
-    print(Utils.coKernel(
-        np.copy(
-            [[2, -1, -1, 0],
-             [0, 1, 0, -1],
-             [0, 0, 1, -1],
-             [0, 0, 0, 0]]
-        )
-    ))"""
-    """print(prettyCok(Utils.coKernel(
-        np.copy(
-            [[0, 0, 0, 0],
-             [-1, 2, -1, 0],
-             [0, 0, 1, -1],
-             [0, 0, 0, 0]]
-        )
-    )))
-    print(prettyCok(Utils.coKernel(
-        np.copy(
-            [[0, 0, 0, 0, 0],
-             [-1, 2, -1, 0, 0],
-             [0, 0, 1, -1, 0],
-             [0, 0, 0, 1, -1],
-             [0, 0, 0, 0, 0]]
-        )
-    )))
-    print(prettyCok(Utils.coKernel(
-        np.copy(
-            [[0, 0, 0, 0, 0],
-             [-1, 2, -1, 0, 0],
-             [0, 0, 1, -1, 0],
-             [0, 0, 0, 0, 0],
-             [0, 0, 0, -1, 1]]
-        )
-    )))
-    print(prettyCok(Utils.coKernel(
-        np.copy(
-            [[0, 0, 0],
-             [-1, 2, -1],
-             [0, 0, 0]]
-        )
-    )))"""
-    # graph.visualize()
-        # print(f"Graph {idx}", graph.jac())
-        # current.visualize()
-    # graph.visualize()
-    # cyclediv = fireCycle(graph, divisor)
-    # print(cyclediv)
-    # grediv = greedy(graph, divisor)
-    # print(grediv)
-    # graph.visualize(grediv[2])
-    # qdiv = qReduced(graph, divisor)
-    # print(qdiv)
-    # graph.visualize(qdiv[2])
+    """graph = Graph.cycle(6)
+    graph.setEdgeState(0, 1, state=2)
+    graph.setEdgeState(1, 2, state=1)
+    graph.setEdgeState(2, 3, state=2)
+    graph.setEdgeState(3, 4, state=1)
+    graph.setEdgeState(4, 5, state=2)
+    graph.setEdgeState(5, 0, state=1)
+    graph.visualize()
+    print(f"Graph picard: {prettyCok(graph.pic())}")"""
 
     # print(graph.jac(divisor))
     # print(graph.pic(divisor))

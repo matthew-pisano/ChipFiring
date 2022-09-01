@@ -149,7 +149,7 @@
 		\end{enumerate}
 	\end{goal}
 
-\section{Background}
+\section{Preliminaries}
 	\subsection{Chip Firing}
 		The game at the heart of this paper is the Chip-Firing game. When a game is started, each vertex on
 		a graph is assigned a certain number of chips.  During play, chips can be lent or borrowed at each
@@ -172,7 +172,6 @@
 		equivalency class has a degree of $0$ where the degree of a divisor $\Deg(D)$ is the sum of each of the divisor's elements.
 		If a divisor is in one of the Jacobian's classes, it can be made winning after a finite series of moves.
 
-\section{Preliminaries}
 \section{Propositions}
 	\subsection{Calculating Sinks and Sources}
 		Vertices on a directed graph can be classified in three ways, as a sink, source, or neither depending on the direction
@@ -210,12 +209,15 @@
 		When accounting for a vertex that has multiple connections, apply these rules for every $V_{1i}$ that $V_2$
 		is connected to, taking into account all the edges of $V_2$ when evaluating its class.  After every vertex has
 		been accounted for, the number of sinks and sources will have been calculated in polynomial time between $O(n)$
-		at the average case and $O(n^2)$ for the case of a connected graph.
+		at the average case and $O(n^2)$ for the case of a connected graph. \label{subsec:sinkssourceprop}
 	\subsection{Using Sinks and Sources to Calculate $Rank(\Pic(G))$}
 		$\Pic(G)$ is often in the form $\mathbb{Z}_1 \times \dots \times \mathbb{Z}_n \times \mathbb{Z}^m$ where $m$ is
-		the rank of the picard group.  When calculating $\Pic(G)$, its $Rank()$ is closely correlated with the number of sinks
-		and sources of the graph.  $Rank(\Pic(G))$ appears to always either in $range(sources, sinks)$ (inclusive) or
-		one greater than $\max(sources, sinks)$.
+		the rank of the Picard group.  When calculating $\Pic(G)$, its $Rank()$ always the number of sinks for any
+		arbitrary graph.  $Rank(\Pic(G))$ is represented in the smith normal form of the laplacian as the number of
+		all zero rows.  For all $Rank(\Pic(G)) \geq 2$, the number of all zero rows in the smith normal form matches
+		the number of all zero rows in the laplacian matrix of $G$ or the number of sink vertices in $G$.  The rank of a
+		graph's Picard group can be found by applying~\ref{subsec:sinkssourceprop} to keep track of the sinks while
+		recreating the original graph.
 	\subsection{Directed Cyclic Jacobians}
 		Proposition: For $C_n$, and $0 \leq m \leq n$, one can always find an orientation of $C_n$ so
 		that $\Jac(C_n)=\mathbb{Z}_m$ (with the orientation).
