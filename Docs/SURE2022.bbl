@@ -1,9 +1,14 @@
-\begin{thebibliography}{GK20}
+\begin{thebibliography}{Wag00}
 
 \bibitem[GK20]{glass2020chip}
 Darren Glass and Nathan Kaplan.
 \newblock Chip-firing games and critical groups.
 \newblock In {\em A Project-Based Guide to Undergraduate Research in
   Mathematics}, pages 107--152. Springer, 2020.
+
+\bibitem[Wag00]{wagner2000critical}
+David~G Wagner.
+\newblock The critical group of a directed graph.
+\newblock {\em arXiv preprint math/0010241}, 2000.
 
 \end{thebibliography}

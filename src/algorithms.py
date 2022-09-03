@@ -384,7 +384,7 @@ def prettyCok(coKernel: tuple):
     for factor in coKernel[1]:
         cokStr += f"\u2124_{factor} x "
     if len(coKernel[1]) == 0:
-        cokStr += f"\u2124 x "
+        cokStr += f"\u2124_1 x "
     if coKernel[2] > 0:
         cokStr += "\u2124"+(f"^{coKernel[2]}" if coKernel[2] > 1 else "")
     else:

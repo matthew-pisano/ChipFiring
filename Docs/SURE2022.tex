@@ -23,6 +23,7 @@
 \pagestyle{plain}
 \usepackage[left=1.2in, right=1.2in, top=1in, bottom=1in]{geometry}
 \usepackage{etoolbox}
+\usepackage{color}
 \patchcmd{\section}{\scshape}{\bfseries}{}{}
 \makeatletter
 \renewcommand{\@secnumfont}{\bfseries}
@@ -91,7 +92,7 @@
 \begin{document}
 
 
-\title{Summer project}
+\title{On Picard groups of directed graphs}
 %
 
 \author{Jaiung Jun}
@@ -99,7 +100,7 @@
 \email{junj@newpaltz.edu}
 
 \author{Matthew Pisano}
-\address{State University of New York at Binghamton, NY 13902, USA}
+\address{Department of Mathematics, State University of New York at New Paltz, NY 12561, USA}
 \email{pisanom1@newpaltz.edu}
 
 
@@ -130,8 +131,8 @@
 	\begin{goal}[8/1/2022]$ $
 		\begin{enumerate}
 			\item
-			Prove/disprove: for an oriented graph $G$, one always has $\Pic(G)=\mathbb{Z} \times \Jac(G)$,
-			i.e., as a finitely generated abelian group, the rank of $\Pic(G)$ is $1$.
+			Prove/disprove: for an oriented graph $G$, one always has $\Pic(G)=\mathbb{Z} \times \Jac(G)$, 
+			i.e., as a finitely generated abelian group, the rank of $\Pic(G)$ is $1$. \textcolor{red}{Jaiung: we disproved this by using \cite{wagner2000critical}.}
 			\item
 			Prove/disprove: for $C_n$, and $0 \leq m \leq n$, one can always find an orientation
 			of $C_n$ so that $\Jac(C_n)=\mathbb{Z}_m$ (with the orientation).
@@ -145,9 +146,14 @@
 			$\hat{G}$, one has $\Jac(G)=\Jac(\hat{G})$.
 			\item
 			Prove/disprove: for oriented graphs $G_1,G_2$, let $G$ be the graph obtained by
-			gluing $G_1$ and $G_2$ along one vertex. Then $\Jac(G)=\Jac(G_1) \times \Jac(G_2)$.
+			gluing $G_1$ and $G_2$ along one vertex. Then $\Jac(G)=\Jac(G_1) \times \Jac(G_2)$. \textcolor{red}{Jaiung: we are currently working on this (8/31)}
 		\end{enumerate}
 	\end{goal}
+
+\bigskip
+
+\textbf{Acknowledgment}\hspace{0.1cm} This research was supported by Research and Creative Activities (RSCA) at
+	SUNY New Paltz. We would like to thank RSCA for their support.
 
 \section{Preliminaries}
 	\subsection{Chip Firing}
@@ -171,6 +177,7 @@
 		part of. The \textbf{Jacobian} of a graph  $\Jac(G)$ is a subset of $\Pic(G)$ such that every divisor in each
 		equivalency class has a degree of $0$ where the degree of a divisor $\Deg(D)$ is the sum of each of the divisor's elements.
 		If a divisor is in one of the Jacobian's classes, it can be made winning after a finite series of moves.
+
 
 \section{Propositions}
 	\subsection{Calculating Sinks and Sources}
@@ -209,15 +216,12 @@
 		When accounting for a vertex that has multiple connections, apply these rules for every $V_{1i}$ that $V_2$
 		is connected to, taking into account all the edges of $V_2$ when evaluating its class.  After every vertex has
 		been accounted for, the number of sinks and sources will have been calculated in polynomial time between $O(n)$
-		at the average case and $O(n^2)$ for the case of a connected graph. \label{subsec:sinkssourceprop}
+		at the average case and $O(n^2)$ for the case of a connected graph.
 	\subsection{Using Sinks and Sources to Calculate $Rank(\Pic(G))$}
 		$\Pic(G)$ is often in the form $\mathbb{Z}_1 \times \dots \times \mathbb{Z}_n \times \mathbb{Z}^m$ where $m$ is
-		the rank of the Picard group.  When calculating $\Pic(G)$, its $Rank()$ always the number of sinks for any
-		arbitrary graph.  $Rank(\Pic(G))$ is represented in the smith normal form of the laplacian as the number of
-		all zero rows.  For all $Rank(\Pic(G)) \geq 2$, the number of all zero rows in the smith normal form matches
-		the number of all zero rows in the laplacian matrix of $G$ or the number of sink vertices in $G$.  The rank of a
-		graph's Picard group can be found by applying~\ref{subsec:sinkssourceprop} to keep track of the sinks while
-		recreating the original graph.
+		the rank of the picard group.  When calculating $\Pic(G)$, its $Rank()$ is closely correlated with the number of sinks
+		and sources of the graph.  $Rank(\Pic(G))$ appears to always either in $range(sources, sinks)$ (inclusive) or
+		one greater than $\max(sources, sinks)$.
 	\subsection{Directed Cyclic Jacobians}
 		Proposition: For $C_n$, and $0 \leq m \leq n$, one can always find an orientation of $C_n$ so
 		that $\Jac(C_n)=\mathbb{Z}_m$ (with the orientation).
@@ -226,6 +230,113 @@
 		The first $C_3$ $C_{17}$ were proven in $O(3^n)$ time.  The algorithm used did not have to check all permutations, however,
 		only a very cmall portion.  This resulted in each portion being $\frac{1}{3}$ of the portion of the previous graph.
 		Due to this, calculations for the first 17 graph was calculated in closer to $O(x^n)$ polynomial time.
+
+\section{Example: Trees}
+
+\begin{lem}\label{proposition: gluing an arrow proposition}
+Let $G$ be a graph with any orientation. If we attach either an incoming arrow or a two-sided  arrow to create a directed graph $G'$, then $\Pic(G)=\Pic(G')$.
+\end{lem}	
+\begin{proof}
+Let $\alpha$ be an arrow which is glued to $G$. Let $|V(G)|=n$. We label the vertexes of $G$ as $1,2,\dots,n$. Suppose first that $\alpha$ is incoming and $\alpha$ is glued at the vertex $n$. Let $A_G=(a_{ij})$ (resp.~$A_{G'}$) be the Laplacian of $G$ (resp.~$G'$). In this case, one can easily observe that the matrix $A_{G'}$ is of the following form:
+\begin{equation}
+A_{G'}=\left[\begin{array}{ccc|c|c}
+	a_{11}&a_{12}&\cdots &a_{1n}&0\\
+	a_{21}&a_{22}&\cdots &a_{2n}&0\\
+	\vdots & \vdots &\ddots & \vdots & \vdots \\ \hline
+		\vdots & \vdots & \cdots&a_n & 0\\ \hline
+	0&0&\cdots &-1&1\\
+\end{array}\right]
+\end{equation}
+By a column operation between the last two columns, we obtain the following matrix:
+\begin{equation}\label{eq: arrow adding matrix}
+	\left[\begin{array}{ccc|c|c}
+		a_{11}&a_{12}&\cdots &a_{1n}&0\\
+		a_{21}&a_{22}&\cdots &a_{2n}&0\\
+		\vdots & \vdots &\ddots & \vdots & \vdots \\ \hline
+		\vdots & \vdots & \cdots&a_n & 0\\ \hline
+		0&0&\cdots &0&1\\
+	\end{array}\right]
+\end{equation}
+This shows that $\Pic(G)=\Pic(G')$.
+
+Next, suppose that $\alpha$ is a two-sided arrow. Then similar to the above, we obtain the following matroid for $G'$:
+\begin{equation}\label{eq: eq two-sided}
+	A_{G'}=\left[\begin{array}{ccc|c|c}
+		a_{11}&a_{12}&\cdots &a_{1n}&0\\
+		a_{21}&a_{22}&\cdots &a_{2n}&0\\
+		\vdots & \vdots &\ddots & \vdots & \vdots \\ \hline
+		\vdots & \vdots & \cdots&a_n+1 & -1\\ \hline
+		0&0&\cdots &-1&1\\
+	\end{array}\right]
+\end{equation}
+By a column operation, the matrix \eqref{eq: eq two-sided} becomes the matrix \eqref{eq: arrow adding matrix}. This shows that $\Pic(G)=\Pic(G')$.
+\end{proof}	
+		
+\begin{pro}
+Let $T$ be a tree with any orientation. Then $\Pic(T)=\mathbb{Z}^n$, where $n$ is the number of sinks of $T$. 
+\end{pro}
+\begin{proof}
+
+Note that from \cite[Corollary 3.5]{wagner2000critical} that the rank of $\Pic(T)$ is the number of sinks of $T$.
+
+Now, we can inductively prove this. When $T_0$ is a tree with one arrow, one can easily check that $\Pic(T_0) =\mathbb{Z}$ or $\{0\}$ (depending on the number of sinks). Suppose that $T_k$ is a directed tree with $k$ arrows. When we add one arrow $\alpha$ to $T_k$ to construct $T_{k+1}$, there are three cases; $(1)$ incoming, $(2)$ outgoing, and $(3)$ two-sided. When $\alpha$ is either incoming or two-sided arrow, then it follows from Lemma \ref{proposition: gluing an arrrow proposition} that $\Pic(T_k)=\Pic(T_{k+1})=\mathbb{Z}^n$, where $n$ is the number of sinks of $T_k$ and $T_{k+1}$, since in this case it does not increase the number of sinks. 
+
+Next, suppose that $\alpha$ is an outgoing arrow. In this case, $T_{k+1}$ has one more sink than $T_{k}$. We claim that $\Pic(T_{k+1})=\Pic(T_k)\times \mathbb{Z}$. We label the vertexes of $G$ as $1,2,\dots,n$ and suppose that the arrow $\alpha$ is attached to the vertex $n$. Let $A_{T_k}=(a_{ij})$ be the Laplacian of $T_k$. Then we have the following:
+\begin{equation}\label{eq: tree case}
+	A_{T_{k+1}}=\left[\begin{array}{ccc|c|c}
+		a_{11}&a_{12}&\cdots &a_{1n}&0\\
+		a_{21}&a_{22}&\cdots &a_{2n}&0\\
+		\vdots & \vdots &\ddots & \vdots & \vdots \\ \hline
+		\vdots & \vdots & \cdots&a_n+1 & -1\\ \hline
+		0&0&\cdots &0&0\\
+	\end{array}\right]
+\end{equation}
+ \textcolor{red}{Jaiung: I will finish writing down the proof before our next meeting.}
+	
+\section{Example: Cycles}
+
+Here's our conjecture:
+\begin{conj}
+Let $C_n$ be the cycle graph with $n$ vertices. For each $k \leq n$, there exists an orientation of $C_n$ such that $\Jac(C_n)$ (with that orientation) is $\mathbb{Z}_k$.
+\end{conj}
+
+The following examples shows the conjecture for $C_3$.
+
+\begin{myeg}
+\textcolor{red}{Jaiung: add here the example of $C_3$ showing the conjecture in this case.}
+\end{myeg}
+
+The following example shows that the rank of $\Pic(C_n)$ (with an orientation) does not have to be $1$; this directly follows from \cite[Corollary 3.5]{wagner2000critical}.
+
+\begin{myeg}
+\textcolor{red}{Jaiung: we add an example of $C_k$ with orientation showing that the rank of $\Pic(C_k)$ is greater than one. }
+\end{myeg}
+
+\begin{lem}
+Let $C_n$ be the cycle graph with $n$ vertices. Consider the equi-orientation of $C_n$. Then $\Pic(C_n)=\mathbb{Z}$.
+\end{lem}
+\begin{proof}
+
+\end{proof}
+
+\begin{lem}
+Let $C_n$ be the cycle graph with $n$ vertices. Consider the orientation of $C_n$ which provides precisely two directed paths in opposite direction. Then $\Pic(C_n)=\mathbb{Z}_2 \times \mathbb{Z}$
+\end{lem}
+\begin{proof}
+	content\ldots
+\end{proof}
+
+
+
+\section{Example: Pseudotrees}
+
+\textcolor{red}{Jaiung: here we study how Picard groups change when we glue two directed graphs along one vertex or connect two graphs along one arrow. If we are lucky this should provide a way to compute Picard groups for pseudotrees by using the tree case and the cycle case in the previous sections.}
+
+
+\end{proof}
+
+
+\section{Strongly connected directed graphs}
 
 \bibliography{Jacobian}
 \bibliographystyle{alpha}
