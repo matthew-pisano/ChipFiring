@@ -28,18 +28,49 @@ def testSinkSource(graph: Graph):
     print(prettyCok(graph.pic()))
 
 
+def testAllJacs():
+    jacs = {}
+    times = []
+    for i in range(5, 6):
+        timeCheck = time.time()
+        jacs[i] = []
+        graph = Graph.cycle(i)
+        jacs[i].append(graph.pic()[1][0])
+        graph.setEdgeState(1, 2, state=1)
+        graph.setEdgeState(2, 3, state=2)
+        if i > 4:
+            for j in range(3, i - 1):
+                graph.setEdgeState(j, j + 1, state=2)
+                jacs[i].append(graph.pic()[1][0])
+        graph.setEdgeState(i - 1, 0, state=2)
+        jacs[i].append(graph.pic()[1][0])
+
+        graph.setEdgeState(0, 1, state=2)
+        jacs[i].append(graph.pic()[1][0])
+
+        graph.setEdgeState(1, 2, state=2)
+        jacs[i].append(1 if len(graph.pic()[1]) == 0 else graph.pic()[1][0])
+        check = jacs[i] == [i for i in range(i, 0, -1)]
+        print(f"Check for {i}: {check} after {time.time() - timeCheck}")
+        times.append((i, round(time.time() - timeCheck, 3)))
+        if not check:
+            print("/\\ Error, not checked!")
+    print(jacs)
+    print(times)
+
+
 def testPseudoTree(glueByVertex=True):
     cycle = Graph.cycle(9)
-    cycle.setEdgeState(0, 1, 0)
-    cycle.setEdgeState(1, 2, 2)
+    cycle.setEdgeState(0, 1, 2)
+    cycle.setEdgeState(1, 2, 1)
     cycle.setEdgeState(2, 3, 1)
-    cycle.setEdgeState(3, 4, 0)
-    cycle.setEdgeState(4, 5, 2)
-    cycle.setEdgeState(5, 6, 1)
-    cycle.setEdgeState(6, 7, 0)
+    cycle.setEdgeState(3, 4, 1)
+    cycle.setEdgeState(4, 5, 1)
+    cycle.setEdgeState(5, 6, 2)
+    cycle.setEdgeState(6, 7, 2)
     cycle.setEdgeState(7, 8, 2)
-    cycle.setEdgeState(8, 0, 1)
-    cycle.visualize()
+    cycle.setEdgeState(8, 0, 2)
+    # cycle.visualize()
     audit = cycle.auditEdges()
     print(f"Cycle sources: {audit[0]}, Cycle sinks: {audit[1]}")
     print(f"Cycle Picard: {prettyCok(cycle.pic())}")
@@ -80,13 +111,14 @@ if __name__ == "__main__":
     # graph.visualize()
     # print(graph.auditEdges())
     # testPseudoTree(glueByVertex=False)
+    testAllJacs()
     """adjacency = [
         [0, 1, 0, 1, 1, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 0, 0, 0],
         [0, 0, 1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 1, 0, 1],
         [0, 0, 0, 0, 1, 0, 0],
     ]
     stick = Graph(adjacency)
@@ -94,7 +126,6 @@ if __name__ == "__main__":
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
     print(f"Tree picard: {prettyCok(stick.pic())}")"""
-    # testBruteForce((3, 15))
     """graph = Graph([
         [0, 1, 0, 0, 0],
         [1, 0, 1, 0, 0],
@@ -109,34 +140,7 @@ if __name__ == "__main__":
     print(prettyCok(Utils.coKernel(graph.laplacian)))"""
     """graph = Graph.complete(3)
     testSinkSource(graph)"""
-    jacs = {}
-    times = []
-    for i in range(5, 6):
-        timeCheck = time.time()
-        jacs[i] = []
-        graph = Graph.cycle(i)
-        jacs[i].append(graph.pic()[1][0])
-        graph.setEdgeState(1, 2, state=1)
-        graph.setEdgeState(2, 3, state=2)
-        if i > 4:
-            for j in range(3, i-1):
-                graph.setEdgeState(j, j+1, state=2)
-                jacs[i].append(graph.pic()[1][0])
-        graph.setEdgeState(i-1, 0, state=2)
-        jacs[i].append(graph.pic()[1][0])
 
-        graph.setEdgeState(0, 1, state=2)
-        jacs[i].append(graph.pic()[1][0])
-
-        graph.setEdgeState(1, 2, state=2)
-        jacs[i].append(1 if len(graph.pic()[1]) == 0 else graph.pic()[1][0])
-        check = jacs[i] == [i for i in range(i, 0, -1)]
-        print(f"Check for {i}: {check} after {time.time()-timeCheck}")
-        times.append((i, round(time.time()-timeCheck, 3)))
-        if not check:
-            print("/\\ Error, not checked!")
-    print(jacs)
-    print(times)
 
 
     # print(graph.jac(divisor))
