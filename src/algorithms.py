@@ -289,7 +289,7 @@ class Graph:
         """Returns an element of Pic(G) that is LinEq to the given divisor"""
         return Utils.coKernel(self.laplacian, divisor)
 
-    def visualize(self, divisor: Divisor = None, withWeights=False):
+    def visualize(self, divisor: Divisor = None, withWeights=False, title=None):
         """Creates a plot representation of the graph"""
         labels = {}
         for i in range(0, len(self.matrix)):
@@ -303,6 +303,8 @@ class Graph:
             edgeLabels = nx.get_edge_attributes(G, 'weight')
             nx.draw_networkx_edge_labels(G, pos, edge_labels=edgeLabels)
         nx.draw_networkx(G, pos, labels=labels, node_size=700)
+        if title:
+            plt.title(title)
         plt.show()
 
     def copy(self):
@@ -383,8 +385,6 @@ def prettyCok(coKernel: tuple):
     cokStr = ""
     for factor in coKernel[1]:
         cokStr += f"\u2124_{factor} x "
-    if len(coKernel[1]) == 0:
-        cokStr += f"\u2124_1 x "
     if coKernel[2] > 0:
         cokStr += "\u2124"+(f"^{coKernel[2]}" if coKernel[2] > 1 else "")
     else:

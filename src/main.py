@@ -35,6 +35,7 @@ def testAllJacs():
         timeCheck = time.time()
         jacs[i] = []
         graph = Graph.cycle(i)
+        graph.visualize(title=f"Pic(G)={prettyCok(graph.pic())}")
         jacs[i].append(graph.pic()[1][0])
         graph.setEdgeState(1, 2, state=1)
         graph.setEdgeState(2, 3, state=2)
@@ -42,14 +43,18 @@ def testAllJacs():
             for j in range(3, i - 1):
                 graph.setEdgeState(j, j + 1, state=2)
                 jacs[i].append(graph.pic()[1][0])
+                graph.visualize(title=f"Pic(G)={prettyCok(graph.pic())}")
         graph.setEdgeState(i - 1, 0, state=2)
         jacs[i].append(graph.pic()[1][0])
+        graph.visualize(title=f"Pic(G)={prettyCok(graph.pic())}")
 
         graph.setEdgeState(0, 1, state=2)
         jacs[i].append(graph.pic()[1][0])
+        graph.visualize(title=f"Pic(G)={prettyCok(graph.pic())}")
 
         graph.setEdgeState(1, 2, state=2)
         jacs[i].append(1 if len(graph.pic()[1]) == 0 else graph.pic()[1][0])
+        graph.visualize(title=f"Pic(G)={prettyCok(graph.pic())}")
         check = jacs[i] == [i for i in range(i, 0, -1)]
         print(f"Check for {i}: {check} after {time.time() - timeCheck}")
         times.append((i, round(time.time() - timeCheck, 3)))
@@ -62,10 +67,10 @@ def testAllJacs():
 def testPseudoTree(glueByVertex=True):
     cycle = Graph.cycle(9)
     cycle.setEdgeState(0, 1, 2)
-    cycle.setEdgeState(1, 2, 1)
-    cycle.setEdgeState(2, 3, 1)
-    cycle.setEdgeState(3, 4, 1)
-    cycle.setEdgeState(4, 5, 1)
+    cycle.setEdgeState(1, 2, 2)
+    cycle.setEdgeState(2, 3, 2)
+    cycle.setEdgeState(3, 4, 2)
+    cycle.setEdgeState(4, 5, 2)
     cycle.setEdgeState(5, 6, 2)
     cycle.setEdgeState(6, 7, 2)
     cycle.setEdgeState(7, 8, 2)
@@ -100,18 +105,20 @@ if __name__ == "__main__":
         [0, 0, 0, 0],
     ]"""
     """adjacency = [
-        [0, 1, 1],
-        [0, 0, 1],
-        [1, 0, 0],
+        [0, 1, 1, 0],
+        [0, 0, 1, 0],
+        [1, 0, 0, 1],
+        [1, 0, 0, 0],
     ]
     divisor = Divisor([16, -4, -5, 0])
-    graph = Graph(adjacency)"""
+    graph = Graph(adjacency)
+    graph.visualize(divisor)"""
     # testBruteForce((3, 14))
     # graph = Graph(adjacency)
     # graph.visualize()
     # print(graph.auditEdges())
-    # testPseudoTree(glueByVertex=False)
-    testAllJacs()
+    testPseudoTree(glueByVertex=False)
+    # testAllJacs()
     """adjacency = [
         [0, 1, 0, 1, 1, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
