@@ -232,20 +232,6 @@
 
 	%~\cite[Corollary 3.5]{wagner2000critical}
 
-	\subsection{Calculating Rank($(\Pic(G)$) Using Terminal Strong Components}
-		$\Pic(G)$ is often in the form $\mathbb{Z}_1 \times \dots \times \mathbb{Z}_n \times \mathbb{Z}^m$ where $m$ is
-		the rank of the picard group.  A terminal strong component describes itself well.  It is a terminal component,
-		meaning that its only connections are edges directed into it.  It is also strongly connected, meaning that every
-		vertex in the component has at least one path to all other components.  For cycle graphs and trees, the number
-		of these terminal strong components is exactly equal to $Rank(\Pic(G))$.
-
-		\begin{proof}
-			The $Rank(\Pic(G))$ comes directly from the number of all zero rows of the Smith Normal Form of the laplacian of
-			$G$.  Terminal strong components are either already zero rows (in the case of a single sink) or there
-			exists a series of row and column operations that, when preformed on the laplacian result in a row of all
-			zeroes.
-		\end{proof}
-
 \section{Example: Trees}
 
 	\begin{lem}
@@ -319,70 +305,98 @@
 				0&0&\cdots &0&0\\
 			\end{array}\right]
 		\end{equation}
-		 \textcolor{red}{Jaiung: I will finish writing down the proof before our next meeting.}
+		\textcolor{red}{Jaiung: I will finish writing down the proof before our next meeting.}
+	\end{proof}
 
-		\section{Example: Cycles}
+\section{Example: Cycles}
 
-		Here's our conjecture:
-		\begin{conj}
-			Let $C_n$ be the cycle graph with $n$ vertices. For each $k \leq n$, there exists an orientation of $C_n$
-			such that $\Jac(C_n)$ (with that orientation) is $\mathbb{Z}_k$.
-		\end{conj}
+	Here's our conjecture:
+	\begin{conj}
+		Let $C_n$ be the cycle graph with $n$ vertices. For each $k \leq n$, there exists an orientation of $C_n$
+		such that $\Jac(C_n)$ (with that orientation) is $\mathbb{Z}_k$.
+	\end{conj}
 
-		The following examples shows the conjecture for $C_3$.
+	The following examples shows the conjecture for $C_3$.
 
-		\begin{myeg}
-			\textcolor{red}{Jaiung: add here the example of $C_3$ showing the conjecture in this case.}
-		\end{myeg}
+	\begin{myeg}
+		%cycle = Graph.cycle(3)
+		%cycle.setEdgeState(0, 1, 2)
+		%cycle.setEdgeState(1, 2, 2)
+		%cycle.setEdgeState(2, 0, 2)
+		%Trivial
 
-		The following example shows that the rank of $\Pic(C_n)$ (with an orientation) does not have to be $1$;
-		this directly follows from~\cite[Corollary 3.5]{wagner2000critical}.
+		%cycle = Graph.cycle(3)
+		%cycle.setEdgeState(0, 1, 0)
+		%cycle.setEdgeState(1, 2, 0)
+		%cycle.setEdgeState(2, 0, 0)
+		%Z_3
 
-		\begin{myeg}
-			\textcolor{red}{Jaiung: we add an example of $C_k$ with orientation showing that the rank of
-			$\Pic(C_k)$ is greater than one. }
-			%cycle = Graph.cycle(9)
-			%cycle.setEdgeState(0, 1, 0)
-			%cycle.setEdgeState(1, 2, 1)
-			%cycle.setEdgeState(2, 3, 1)
-			%cycle.setEdgeState(3, 4, 2)
-			%cycle.setEdgeState(4, 5, 2)
-			%cycle.setEdgeState(5, 6, 1)
-			%cycle.setEdgeState(6, 7, 1)
-			%cycle.setEdgeState(7, 8, 2)
-			%cycle.setEdgeState(8, 0, 2)
-			%Rank(Pic(G)) = 2. 2 terminal strong components
-		\end{myeg}
+		%cycle = Graph.cycle(3)
+		%cycle.setEdgeState(0, 1, 1)
+		%cycle.setEdgeState(1, 2, 2)
+		%cycle.setEdgeState(2, 0, 2)
+		%Z_2
+	\end{myeg}
 
-		\begin{lem}
-			Let $C_n$ be the cycle graph with $n$ vertices. Consider the equi-orientation of $C_n$.
-			Then $\Pic(C_n)=\mathbb{Z}$.
-		\end{lem}
+	\begin{lem}
+		Let $C_n$ be the cycle graph with $n$ vertices. Consider the orientation of $C_n$ which provides precisely
+		two directed paths in opposite direction. All invariant factors of $\Jac(G)$, where $G = C_n$, can
+		be represented in the Jacobian of that graph using two directed paths.
+	\end{lem}
+	\begin{proof}
+		Beginning with a non-oriented cyclic graph, $\Jac(G) = \mathbb{Z}_n$.
+		Orienting one edge $(x, x+1)$ in the counter-clockwise direction, another edge $(x-1, x)$ to clockwise,
+		and $(x+1, x+2)$ to counter-clockwise yields a Jacobian of $\mathbb{Z}_{n-1}$.
+		Orienting either the edge before $(x-1, x)$ to clockwise or the edge after $(x+1, x+2)$ to
+		counter-clockwise yields $\Jac(G) = \mathbb{Z}_{n-2}$.  Continuing this pattern until the two paths
+		meet yields all invariant factors down to $\mathbb{Z}_2$.  Going further to orient the entire
+		graph to one direction results in a trivial Jacobian of ${0}$.This pattern should hold for all
+		cycle graphs $C_3 \dots C_x$, and had been proven for graphs $C_3 \dots C_{80}$.
+	\end{proof}
+
+	The following example shows that the rank of $\Pic(C_n)$ (with an orientation) does not have to be $1$;
+	this directly follows from~\cite[Corollary 3.5]{wagner2000critical}.
+
+	\begin{myeg}
+		%cycle = Graph.cycle(9)
+		%cycle.setEdgeState(0, 1, 0)
+		%cycle.setEdgeState(1, 2, 1)
+		%cycle.setEdgeState(2, 3, 1)
+		%cycle.setEdgeState(3, 4, 2)
+		%cycle.setEdgeState(4, 5, 2)
+		%cycle.setEdgeState(5, 6, 1)
+		%cycle.setEdgeState(6, 7, 1)
+		%cycle.setEdgeState(7, 8, 2)
+		%cycle.setEdgeState(8, 0, 2)
+		%Rank(Pic(G)) = 2: 2 terminal strong components
+	\end{myeg}
+
+	\subsection{Calculating Rank($(\Pic(G)$) Using Terminal Strong Components}
+		$\Pic(G)$ is often in the form $\mathbb{Z}_1 \times \dots \times \mathbb{Z}_n \times \mathbb{Z}^m$ where $m$ is
+		the rank of the picard group.  A terminal strong component describes itself well.  It is a terminal component,
+		meaning that its only connections are edges directed into it.  It is also strongly connected, meaning that every
+		vertex in the component has at least one path to all other components.  For cycle graphs and trees, the number
+		of these terminal strong components is exactly equal to $Rank(\Pic(G))$.
+
 		\begin{proof}
-			In this case $C_n$ will always have a laplacian with a diagonal of $1$ and a diagonal of $-1$
-			above or below it depending on the orientation, with another $-1$ in the top right or bottom left corner
-			where $V_0$ connects $V_{n-1}$.  Turing this laplacian into a smith normal form of all $1$s is as simple as
-			cascading additions from the first row in a counter-clockwise case and the last row in the clockwise case.
-			This will result in a diagonal of ones with the first or last column made up of mostly $-1$.  From here
-			all that needs to be done is to eliminate these with the first or last row.  Since each equi-oriented $C_n$
-			will follow this pattern, this algorithm will prove $\Pic(C_n)=\mathbb{Z}$ for all $C_n$.
+			The $Rank(\Pic(G))$ comes directly from the number of all zero rows of the Smith Normal Form of the laplacian of
+			$G$.  Terminal strong components are either already zero rows (in the case of a single sink) or there
+			exists a series of row and column operations that, when preformed on the laplacian result in a row of all
+			zeroes.
 		\end{proof}
 
-		\begin{lem}
-			Let $C_n$ be the cycle graph with $n$ vertices. Consider the orientation of $C_n$ which provides precisely
-			two directed paths in opposite direction. All invariant factors of $\Jac(G)$, where $G = C_n$, can 
-			be represented in the Jacobian of that graph using two directed paths.
-		\end{lem}
-		\begin{proof}
-			Beginning with a non-oriented cyclic graph, $\Jac(G) = \mathbb{Z}_n$.
-			Orienting one edge $(x, x+1)$ in the counter-clockwise direction, another edge $(x-1, x)$ to clockwise,
-			and $(x+1, x+2)$ to counter-clockwise yields a Jacobian of $\mathbb{Z}_{n-1}$.
-			Orienting either the edge before $(x-1, x)$ to clockwise or the edge after $(x+1, x+2)$ to
-			counter-clockwise yields $\Jac(G) = \mathbb{Z}_{n-2}$.  Continuing this pattern until the two paths
-			meet yields all invariant factors down to $\mathbb{Z}_2$.  Going further to orient the entire
-			graph to one direction results in a trivial Jacobian of ${0}$.This pattern should hold for all
-			cycle graphs $C_3 \dots C_x$, and had been proven for graphs $C_3 \dots C_{80}$.
-		\end{proof}
+	\begin{lem}
+		Let $C_n$ be the cycle graph with $n$ vertices. Consider the equi-orientation of $C_n$.
+		Then $\Pic(C_n)=\mathbb{Z}$.
+	\end{lem}
+	\begin{proof}
+		In this case $C_n$ will always have a laplacian with a diagonal of $1$ and a diagonal of $-1$
+		above or below it depending on the orientation, with another $-1$ in the top right or bottom left corner
+		where $V_0$ connects $V_{n-1}$.  Turing this laplacian into a smith normal form of all $1$s is as simple as
+		cascading additions from the first row in a counter-clockwise case and the last row in the clockwise case.
+		This will result in a diagonal of ones with the first or last column made up of mostly $-1$.  From here
+		all that needs to be done is to eliminate these with the first or last row.  Since each equi-oriented $C_n$
+		will follow this pattern, this algorithm will prove $\Pic(C_n)=\mathbb{Z}$ for all $C_n$.
 	\end{proof}
 
 \section{Example: Pseudotrees}

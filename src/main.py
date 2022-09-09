@@ -65,21 +65,20 @@ def testAllJacs():
 
 
 def testPseudoTree(glueByVertex=True):
-    cycle = Graph.cycle(9)
-    cycle.setEdgeState(0, 1, 2)
-    cycle.setEdgeState(1, 2, 2)
-    cycle.setEdgeState(2, 3, 2)
+    cycle = Graph.cycle(5)
+    cycle.setEdgeState(0, 1, 1)
+    cycle.setEdgeState(1, 2, 1)
+    cycle.setEdgeState(2, 3, 1)
     cycle.setEdgeState(3, 4, 2)
-    cycle.setEdgeState(4, 5, 2)
-    cycle.setEdgeState(5, 6, 2)
-    cycle.setEdgeState(6, 7, 2)
-    cycle.setEdgeState(7, 8, 2)
-    cycle.setEdgeState(8, 0, 2)
     # cycle.visualize()
     audit = cycle.auditEdges()
     print(f"Cycle sources: {audit[0]}, Cycle sinks: {audit[1]}")
     print(f"Cycle Picard: {prettyCok(cycle.pic())}")
-    adjacency = [[0]]
+    adjacency = [
+        [0, 1, 1],
+        [0, 0, 0],
+        [0, 0, 0]
+    ]
     stick = Graph(adjacency)
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
@@ -117,7 +116,7 @@ if __name__ == "__main__":
     # graph = Graph(adjacency)
     # graph.visualize()
     # print(graph.auditEdges())
-    testPseudoTree(glueByVertex=False)
+    testPseudoTree(glueByVertex=True)
     # testAllJacs()
     """adjacency = [
         [0, 1, 0, 1, 1, 0, 0],
