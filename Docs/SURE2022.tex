@@ -24,6 +24,7 @@
 \usepackage[left=1.2in, right=1.2in, top=1in, bottom=1in]{geometry}
 \usepackage{etoolbox}
 \usepackage{color}
+\usepackage{xcolor}
 \patchcmd{\section}{\scshape}{\bfseries}{}{}
 \makeatletter
 \renewcommand{\@secnumfont}{\bfseries}
@@ -118,7 +119,34 @@
 %\thanks{}
 
 \begin{abstract}
+	Our research focuses on directed Chip-Firing Games, a one-player, combinatoric game played on any connected,
+	loopless, finite, directed graph.  The analysis of the behavior of this game has many applications in the fields of
+	combinatorics, algebraic geometry, number theory, economics and beyond.  Each vertex of this graph has an
+	integer amount of chips on it and chips are exchanged between vertices as the game progresses.
+	\textcolor{red}{Add small mention of experimental mathematics}.
 
+	The graph $G$ of a game	can be described by the Picard Group, $\Pic(G)$, and the Jacobian, $\Jac(G)$.
+	In order to describe $\Pic(G)$, and $\Jac(G)$, we must use a divisor $\Div(G) \in \mathbb{Z}^n$
+	for a graph of size $n$ with $\Div(G)[i]$ representing the number of chips on the $i^{th}$ vertex of $G$.
+	A set of divisors are equivalent if all divisors in that set can be gotten from each other by a finite number
+	of moves on a graph.  This set defines one equivalency class.  $\Pic(G)$ is the set of all these classes for $G$.
+	The degree of a divisor is represented by the sum of its elements.  $\Jac(G)$ is a proper subset of $\Pic(G)$
+	such that every divisor in the classes of $\Pic(G)$ has a degree of $0$.
+
+	The structure of $\Pic(G)$ and $\Jac(G)$ can be reliably calculated for undirected games, but calculations become
+	much more complex when concentrating on the directed case as we are here.  For example, $\Pic(G)=\mathbb{Z}$ when
+	$G$ is a tree \textcolor{red}{[Cite Matrix tree theorem]} and $|\Jac(G)|=#spanning trees$ for any arbitrary graph
+	\textcolor{red}{[Cite Matrix tree theorem]}.  For the directed case, we focused on calculating
+	$\Pic(G)$ and $\Jac(G)$ for cycle graphs, trees, and pseudo-trees, a gluing of a tree to a cycle.
+
+	Through our research we have been able to inductively prove that the rank of a picard group for a graph
+	($n$ when $\Pic(G)=\dots\mathbb{Z}^n$).  We have also been able to experimentally show that $\Jac(G)$ for an
+	oriented cycle graph with two paths exists within the set $\{\{0\},\dots,\mathbb{Z}_n\}$ for a graph of size $n$.
+	When gluing a tree $T_n$ to a cycle graph $C_n$ by adding an edge between the two, the resulting picard group of
+	the pseudo-tree is often $\Pic(C_n) \times \Pic(T_n)$.  In further research, we plan to further complete our
+	descriptions of trees, cycle graphs, and the gluing of those graphs.  Through these efforts, we hope to create
+	a more generalized description of the behavior of directed Chip-Firing games similarly to the level of the
+	undirected case.
 \end{abstract}
 
 \maketitle

@@ -75,9 +75,10 @@ def testPseudoTree(glueByVertex=True):
     print(f"Cycle sources: {audit[0]}, Cycle sinks: {audit[1]}")
     print(f"Cycle Picard: {prettyCok(cycle.pic())}")
     adjacency = [
-        [0, 1, 1],
-        [0, 0, 0],
-        [0, 0, 0]
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1],
+        [0, 0, 0, 0],
     ]
     stick = Graph(adjacency)
     audit = stick.auditEdges()
