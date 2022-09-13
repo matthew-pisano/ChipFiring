@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  12 SEP 2022 17:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  12 SEP 2022 20:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**SURE2022.tex
-(/home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.tex
+**SURE2022Abstract.tex
+(./SURE2022Abstract.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-01-21>
 (/usr/share/texlive/texmf-dist/tex/latex/amscls/amsart.cls
@@ -940,8 +940,8 @@ File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count339
 \l__pdf_internal_box=\box98
 )
-(/home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.aux)
-\openout1 = `SURE2022.aux'.
+(/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022Abstract.aux)
+\openout1 = `SURE2022Abstract.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 93.
 LaTeX Font Info:    ... okay on input line 93.
@@ -1060,10 +1060,10 @@ LaTeX Info: Redefining \ref on input line 93.
 LaTeX Info: Redefining \pageref on input line 93.
 LaTeX Info: Redefining \nameref on input line 93.
 
-(/home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.out)
-(/home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.out)
+(/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022Abstract.out)
+(/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022Abstract.out)
 \@outlinefile=\write5
-\openout5 = `SURE2022.out'.
+\openout5 = `SURE2022Abstract.out'.
 
 
 *geometry* driver: auto-detecting
@@ -1100,114 +1100,32 @@ LaTeX Info: Redefining \nameref on input line 93.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-/home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.tex:138: You can't use `m
-acro parameter character #' in math mode.
-l.138 ...te Matrix tree theorem]} and $|\Jac(G)|=#
-                                                  spanning trees$ for any ar...
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathop' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathchardef' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\std@minus' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.43306pt
-(hyperref)                removed on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathgroup' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\symoperators' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 403.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 403.
-
-[4] (/home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.bbl) [5]
-(/home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.aux)
-Package rerunfilecheck Info: File `SURE2022.out' has not changed.
-(rerunfilecheck)             Checksum: 1DA6D299D94D2ADA55EEB503DDC3B4AA;2600.
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+(/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022Abstract.aux)
+Package rerunfilecheck Info: File `SURE2022Abstract.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 27934 strings out of 480171
- 519250 string characters out of 5894489
- 841629 words of memory out of 5000000
- 45121 multiletter control sequences out of 15000+600000
- 515813 words of font info for 142 fonts, out of 8000000 for 9000
+ 27831 strings out of 480171
+ 518243 string characters out of 5894489
+ 829346 words of memory out of 5000000
+ 45090 multiletter control sequences out of 15000+600000
+ 505332 words of font info for 119 fonts, out of 8000000 for 9000
  220 hyphenation exceptions out of 8191
- 85i,12n,90p,3240b,514s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 85i,5n,90p,3248b,347s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbo
-l/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on /home/matthew/Documents/pgrm/chipFiring/Docs/SURE2022.pdf (5 
-pages, 132986 bytes).
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
+w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on /home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022Abst
+ract.pdf (1 page, 82179 bytes).
 PDF statistics:
- 191 PDF objects out of 1000 (max. 8388607)
- 160 compressed objects within 2 object streams
- 49 named destinations out of 1000 (max. 500000)
- 117 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 57 PDF objects out of 1000 (max. 8388607)
+ 37 compressed objects within 1 object stream
+ 2 named destinations out of 1000 (max. 500000)
+ 13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
