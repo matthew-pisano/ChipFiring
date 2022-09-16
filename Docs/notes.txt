@@ -1,3 +1,24 @@
-Find using picard group Zn x Z
-
 Matrix tree theorem directed graphs
+
+Invariant factors of Jacobian of cycle graphs with no paths:
+    This is always Z_n.
+
+Invariant factors of Jacobian of cycle graphs with one path:
+    This is always trivial.
+
+Invariant factors of Jacobian of cycle graphs with two paths:
+    Possible way of generalization: prove that two paths always use up all
+    available higher invariant factors
+
+    Invariant factor depends only on number of zeroes clockwise of the
+    counter-clockwise path and counter-clockwise of the clockwise path.
+    The other ends of these paths can grow or shrink, and it will not
+    change the invariant factor.
+
+    It does also seem to not matter if the inside of this path is broken up be zeroes.
+    This means that the inside of these paths can be anything as long as the
+    cc paths and the c paths do not cross.
+
+Invariant factors of Jacobian of cycle graphs with more than two paths:
+    This refers to any configuration that are not covered by the two paths configurations.
+    The only factors that I have noticed for these paths is Z_2 and the trivial group.

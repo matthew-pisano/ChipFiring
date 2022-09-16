@@ -5,6 +5,8 @@ from src import results
 from utils import logger
 
 
+# Do komplete 4 and 5
+
 def testSrcSnk():
     graph = Graph.cycle(4)
     graph.forceFlow(0)
@@ -16,7 +18,7 @@ def testSrcSnk():
 
 
 def testBruteForce(rng=(3, 10)):
-    cokDict = {i: bruteCheckGraphs(Graph.cycle(i), includeBi=False) for i in range(*rng)}
+    cokDict = {i: bruteCheckGraphs(Graph.cycle(i), includeBi=True) for i in range(*rng)}
     logger.info(cokDict)
 
 
@@ -113,12 +115,31 @@ if __name__ == "__main__":
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)
     graph.visualize(divisor)"""
+    # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
+    # logger.info(cokDict)
     # testBruteForce((3, 14))
     # graph = Graph(adjacency)
     # graph.visualize()
     # print(graph.auditEdges())
-    testPseudoTree(glueByVertex=True)
+    # testPseudoTree(glueByVertex=True)
     # testAllJacs()
+    #"""
+    i = 6
+    cycle = Graph.wheel(i, direction=2, spoke_direction=Graph.FWD)
+    cycle.setEdgeState(0, 1, 0)
+    cycle.setEdgeState(1, 2, 0)
+    cycle.setEdgeState(2, 3, 0)
+    cycle.setEdgeState(3, 4, 0)
+    cycle.setEdgeState(4, 5, 0)
+    """cycle.setEdgeState(5, 6, 0)
+    cycle.setEdgeState(6, 7, 0)
+    cycle.setEdgeState(7, 8, 0)
+    cycle.setEdgeState(8, 9, 0)
+    cycle.setEdgeState(9, 10, 0)"""
+    cycle.setEdgeState(i-1, 0, 0)
+    # cycle.visualize()
+    print(f"Cycle Picard: {prettyCok(cycle.pic())}")
+    #"""
     """adjacency = [
         [0, 1, 0, 1, 1, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -147,9 +168,6 @@ if __name__ == "__main__":
     print(prettyCok(Utils.coKernel(graph.laplacian)))"""
     """graph = Graph.complete(3)
     testSinkSource(graph)"""
-
-
-
     # print(graph.jac(divisor))
     # print(graph.pic(divisor))
     """for v in range(len(graph)):

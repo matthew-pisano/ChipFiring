@@ -171,13 +171,6 @@ class Graph:
             sinks += 1 if isSink else 0
         return sources, sinks
 
-    def setEdgeStates(self, config: list[int]):
-        """Set the direction of each edge of the graph using the configuration"""
-        edgeSet = list(self.edgeSet(directed=False))
-        for idx, state in enumerate(config):
-            self.setEdgeState(edgeSet[idx][0], edgeSet[idx][1], state, refreshState=False)
-        self._refreshState()
-
     def getEdgeStates(self):
         """Returns a list of edges and their state"""
         edgeConfig = []
@@ -201,6 +194,13 @@ class Graph:
             self.matrix = np.append(self.matrix, [[0]*len(self.matrix)], 0)
             self.matrix = np.append(self.matrix, [[0]] * (len(self.matrix)), 1)
         self.setEdgeState(v, w, weight=weight, state=state, refreshState=refreshState)
+
+    def setEdgeStates(self, config: list[int]):
+        """Set the direction of each edge of the graph using the configuration"""
+        edgeSet = list(self.edgeSet(directed=False))
+        for idx, state in enumerate(config):
+            self.setEdgeState(edgeSet[idx][0], edgeSet[idx][1], state, refreshState=False)
+        self._refreshState()
 
     def setEdgeState(self, v: int, w: int, state: int = 0, weight: int = None, refreshState=True):
         """Sets as an edge as directed or undirected or change the direction of the edge"""
@@ -315,12 +315,27 @@ class Graph:
         return len(self.matrix)
 
     @classmethod
-    def cycle(cls, size):
+    def cycle(cls, size, direction=BI):
         """Returns a cycle graph of the given size"""
         graph = cls.empty(size)
         for i in range(0, size-1):
-            graph.addEdge(i, i + 1, refreshState=False)
-        graph.addEdge(0, size-1)
+            graph.addEdge(i, i + 1, state=direction, refreshState=False)
+        graph.addEdge(size-1, 0, state=direction)
+        return graph
+
+    @classmethod
+    def wheel(cls, size, axel=0, direction=BI, spoke_direction=BI):
+        """Returns a cycle graph of the given size"""
+        graph = cls.empty(size)
+        rng = list(range(0, size))
+        rng.pop(axel)
+        for idx, v in enumerate(rng[:-1]):
+            graph.addEdge(v, rng[idx + 1], state=direction, refreshState=False)
+        graph.addEdge(rng[-1], rng[0], state=direction, refreshState=False)
+
+        for v in rng[:-1]:
+            graph.addEdge(axel, v, state=spoke_direction, refreshState=False)
+        graph.addEdge(axel, rng[-1], state=spoke_direction)
         return graph
 
     @classmethod
@@ -392,10 +407,11 @@ def prettyCok(coKernel: tuple):
     return cokStr
 
 
-def allCyclics(graph: Graph, skipRotations=True, includeBi=True):
+def allOrientations(graph: Graph, skipRotations=True, includeBi=True):
     """Generates all oriented permutations of a cyclic graph"""
     permutations = []
-    config = [0 if includeBi else 1]*len(graph)
+    edges = len(graph.edgeSet(directed=False))
+    config = [0 if includeBi else 1]*edges
     idx = 0
     lastYield = time.time()
 
@@ -404,7 +420,7 @@ def allCyclics(graph: Graph, skipRotations=True, includeBi=True):
         if config in permutations:
             return False
         currCopy = config.copy()
-        for _ in range(0, len(graph)-1):
+        for _ in range(0, len(config)-1):
             # Rotate by one vertex increment
             first = currCopy.pop(0)
             currCopy.append(first)
@@ -421,7 +437,7 @@ def allCyclics(graph: Graph, skipRotations=True, includeBi=True):
             pointer -= 1
             config[pointer] += 1
 
-    for i in range(0, (3 if includeBi else 2)**len(graph)):
+    for i in range(0, (3 if includeBi else 2)**edges):
         if skipRotations and not checkRotations():
             increment()
             idx += 1
@@ -435,17 +451,51 @@ def allCyclics(graph: Graph, skipRotations=True, includeBi=True):
         idx += 1
 
 
-def bruteCheckGraphs(graph: Graph, includeBi=True):
+def allStats(graph: Graph, includeBi=True, skipRotations=False):
+    timer = time.time()
+    logger.info(f"===> Checking graph of size {len(graph)} in series")
+    invFactors = {}
+    globalIdx = 0
+    picAvg = 0
+    yieldAvg = 0
+    for idx, config, current, lastYield in allOrientations(graph, skipRotations=skipRotations, includeBi=includeBi):
+        globalIdx += 1
+        if globalIdx % 5000 == 0:
+            logger.info(f"Checked up to {globalIdx} items...")
+        chk = time.time()
+        cok = current.pic()
+        picAvg = (picAvg * (globalIdx - 1) + time.time() - chk) / globalIdx
+        yieldAvg = (yieldAvg * (globalIdx - 1) + lastYield) / globalIdx
+        # Account for trivial set if invariant factors are empty
+        if len(cok[1]) == 0:
+            cok[1].append(1)
+        if cok[1][0] not in invFactors:
+            invFactors[cok[1][0]] = 0
+        invFactors[cok[1][0]] += 1
+
+    factors = [i for i in range(0, max(invFactors.keys())+1)]
+    occurances = [0]*(max(invFactors.keys())+1)
+    for factor in invFactors:
+        occurances[factor] = invFactors[factor]
+    plt.plot(factors, occurances, marker='o')
+    plt.xlabel('Inv Factors')
+    plt.ylabel('Occurances')
+    plt.show()
+    logger.info(f"Finished after {round((time.time()-timer), 3)}s")
+
+
+def bruteCheckGraphs(graph: Graph, includeBi=True, skipRotations=False):
     """Checks manually to see if the cyclic graph of the given
     size has the appropriate invariant factors"""
     timer = time.time()
-
-    sets = [None]*len(graph)
+    logger.info(f"===> Checking graph of size {len(graph)} in series")
+    edges = len(graph.edgeSet(directed=False))
+    sets = [None]*edges
     globalIdx = 0
     found = []
     picAvg = 0
     yieldAvg = 0
-    for idx, config, current, lastYield in allCyclics(graph, skipRotations=False, includeBi=includeBi):
+    for idx, config, current, lastYield in allOrientations(graph, skipRotations=skipRotations, includeBi=includeBi):
         globalIdx += 1
         if globalIdx % 5000 == 0:
             logger.info(f"Checked up to {globalIdx} items...")
@@ -456,27 +506,24 @@ def bruteCheckGraphs(graph: Graph, includeBi=True):
         # Account for trivial set if invariant factors are empty
         if len(cok[1]) == 0:
             cok[1].append(1)
-        if sets[cok[1][0]-1] is None:
-            if len(cok[1]) != 1:
-                logger.warning("===> Large!")
+        if cok[1][0]-1 < len(sets) and sets[cok[1][0]-1] is None:
             sets[cok[1][0]-1] = config
             found.append(globalIdx)
             logger.info(f"Found \u2124_{cok[1][0]} at: {globalIdx} {len(found)}/{len(graph)} "
                         f"({round(len(found)/len(graph)*100)}%), {config}")
             if len([elem for elem in sets if elem is not None]) == len(graph):
-                # logger.info(f"Matches Guess: {set(guesses)==set(found)}")
                 logger.info(f"Found sets from trivial through Z_{len(graph)}")
-                logger.info(f"Finished after checking {globalIdx} permutations of {(3 if includeBi else 2) ** len(graph)} permutations"
-                      f", ({round(globalIdx/(3 ** len(graph))*100, 5)}%) "
+                logger.info(f"Finished after checking {globalIdx} ({idx} with skipped rotations) permutations "
+                      f"of {(3 if includeBi else 2) ** edges} permutations"
+                      f", ({round(globalIdx/(3 ** edges)*100, 5)}%) "
                       f"after {round((time.time()-timer), 3)}s")
                 logger.info("--------")
                 return True
 
     logger.info(f"Failed to find sets from trivial through Z_{len(graph)}, only found "
         f"{[idx for idx, elem in enumerate(sets) if elem is not None]}")
-    logger.info(f"Failed after checking all {(3 if includeBi else 2) ** len(graph)} permutations"
-        f", ({round(globalIdx / (3 ** len(graph)) * 100, 5)}%) "
-        f"after {round((time.time() - timer), 3)}s")
+    logger.info(f"Failed after checking all {(3 if includeBi else 2) ** edges} permutations"
+        f" after {round((time.time() - timer), 3)}s")
     logger.info("--------")
     return False
 
