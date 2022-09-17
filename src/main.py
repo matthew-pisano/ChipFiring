@@ -97,6 +97,39 @@ def testPseudoTree(glueByVertex=True):
     print(f"Pseudo-tree picard: {prettyCok(glued.pic())}")
 
 
+def cycleOrientations(size: int):
+    cycle = Graph.cycle(size)
+    cycle.setEdgeState(0, 1, 1)
+    cycle.setEdgeState(1, 2, 0)
+    cycle.setEdgeState(2, 3, 0)
+    cycle.setEdgeState(3, 4, 0)
+    cycle.setEdgeState(4, 5, 0)
+    """cycle.setEdgeState(5, 6, 0)
+    cycle.setEdgeState(6, 7, 0)
+    cycle.setEdgeState(7, 8, 0)
+    cycle.setEdgeState(8, 9, 0)
+    cycle.setEdgeState(9, 10, 0)"""
+    cycle.setEdgeState(size - 1, 0, 0)
+    # cycle.visualize()
+    print(f"Cycle Picard of size {size}: {prettyCok(cycle.pic())}")
+
+
+def wheelOrientations(size: int):
+    wheel = Graph.wheel(size, direction=0, spoke_direction=1)
+    # wheel.setEdgeState(1, 2, 1)
+    # wheel.setEdgeState(2, 3, 1)
+    # wheel.setEdgeState(3, 4, 1)
+    # wheel.setEdgeState(4, 5, 1)
+    """wheel.setEdgeState(5, 6, 0)
+    wheel.setEdgeState(6, 7, 0)
+    wheel.setEdgeState(7, 8, 0)
+    wheel.setEdgeState(8, 9, 0)
+    wheel.setEdgeState(9, 10, 0)"""
+    # wheel.setEdgeState(size - 1, 1, 1)
+    # wheel.visualize()
+    print(f"Wheel Picard of size {size}: {prettyCok(wheel.pic())}")
+
+
 if __name__ == "__main__":
     start = time.time()
     logger.info(f"=====\nEntering program at {datetime.datetime.fromtimestamp(start).strftime('%H:%M:%S')}\n=====")
@@ -123,23 +156,7 @@ if __name__ == "__main__":
     # print(graph.auditEdges())
     # testPseudoTree(glueByVertex=True)
     # testAllJacs()
-    #"""
-    i = 6
-    cycle = Graph.wheel(i, direction=2, spoke_direction=Graph.FWD)
-    cycle.setEdgeState(0, 1, 0)
-    cycle.setEdgeState(1, 2, 0)
-    cycle.setEdgeState(2, 3, 0)
-    cycle.setEdgeState(3, 4, 0)
-    cycle.setEdgeState(4, 5, 0)
-    """cycle.setEdgeState(5, 6, 0)
-    cycle.setEdgeState(6, 7, 0)
-    cycle.setEdgeState(7, 8, 0)
-    cycle.setEdgeState(8, 9, 0)
-    cycle.setEdgeState(9, 10, 0)"""
-    cycle.setEdgeState(i-1, 0, 0)
-    # cycle.visualize()
-    print(f"Cycle Picard: {prettyCok(cycle.pic())}")
-    #"""
+    [wheelOrientations(i) for i in range(3, 21)]
     """adjacency = [
         [0, 1, 0, 1, 1, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],

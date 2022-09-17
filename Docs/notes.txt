@@ -22,3 +22,18 @@ Invariant factors of Jacobian of cycle graphs with two paths:
 Invariant factors of Jacobian of cycle graphs with more than two paths:
     This refers to any configuration that are not covered by the two paths configurations.
     The only factors that I have noticed for these paths is Z_2 and the trivial group.
+
+Wheel graphs:
+    Graph.wheel(size, direction=1, spoke_direction=2) inv factors followed 2^(size-1)-1 x Z
+
+    Graph.wheel(size, direction=2, spoke_direction=1) inv factors followed size-1 x Z
+
+    Graph.wheel(size, direction=1, spoke_direction=1) inv factors followed size-1 x Z
+
+    Graph.wheel(size, direction=2, spoke_direction=2) inv factors followed 2^(size-1)-1 x Z
+
+    Graph.wheel(size, direction=0, spoke_direction=0) inv factors followed .27555(golden_ratio^{x}) x 5*.27555(golden_ratio^{x}) x Z for odd sizes
+    Graph.wheel(size, direction=0, spoke_direction=0) inv factors followed .618035(golden_ratio^{x}) x .618035(golden_ratio^{x}) x Z for even sizes
+
+
+A sequence P of numbers where its elements depend on a second seed sequence Q where P_n = Q_n + Q_(n+1)
