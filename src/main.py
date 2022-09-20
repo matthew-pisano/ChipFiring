@@ -99,11 +99,11 @@ def testPseudoTree(glueByVertex=True):
 
 def cycleOrientations(size: int):
     cycle = Graph.cycle(size)
-    cycle.setEdgeState(0, 1, 1)
-    cycle.setEdgeState(1, 2, 0)
-    cycle.setEdgeState(2, 3, 0)
-    cycle.setEdgeState(3, 4, 0)
-    cycle.setEdgeState(4, 5, 0)
+    cycle.setEdgeState(0, 1, 0)
+    cycle.setEdgeState(1, 2, 1)
+    cycle.setEdgeState(2, 3, 2)
+    cycle.setEdgeState(3, 4, 2)
+    cycle.setEdgeState(4, 5, 2)
     """cycle.setEdgeState(5, 6, 0)
     cycle.setEdgeState(6, 7, 0)
     cycle.setEdgeState(7, 8, 0)
@@ -115,7 +115,7 @@ def cycleOrientations(size: int):
 
 
 def wheelOrientations(size: int):
-    wheel = Graph.wheel(size, direction=0, spoke_direction=1)
+    wheel = Graph.wheel(size, direction=1, spoke_direction=0)
     # wheel.setEdgeState(1, 2, 1)
     # wheel.setEdgeState(2, 3, 1)
     # wheel.setEdgeState(3, 4, 1)

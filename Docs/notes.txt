@@ -13,7 +13,8 @@ Invariant factors of Jacobian of cycle graphs with two paths:
     Invariant factor depends only on number of zeroes clockwise of the
     counter-clockwise path and counter-clockwise of the clockwise path.
     The other ends of these paths can grow or shrink, and it will not
-    change the invariant factor.
+    change the invariant factor.  The invariant factor produced is always
+    z_(x+3) where x is the number of zeroes in that section between the paths.
 
     It does also seem to not matter if the inside of this path is broken up be zeroes.
     This means that the inside of these paths can be anything as long as the
@@ -24,16 +25,24 @@ Invariant factors of Jacobian of cycle graphs with more than two paths:
     The only factors that I have noticed for these paths is Z_2 and the trivial group.
 
 Wheel graphs:
-    Graph.wheel(size, direction=1, spoke_direction=2) inv factors followed 2^(size-1)-1 x Z
+    Graph.wheel(size, direction=1, spoke_direction=2) inv factors followed Z_(2^(size-1)-1) x Z
 
-    Graph.wheel(size, direction=2, spoke_direction=1) inv factors followed size-1 x Z
+    Graph.wheel(size, direction=2, spoke_direction=1) inv factors followed Z_(size-1) x Z
 
-    Graph.wheel(size, direction=1, spoke_direction=1) inv factors followed size-1 x Z
+    Graph.wheel(size, direction=1, spoke_direction=1) same as Graph.wheel(size, direction=1, spoke_direction=1)
 
-    Graph.wheel(size, direction=2, spoke_direction=2) inv factors followed 2^(size-1)-1 x Z
+    Graph.wheel(size, direction=2, spoke_direction=2) same as Graph.wheel(size, direction=1, spoke_direction=2)
 
-    Graph.wheel(size, direction=0, spoke_direction=0) inv factors followed .27555(golden_ratio^{x}) x 5*.27555(golden_ratio^{x}) x Z for odd sizes
-    Graph.wheel(size, direction=0, spoke_direction=0) inv factors followed .618035(golden_ratio^{x}) x .618035(golden_ratio^{x}) x Z for even sizes
+    Graph.wheel(size, direction=0, spoke_direction=0) inv factors followed
+        .27555(golden_ratio^{x}) x 5*.27555(golden_ratio^{x}) x Z for odd sizes
+    Graph.wheel(size, direction=0, spoke_direction=0) inv factors followed
+        .618035(golden_ratio^{x}) x .618035(golden_ratio^{x}) x Z for even sizes
 
+    Graph.wheel(size, direction=0, spoke_direction=1) inv factors followed Z_(n-1) x Z_(n-1) X Z for even sizes
+    Graph.wheel(size, direction=0, spoke_direction=1) inv factors followed Z_((n-1)/2) x Z_((n-1)*2) X Z for odd sizes
 
-A sequence P of numbers where its elements depend on a second seed sequence Q where P_n = Q_n + Q_(n+1)
+    Graph.wheel(size, direction=0, spoke_direction=2) same as Graph.wheel(size, direction=0, spoke_direction=0)
+
+    Graph.wheel(size, direction=2, spoke_direction=0) same as Graph.wheel(size, direction=1, spoke_direction=2)
+
+    Graph.wheel(size, direction=1, spoke_direction=0) same as Graph.wheel(size, direction=1, spoke_direction=2)
