@@ -14,7 +14,7 @@ Invariant factors of Jacobian of cycle graphs with two paths:
     counter-clockwise path and counter-clockwise of the clockwise path.
     The other ends of these paths can grow or shrink, and it will not
     change the invariant factor.  The invariant factor produced is always
-    z_(x+3) where x is the number of zeroes in that section between the paths.
+    >[REDO]< where x is the number of zeroes in that section between the paths.
 
     It does also seem to not matter if the inside of this path is broken up be zeroes.
     This means that the inside of these paths can be anything as long as the
@@ -29,7 +29,7 @@ Wheel graphs:
 
     Graph.wheel(size, direction=2, spoke_direction=1) inv factors followed Z_(size-1) x Z
 
-    Graph.wheel(size, direction=1, spoke_direction=1) same as Graph.wheel(size, direction=1, spoke_direction=1)
+    Graph.wheel(size, direction=1, spoke_direction=1) same as Graph.wheel(size, direction=2, spoke_direction=1)
 
     Graph.wheel(size, direction=2, spoke_direction=2) same as Graph.wheel(size, direction=1, spoke_direction=2)
 
@@ -46,3 +46,9 @@ Wheel graphs:
     Graph.wheel(size, direction=2, spoke_direction=0) same as Graph.wheel(size, direction=1, spoke_direction=2)
 
     Graph.wheel(size, direction=1, spoke_direction=0) same as Graph.wheel(size, direction=1, spoke_direction=2)
+
+
+Check for pattern un P, Q in PAQ = Smith when growing P and Q to fit larger cycles.  Maybe check ofr pattern
+in growing smith itself or growing laplacian
+
+Check 4, 6, 8 ... paths for cyclic graphs to determine if they all have Z ... Z_n invariant factors

@@ -99,23 +99,23 @@ def testPseudoTree(glueByVertex=True):
 
 def cycleOrientations(size: int):
     cycle = Graph.cycle(size)
-    cycle.setEdgeState(0, 1, 0)
-    cycle.setEdgeState(1, 2, 1)
-    cycle.setEdgeState(2, 3, 2)
-    cycle.setEdgeState(3, 4, 2)
-    cycle.setEdgeState(4, 5, 2)
+    cycle.setEdgeState(0, 1, 2)
+    cycle.setEdgeState(1, 2, 0)
+    cycle.setEdgeState(2, 3, 1)
+    cycle.setEdgeState(3, 4, 1)
+    # cycle.setEdgeState(4, 5, 0)
     """cycle.setEdgeState(5, 6, 0)
     cycle.setEdgeState(6, 7, 0)
     cycle.setEdgeState(7, 8, 0)
     cycle.setEdgeState(8, 9, 0)
     cycle.setEdgeState(9, 10, 0)"""
-    cycle.setEdgeState(size - 1, 0, 0)
-    # cycle.visualize()
+    cycle.setEdgeState(size - 1, 0, 2)
+    cycle.visualize()
     print(f"Cycle Picard of size {size}: {prettyCok(cycle.pic())}")
 
 
 def wheelOrientations(size: int):
-    wheel = Graph.wheel(size, direction=1, spoke_direction=0)
+    wheel = Graph.wheel(size, direction=0, spoke_direction=0)
     # wheel.setEdgeState(1, 2, 1)
     # wheel.setEdgeState(2, 3, 1)
     # wheel.setEdgeState(3, 4, 1)
@@ -126,7 +126,7 @@ def wheelOrientations(size: int):
     wheel.setEdgeState(8, 9, 0)
     wheel.setEdgeState(9, 10, 0)"""
     # wheel.setEdgeState(size - 1, 1, 1)
-    # wheel.visualize()
+    wheel.visualize()
     print(f"Wheel Picard of size {size}: {prettyCok(wheel.pic())}")
 
 
@@ -156,18 +156,22 @@ if __name__ == "__main__":
     # print(graph.auditEdges())
     # testPseudoTree(glueByVertex=True)
     # testAllJacs()
+    """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
+        title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
+    )"""
     [wheelOrientations(i) for i in range(3, 21)]
+    # cycleOrientations(5)
     """adjacency = [
         [0, 1, 0, 1, 1, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 0, 0, 0],
         [0, 0, 1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 0, 1, 0, 0],
         [0, 0, 0, 0, 1, 0, 0],
     ]
     stick = Graph(adjacency)
-    stick.visualize()
+    stick.visualize(title="A Tree Graph", positions={1: [.8, -.4], 2: [.9, .9], 0: [0, .5]})
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
     print(f"Tree picard: {prettyCok(stick.pic())}")"""

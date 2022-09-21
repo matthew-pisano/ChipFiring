@@ -289,15 +289,18 @@ class Graph:
         """Returns an element of Pic(G) that is LinEq to the given divisor"""
         return Utils.coKernel(self.laplacian, divisor)
 
-    def visualize(self, divisor: Divisor = None, withWeights=False, title=None):
+    def visualize(self, divisor: Divisor = None, withWeights=False, title=None, positions=None):
         """Creates a plot representation of the graph"""
         labels = {}
         for i in range(0, len(self.matrix)):
             labels[i] = f"{i}"+(f": {divisor[i]}" if divisor else "")
         G = nx.DiGraph()
         G.add_weighted_edges_from(self.edgeSet())
-        # pos = nx.circular_layout(G)
-        pos = nx.planar_layout(G)
+        pos = nx.circular_layout(G)
+        # pos = nx.planar_layout(G)
+        if positions:
+            for vertex in positions:
+                pos[vertex] = positions[vertex]
         # pos = nx.kamada_kawai_layout(G)
         if withWeights:
             edgeLabels = nx.get_edge_attributes(G, 'weight')
