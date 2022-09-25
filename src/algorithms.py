@@ -118,18 +118,14 @@ class Graph:
                 for w in range(0, len(self.matrix)):
                     if (not directed and v > w) or v == w:
                         continue
-                    if self.matrix[v][w] > 0 or (not directed and self.matrix[w][v] > 0):
-                        edgeState = self.BI if self.matrix[v][w] > 0 and self.matrix[w][v] > 0 else \
-                            self.FWD if self.matrix[v][w] > 0 else self.REV
-                        edgeSet.add((v, w, edgeState))
+                    if edge := self.getEdge(v, w, directed):
+                        edgeSet.add(edge)
         else:
             for w in range(0, len(self.matrix)):
                 if vertex == w:
                     continue
-                if self.matrix[vertex][w] > 0 or (not directed and self.matrix[w][vertex] > 0):
-                    edgeState = self.BI if self.matrix[vertex][w] > 0 and self.matrix[w][vertex] > 0 else \
-                        self.FWD if self.matrix[vertex][w] > 0 else self.REV
-                    edgeSet.add((vertex, w, edgeState))
+                if edge := self.getEdge(vertex, w, directed):
+                    edgeSet.add(edge)
         return edgeSet
 
     def size(self):
@@ -149,10 +145,10 @@ class Graph:
 
     def getEdge(self, v, w, directed=True):
         """Return a directed or undirected edge if it exists"""
-        for edge in self.edgeSet(v, directed=directed):
-            if w in edge[:2]:
-                return edge
-        return None
+        if self.matrix[v][w] > 0 or (not directed and self.matrix[w][v] > 0):
+            edgeState = self.BI if self.matrix[v][w] > 0 and self.matrix[w][v] > 0 else \
+                self.FWD if self.matrix[v][w] > 0 else self.REV
+            return v, w, edgeState
 
     def auditEdges(self):
         # TODO: rewrite using induction
@@ -170,6 +166,10 @@ class Graph:
             sources += 1 if isSource else 0
             sinks += 1 if isSink else 0
         return sources, sinks
+
+    def getEdgeState(self, v, w):
+        edge = self.getEdge(v, w, directed=False)
+        return edge[2] if edge else None
 
     def getEdgeStates(self):
         """Returns a list of edges and their state"""
@@ -226,27 +226,27 @@ class Graph:
 
     def spanningTree(self):
         size = len(self.matrix)
-        selected_node = [0]*size
-        no_edge = 0
-        selected_node[0] = True
+        selectedNode = [0]*size
+        noEdge = 0
+        selectedNode[0] = True
         tree = self.empty(size)
 
-        while no_edge < size - 1:
+        while noEdge < size - 1:
             minimum = float('inf')
             a = 0
             b = 0
             for m in range(size):
-                if selected_node[m]:
+                if selectedNode[m]:
                     for n in range(size):
-                        if not selected_node[n] and self.matrix[m][n]:
+                        if not selectedNode[n] and self.matrix[m][n]:
                             # not in selected and there is an edge
                             if minimum > self.matrix[m][n]:
                                 minimum = self.matrix[m][n]
                                 a = m
                                 b = n
             tree.addEdge(a, b, self.matrix[a][b], refreshState=False)
-            selected_node[b] = True
-            no_edge += 1
+            selectedNode[b] = True
+            noEdge += 1
         tree._refreshState()
         return tree
 
@@ -310,12 +310,39 @@ class Graph:
             plt.title(title)
         plt.show()
 
+    def countPaths(self, cycleRange=None):
+        if cycleRange is None:
+            cycleRange = (0, len(self)-1)
+        paths = 0
+        firstState = None
+        lastState = self.BI
+        for i in range(cycleRange[0], cycleRange[1]):
+            state = self.getEdgeState(i, i+1)
+            if state != lastState and state != self.BI:
+                if firstState is None:
+                    firstState = state
+                paths += 1
+                lastState = state
+        state = self.getEdgeState(cycleRange[1], cycleRange[0])
+        if state != lastState and state != self.BI:
+            paths += 1
+            lastState = state
+
+        if firstState == lastState and paths != 1:
+            paths -= 1
+
+        return paths
+
     def copy(self):
         """Returns a copy of this graph"""
         return Graph(self.matrix)
 
     def __len__(self):
         return len(self.matrix)
+
+    @classmethod
+    def build(cls, form: str, size: int, **kwargs):
+        return getattr(cls, form)(size, **kwargs)
 
     @classmethod
     def cycle(cls, size, direction=BI):
@@ -327,7 +354,7 @@ class Graph:
         return graph
 
     @classmethod
-    def wheel(cls, size, axel=0, direction=BI, spoke_direction=BI):
+    def wheel(cls, size, axel=0, direction=BI, spokeDirection=BI):
         """Returns a cycle graph of the given size"""
         graph = cls.empty(size)
         rng = list(range(0, size))
@@ -337,8 +364,8 @@ class Graph:
         graph.addEdge(rng[-1], rng[0], state=direction, refreshState=False)
 
         for v in rng[:-1]:
-            graph.addEdge(axel, v, state=spoke_direction, refreshState=False)
-        graph.addEdge(axel, rng[-1], state=spoke_direction)
+            graph.addEdge(axel, v, state=spokeDirection, refreshState=False)
+        graph.addEdge(axel, rng[-1], state=spokeDirection)
         return graph
 
     @classmethod
@@ -410,7 +437,7 @@ def prettyCok(coKernel: tuple):
     return cokStr
 
 
-def allOrientations(graph: Graph, skipRotations=True, includeBi=True):
+def allOrientations(graph: Graph, skipRotations=True, includeBi=True, includePaths: tuple = None):
     """Generates all oriented permutations of a cyclic graph"""
     permutations = []
     edges = len(graph.edgeSet(directed=False))
@@ -448,20 +475,44 @@ def allOrientations(graph: Graph, skipRotations=True, includeBi=True):
         permutations.append(config.copy())
         copy = graph.copy()
         copy.setEdgeStates(config)
-        yield idx, config, copy, time.time()-lastYield
+        paths = copy.countPaths()
+        if not includePaths or (includePaths and paths in includePaths):
+            yield idx, config, copy, time.time()-lastYield, paths
         lastYield = time.time()
         increment()
         idx += 1
 
 
-def allStats(graph: Graph, includeBi=True, skipRotations=False):
+def plotFactors(graphForm: str, sizeRange: tuple, includeBi=True, skipRotations=False,
+                includePaths: tuple = None, bySize=True):
+    if bySize:
+        for i in range(*sizeRange):
+            factors, occurrences = allStats(Graph.build(graphForm, i), includeBi, skipRotations, includePaths)
+            plt.plot(factors, occurrences, marker='o', label=f'Graph {i}')
+            plt.title("Invariant Factors by Graph Size")
+    else:
+        factors, occurrences, pathFactors, pathOccurrences = allStats(Graph.build(graphForm, sizeRange[0]),
+            includeBi, skipRotations, (0, 1, *range(2, sizeRange[0]+1, 2)))
+        for paths in pathFactors:
+            plt.plot(pathFactors[paths], pathOccurrences[paths], marker='o', label=f'{paths} Paths')
+            plt.title(f"Invariant Factors by Path Number for a Size {sizeRange[0]} Graph")
+
+    plt.xlabel('Inv Factors')
+    plt.ylabel('Occurrences')
+    plt.legend()
+    plt.show()
+
+
+def allStats(graph: Graph, includeBi=True, skipRotations=False, includePaths: tuple = None):
     timer = time.time()
-    logger.info(f"===> Checking graph of size {len(graph)} in series")
+    logger.info(f"===> Checking graph of size {len(graph)} in series with {includePaths} paths")
     invFactors = {}
+    pathInvFactors = {}
     globalIdx = 0
     picAvg = 0
     yieldAvg = 0
-    for idx, config, current, lastYield in allOrientations(graph, skipRotations=skipRotations, includeBi=includeBi):
+    for idx, config, current, lastYield, paths, in allOrientations(graph, skipRotations=skipRotations,
+            includeBi=includeBi, includePaths=includePaths):
         globalIdx += 1
         if globalIdx % 5000 == 0:
             logger.info(f"Checked up to {globalIdx} items...")
@@ -472,19 +523,37 @@ def allStats(graph: Graph, includeBi=True, skipRotations=False):
         # Account for trivial set if invariant factors are empty
         if len(cok[1]) == 0:
             cok[1].append(1)
+        if paths not in pathInvFactors:
+            pathInvFactors[paths] = {}
         if cok[1][0] not in invFactors:
             invFactors[cok[1][0]] = 0
+        if cok[1][0] not in pathInvFactors[paths]:
+            pathInvFactors[paths][cok[1][0]] = 0
         invFactors[cok[1][0]] += 1
+        pathInvFactors[paths][cok[1][0]] += 1
 
-    factors = [i for i in range(0, max(invFactors.keys())+1)]
-    occurances = [0]*(max(invFactors.keys())+1)
+    if len(invFactors) == 0:
+        logger.warning("No graphs matched selection.  Exiting.")
+        return [], []
+
+    graphLen = max((*invFactors.keys(), len(graph)))
+    factors = [i for i in range(1, graphLen+1)]
+    pathFactors = {paths: [i for i in range(1, graphLen + 1)] for paths in pathInvFactors}
+    occurrences = [0]*graphLen
+    pathOccurrences = {paths: [0] * graphLen for paths in pathInvFactors}
     for factor in invFactors:
-        occurances[factor] = invFactors[factor]
-    plt.plot(factors, occurances, marker='o')
-    plt.xlabel('Inv Factors')
-    plt.ylabel('Occurances')
-    plt.show()
+        occurrences[factor-1] = invFactors[factor]
+
+    for path in pathInvFactors:
+        for factor in pathInvFactors[path]:
+            pathOccurrences[path][factor - 1] = pathInvFactors[path][factor]
+    factorStr = "Frequencies: "
+    for factor, occurrence in zip(factors, occurrences):
+        factorStr += f"\u2124_{factor}: {occurrence}, "
+    logger.info(factorStr[:-1])
     logger.info(f"Finished after {round((time.time()-timer), 3)}s")
+
+    return factors, occurrences, pathFactors, pathOccurrences
 
 
 def bruteCheckGraphs(graph: Graph, includeBi=True, skipRotations=False):

@@ -97,13 +97,13 @@ def testPseudoTree(glueByVertex=True):
     print(f"Pseudo-tree picard: {prettyCok(glued.pic())}")
 
 
-def cycleOrientations(size: int):
+def cycleOrientation(size: int):
     cycle = Graph.cycle(size)
-    cycle.setEdgeState(0, 1, 2)
-    cycle.setEdgeState(1, 2, 0)
+    cycle.setEdgeState(0, 1, 1)
+    cycle.setEdgeState(1, 2, 2)
     cycle.setEdgeState(2, 3, 1)
-    cycle.setEdgeState(3, 4, 1)
-    # cycle.setEdgeState(4, 5, 0)
+    # cycle.setEdgeState(3, 4, 2)
+    # cycle.setEdgeState(4, 5, 1)
     """cycle.setEdgeState(5, 6, 0)
     cycle.setEdgeState(6, 7, 0)
     cycle.setEdgeState(7, 8, 0)
@@ -112,10 +112,11 @@ def cycleOrientations(size: int):
     cycle.setEdgeState(size - 1, 0, 2)
     cycle.visualize()
     print(f"Cycle Picard of size {size}: {prettyCok(cycle.pic())}")
+    print(f"Cycle paths: {cycle.countPaths()}")
 
 
-def wheelOrientations(size: int):
-    wheel = Graph.wheel(size, direction=0, spoke_direction=0)
+def wheelOrientation(size: int):
+    wheel = Graph.wheel(size, direction=0, spokeDirection=0)
     # wheel.setEdgeState(1, 2, 1)
     # wheel.setEdgeState(2, 3, 1)
     # wheel.setEdgeState(3, 4, 1)
@@ -159,8 +160,9 @@ if __name__ == "__main__":
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
         title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
     )"""
-    [wheelOrientations(i) for i in range(3, 21)]
-    # cycleOrientations(5)
+    [plotFactors('cycle', (size, 8), includePaths=(2,), bySize=False) for size in range(4, 11)]
+    # [wheelOrientation(i) for i in range(3, 21)]
+    # cycleOrientation(4)
     """adjacency = [
         [0, 1, 0, 1, 1, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],

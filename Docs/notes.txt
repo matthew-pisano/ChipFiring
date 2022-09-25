@@ -48,7 +48,7 @@ Wheel graphs:
     Graph.wheel(size, direction=1, spoke_direction=0) same as Graph.wheel(size, direction=1, spoke_direction=2)
 
 
-Check for pattern un P, Q in PAQ = Smith when growing P and Q to fit larger cycles.  Maybe check ofr pattern
+Check for pattern un P, Q in PAQ = Smith when growing P and Q to fit larger cycles.  Maybe check for pattern
 in growing smith itself or growing laplacian
 
 Check 4, 6, 8 ... paths for cyclic graphs to determine if they all have Z ... Z_n invariant factors
