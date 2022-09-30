@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import os.path
 import time
@@ -6,62 +8,49 @@ import typing
 import numpy as np
 import sys
 
-DEBUG = {"debug_out": False, "log_file": "loggy.log", "snfDepth": None}
+DEBUG = {"debug_out": False, "log_file": None, "snfDepth": None, "snfMoves": False}
 
 
 loglevel = logging.INFO
 if DEBUG["debug_out"]:
     loglevel = logging.DEBUG
 
+logger = logging.getLogger(__name__)
+handlers = [logging.StreamHandler(sys.stdout)]
+
 if DEBUG["log_file"]:
-    filePath = "src/logs/"+DEBUG["log_file"]
+    filePath = f"src/logs/{DEBUG['log_file']}"
     with open(filePath, "w") as file:
         file.write("===> Log File <===\n")
-    fileHandler = logging.FileHandler(filePath)
-    shell = logging.StreamHandler(sys.stdout)
-    logging.basicConfig(handlers=[shell, fileHandler], level=loglevel,
-                        format="%(asctime)s [%(levelname)s] %(message)s", datefmt="%H:%M:%S")
+    handlers.append(logging.FileHandler(filePath))
 
-logger = logging.getLogger(__name__)
+logging.basicConfig(handlers=handlers, level=loglevel,
+                    format="%(asctime)s [%(levelname)s] %(message)s", datefmt="%H:%M:%S")
 
 
 class Utils:
+
+    verbose = False
+
+    @classmethod
+    def setVerbose(cls, vSet):
+        cls.verbose = vSet
+
     @classmethod
     def smithNormalForm(cls, matrix: np.ndarray):
         """Calculates the smith normal form of the given matrix"""
-        start = time.time()
-        smith = matrix.copy()
-
-        def exchangeRows(other: np.ndarray, i: int, j: int):
-            smith[[i, j]] = smith[[j, i]]
-            other[[i, j]] = other[[j, i]]
-
-        def exchangeCols(other: np.ndarray, i: int, j: int):
-            smith[:, [i, j]] = smith[:, [j, i]]
-            other[:, [i, j]] = other[:, [j, i]]
-
-        def addRows(other: np.ndarray, i: int, j: int, scale=1):
-            smith[i, :] = (smith[i, :] + scale * smith[j, :])
-            other[i, :] = (other[i, :] + scale * other[j, :])
-
-        def addCols(other: np.ndarray, i: int, j: int, scale=1):
-            smith[:, i] = (smith[:, i] + scale * smith[:, j])
-            other[:, i] = (other[:, i] + scale * other[:, j])
-
-        def scaleRow(other: np.ndarray, i: int, scale):
-            smith[i, :] = scale * smith[i, :]
-            other[i, :] = scale * other[i, :]
-
-        def scaleCol(other: np.ndarray, i: int, scale=1):
-            smith[:, i] = scale * smith[:, i]
-            other[:, i] = scale * other[:, i]
-
+        smith: np.ndarray = matrix.copy()
+        if cls.verbose:
+            ops = VerboseMatrixOps
+            ops.endOps()
+            ops.startOps()
+        else:
+            ops = MatrixOps
         matrixSize = len(smith) if not DEBUG["snfDepth"] else DEBUG["snfDepth"]
 
         def minAij(s):
             """Find the minimum non-zero element below and to the right of matrix[s][s]"""
             element = [s, s]
-            # globalMin = max(max([abs(x) for x in smith[j][s:]]) for j in range(s, matrixSize))
             globalMin = float('inf')
             for i in (range(s, matrixSize)):
                 for j in (range(s, matrixSize)):
@@ -93,36 +82,33 @@ class Utils:
             while not isLone(s):
                 # Get min location
                 i, j = minAij(s)
-                exchangeRows(p, s, i)
-                exchangeCols(q, s, j)
+                ops.exchangeRows(smith, p, s, i)
+                ops.exchangeCols(smith, q, s, j)
                 for x in range(s + 1, matrixSize):
                     if smith[x][s] != 0:
                         k = smith[x][s] // smith[s][s]
-                        addRows(p, x, s, -k)
+                        ops.addRows(smith, p, x, s, -k)
                 for x in range(s + 1, matrixSize):
                     if smith[s][x] != 0:
                         k = smith[s][x] // smith[s][s]
-                        addCols(q, x, s, -k)
+                        ops.addCols(smith, q, x, s, -k)
                 if isLone(s):
                     res = findNonDivisible(s)
                     if res:
                         x, y = res
-                        addRows(p, s, x, 1)
+                        ops.addRows(smith, p, s, x, 1)
                     else:
                         if smith[s][s] < 0:
-                            scaleRow(p, s, -1)
+                            ops.scaleRow(smith, p, s, -1)
             if smith[s][s] < 0:
-                scaleRow(p, s, -1)
-
-        # logger.info(f"Smith time for size {len(matrix)} is {time.time()-start}s")
+                ops.scaleRow(smith, p, s, -1)
         return smith, p, q
 
     @classmethod
     def coKernel(cls, matrix: np.ndarray, divisor: typing.Any | np.ndarray = None):
         """Returns the polynomial, invariant factors, and rank of the coKernel of the given matrix"""
         smith, p, q = cls.smithNormalForm(matrix)
-        # print(f"{len(matrix)} Reduced:", matrix)
-        # print(f"{len(matrix)} Smith:", smith)
+
         if not divisor:
             product = p
         else:
@@ -144,3 +130,106 @@ class Utils:
 
         # polynomial, invariant factors, rank
         return product, invFactors, len(infs)
+
+    @staticmethod
+    def prettyCok(coKernel: tuple):
+        cokStr = ""
+        for factor in coKernel[1]:
+            cokStr += f"\u2124_{factor} x "
+        if coKernel[2] > 0:
+            cokStr += "\u2124" + (f"^{coKernel[2]}" if coKernel[2] > 1 else "")
+        else:
+            cokStr = cokStr[:-2]
+        return cokStr
+
+
+class MatrixOps:
+
+    @staticmethod
+    def exchangeRows(matrix: np.ndarray, mimic: np.ndarray, i: int, j: int):
+        matrix[[i, j]] = matrix[[j, i]]
+        mimic[[i, j]] = mimic[[j, i]]
+
+    @staticmethod
+    def exchangeCols(matrix: np.ndarray, mimic: np.ndarray, i: int, j: int):
+        matrix[:, [i, j]] = matrix[:, [j, i]]
+        mimic[:, [i, j]] = mimic[:, [j, i]]
+
+    @staticmethod
+    def addRows(matrix: np.ndarray, mimic: np.ndarray, i: int, j: int, scale=1):
+        matrix[i, :] = matrix[i, :] + scale * matrix[j, :]
+        mimic[i, :] = mimic[i, :] + scale * mimic[j, :]
+
+    @staticmethod
+    def addCols(matrix: np.ndarray, mimic: np.ndarray, i: int, j: int, scale=1):
+        matrix[:, i] = matrix[:, i] + scale * matrix[:, j]
+        mimic[:, i] = mimic[:, i] + scale * mimic[:, j]
+
+    @staticmethod
+    def scaleRow(matrix: np.ndarray, mimic: np.ndarray, i: int, scale):
+        matrix[i, :] = scale * matrix[i, :]
+        mimic[i, :] = scale * mimic[i, :]
+
+
+class VerboseMatrixOps:
+
+    stepNumber = None
+
+    @classmethod
+    def startOps(cls):
+        cls.stepNumber = 0
+
+    @classmethod
+    def endOps(cls):
+        cls.stepNumber = None
+
+    @classmethod
+    def printMatrix(cls, prev, current, opStr):
+        if cls.stepNumber is not None:
+            cls.stepNumber += 1
+        logStr = "" if cls.stepNumber is None else f"Step {cls.stepNumber}"
+        for i in range(0, len(current)):
+            logStr += "\n["
+            for j in range(0, len(prev[0])):
+                logStr += f"{prev[i][j]}, ".rjust(6, ' ')
+            logStr += "]  "+(opStr if i == 0 else '-'*(len(opStr)-1)+">" if i == 1 else ' '*len(opStr))+"  ["
+            for j in range(0, len(prev[0])):
+                logStr += f"{current[i][j]}, ".rjust(6, ' ')
+            logStr += "]"
+
+        logger.info(logStr)
+
+    @classmethod
+    def exchangeRows(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, j: int):
+        prevMatrix = np.copy(matrix)
+        matrix[[i, j]] = matrix[[j, i]]
+        mimic[[i, j]] = mimic[[j, i]]
+        cls.printMatrix(prevMatrix, matrix, f"R{i} <-> R{j}")
+
+    @classmethod
+    def exchangeCols(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, j: int):
+        prevMatrix = np.copy(matrix)
+        matrix[:, [i, j]] = matrix[:, [j, i]]
+        mimic[:, [i, j]] = mimic[:, [j, i]]
+        cls.printMatrix(prevMatrix, matrix, f"C{i} <-> C{j}")
+
+    @classmethod
+    def addRows(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, j: int, scale=1):
+        prevMatrix = np.copy(matrix)
+        matrix[i, :] = matrix[i, :] + scale * matrix[j, :]
+        mimic[i, :] = mimic[i, :] + scale * mimic[j, :]
+        cls.printMatrix(prevMatrix, matrix, f"R{i} -> R{i} + {scale}*R{j}")
+
+    @classmethod
+    def addCols(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, j: int, scale=1):
+        prevMatrix = np.copy(matrix)
+        matrix[:, i] = matrix[:, i] + scale * matrix[:, j]
+        mimic[:, i] = mimic[:, i] + scale * mimic[:, j]
+        cls.printMatrix(prevMatrix, matrix, f"C{i} -> C{i} + {scale}*C{j}")
+
+    @classmethod
+    def scaleRow(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, scale):
+        prevMatrix = np.copy(matrix)
+        matrix[i, :] = scale * matrix[i, :]
+        mimic[i, :] = scale * mimic[i, :]
+        cls.printMatrix(prevMatrix, matrix, f"R{i} -> {scale}*R{i}")

@@ -52,3 +52,5 @@ Check for pattern un P, Q in PAQ = Smith when growing P and Q to fit larger cycl
 in growing smith itself or growing laplacian
 
 Check 4, 6, 8 ... paths for cyclic graphs to determine if they all have Z ... Z_n invariant factors
+
+bipartite graph

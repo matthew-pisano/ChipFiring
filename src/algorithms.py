@@ -186,7 +186,7 @@ class Graph:
                     edgeConfig.append((i, j, self.REV))
         return edgeConfig
 
-    def addEdge(self, v: int, w: int, weight: int = 1, state: int = 0, refreshState=True):
+    def addEdge(self, v: int, w: int, state: int = 0, weight: int = 1, refreshState=True):
         """Adds an edge between two vertices"""
         if v >= len(self.matrix) and w >= len(self.matrix):
             raise AttributeError("Both vertices cannot be new!")
@@ -204,7 +204,7 @@ class Graph:
 
     def setEdgeState(self, v: int, w: int, state: int = 0, weight: int = None, refreshState=True):
         """Sets as an edge as directed or undirected or change the direction of the edge"""
-        weight = max(self.matrix[v][w], self.matrix[w][v]) if weight is None else weight
+        weight = max(self.matrix[v][w], self.matrix[w][v], 1) if weight is None else weight
 
         if state == self.BI:
             self.matrix[v][w] = weight
@@ -244,7 +244,7 @@ class Graph:
                                 minimum = self.matrix[m][n]
                                 a = m
                                 b = n
-            tree.addEdge(a, b, self.matrix[a][b], refreshState=False)
+            tree.addEdge(a, b, weight=self.matrix[a][b], refreshState=False)
             selectedNode[b] = True
             noEdge += 1
         tree._refreshState()
@@ -426,17 +426,6 @@ class Graph:
         return cls._glue(graph1, graph2, vertex1, vertex2, byVertex=False, edgeState=state)
 
 
-def prettyCok(coKernel: tuple):
-    cokStr = ""
-    for factor in coKernel[1]:
-        cokStr += f"\u2124_{factor} x "
-    if coKernel[2] > 0:
-        cokStr += "\u2124"+(f"^{coKernel[2]}" if coKernel[2] > 1 else "")
-    else:
-        cokStr = cokStr[:-2]
-    return cokStr
-
-
 def allOrientations(graph: Graph, skipRotations=True, includeBi=True, includePaths: tuple = None):
     """Generates all oriented permutations of a cyclic graph"""
     permutations = []
@@ -567,7 +556,7 @@ def bruteCheckGraphs(graph: Graph, includeBi=True, skipRotations=False):
     found = []
     picAvg = 0
     yieldAvg = 0
-    for idx, config, current, lastYield in allOrientations(graph, skipRotations=skipRotations, includeBi=includeBi):
+    for idx, config, current, lastYield, _ in allOrientations(graph, skipRotations=skipRotations, includeBi=includeBi):
         globalIdx += 1
         if globalIdx % 5000 == 0:
             logger.info(f"Checked up to {globalIdx} items...")

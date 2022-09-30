@@ -1,8 +1,5 @@
 import datetime
-
 from algorithms import *
-from src import results
-from utils import logger
 
 
 # Do komplete 4 and 5
@@ -19,15 +16,15 @@ def testSrcSnk():
 
 def testBruteForce(rng=(3, 10)):
     cokDict = {i: bruteCheckGraphs(Graph.cycle(i), includeBi=True) for i in range(*rng)}
-    logger.info(cokDict)
+    logger.info(f"CoKernels {cokDict}")
 
 
 def testSinkSource(graph: Graph):
-    print(prettyCok(graph.pic()))
+    print(Utils.prettyCok(graph.pic()))
     graph.forceFlow(0, makeSink=True)
-    print(prettyCok(graph.pic()))
+    print(Utils.prettyCok(graph.pic()))
     graph.forceFlow(0, makeSink=False)
-    print(prettyCok(graph.pic()))
+    print(Utils.prettyCok(graph.pic()))
 
 
 def testAllJacs():
@@ -37,7 +34,7 @@ def testAllJacs():
         timeCheck = time.time()
         jacs[i] = []
         graph = Graph.cycle(i)
-        graph.visualize(title=f"Pic(G)={prettyCok(graph.pic())}")
+        graph.visualize(title=f"Pic(G)={Utils.prettyCok(graph.pic())}")
         jacs[i].append(graph.pic()[1][0])
         graph.setEdgeState(1, 2, state=1)
         graph.setEdgeState(2, 3, state=2)
@@ -45,18 +42,18 @@ def testAllJacs():
             for j in range(3, i - 1):
                 graph.setEdgeState(j, j + 1, state=2)
                 jacs[i].append(graph.pic()[1][0])
-                graph.visualize(title=f"Pic(G)={prettyCok(graph.pic())}")
+                graph.visualize(title=f"Pic(G)={Utils.prettyCok(graph.pic())}")
         graph.setEdgeState(i - 1, 0, state=2)
         jacs[i].append(graph.pic()[1][0])
-        graph.visualize(title=f"Pic(G)={prettyCok(graph.pic())}")
+        graph.visualize(title=f"Pic(G)={Utils.prettyCok(graph.pic())}")
 
         graph.setEdgeState(0, 1, state=2)
         jacs[i].append(graph.pic()[1][0])
-        graph.visualize(title=f"Pic(G)={prettyCok(graph.pic())}")
+        graph.visualize(title=f"Pic(G)={Utils.prettyCok(graph.pic())}")
 
         graph.setEdgeState(1, 2, state=2)
         jacs[i].append(1 if len(graph.pic()[1]) == 0 else graph.pic()[1][0])
-        graph.visualize(title=f"Pic(G)={prettyCok(graph.pic())}")
+        graph.visualize(title=f"Pic(G)={Utils.prettyCok(graph.pic())}")
         check = jacs[i] == [i for i in range(i, 0, -1)]
         print(f"Check for {i}: {check} after {time.time() - timeCheck}")
         times.append((i, round(time.time() - timeCheck, 3)))
@@ -75,7 +72,7 @@ def testPseudoTree(glueByVertex=True):
     # cycle.visualize()
     audit = cycle.auditEdges()
     print(f"Cycle sources: {audit[0]}, Cycle sinks: {audit[1]}")
-    print(f"Cycle Picard: {prettyCok(cycle.pic())}")
+    print(f"Cycle Picard: {Utils.prettyCok(cycle.pic())}")
     adjacency = [
         [0, 1, 0, 0],
         [0, 0, 1, 0],
@@ -85,7 +82,7 @@ def testPseudoTree(glueByVertex=True):
     stick = Graph(adjacency)
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
-    print(f"Tree picard: {prettyCok(stick.pic())}")
+    print(f"Tree picard: {Utils.prettyCok(stick.pic())}")
     gluePoint = 1
     if glueByVertex:
         glued = Graph.glueByVertex(cycle, stick, gluePoint, 0)
@@ -94,24 +91,24 @@ def testPseudoTree(glueByVertex=True):
     glued.visualize()
     audit = glued.auditEdges()
     print(f"Pseudo-tree sources: {audit[0]}, Pseudo-tree sinks: {audit[1]}")
-    print(f"Pseudo-tree picard: {prettyCok(glued.pic())}")
+    print(f"Pseudo-tree picard: {Utils.prettyCok(glued.pic())}")
 
 
 def cycleOrientation(size: int):
     cycle = Graph.cycle(size)
-    cycle.setEdgeState(0, 1, 1)
-    cycle.setEdgeState(1, 2, 2)
-    cycle.setEdgeState(2, 3, 1)
-    # cycle.setEdgeState(3, 4, 2)
-    # cycle.setEdgeState(4, 5, 1)
+    cycle.setEdgeState(0, 1, 0)
+    cycle.setEdgeState(1, 2, 0)
+    cycle.setEdgeState(2, 3, 0)
+    cycle.setEdgeState(3, 4, 1)
+    cycle.setEdgeState(4, 5, 2)
     """cycle.setEdgeState(5, 6, 0)
     cycle.setEdgeState(6, 7, 0)
     cycle.setEdgeState(7, 8, 0)
     cycle.setEdgeState(8, 9, 0)
     cycle.setEdgeState(9, 10, 0)"""
-    cycle.setEdgeState(size - 1, 0, 2)
+    cycle.setEdgeState(size - 1, 0, 0)
     cycle.visualize()
-    print(f"Cycle Picard of size {size}: {prettyCok(cycle.pic())}")
+    print(f"Cycle Picard of size {size}: {Utils.prettyCok(cycle.pic())}")
     print(f"Cycle paths: {cycle.countPaths()}")
 
 
@@ -128,7 +125,7 @@ def wheelOrientation(size: int):
     wheel.setEdgeState(9, 10, 0)"""
     # wheel.setEdgeState(size - 1, 1, 1)
     wheel.visualize()
-    print(f"Wheel Picard of size {size}: {prettyCok(wheel.pic())}")
+    print(f"Wheel Picard of size {size}: {Utils.prettyCok(wheel.pic())}")
 
 
 if __name__ == "__main__":
@@ -149,20 +146,47 @@ if __name__ == "__main__":
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)
     graph.visualize(divisor)"""
+    # [plotFactors('cycle', (size, 8), includePaths=(2,), bySize=False) for size in range(4, 9)]
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
     # logger.info(cokDict)
-    # testBruteForce((3, 14))
+    # testBruteForce((3, 40))
     # graph = Graph(adjacency)
     # graph.visualize()
     # print(graph.auditEdges())
     # testPseudoTree(glueByVertex=True)
     # testAllJacs()
+    cycleOrientation(6)
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
         title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
     )"""
-    [plotFactors('cycle', (size, 8), includePaths=(2,), bySize=False) for size in range(4, 11)]
+    """Utils.setVerbose(True)
+    cycle = Graph.cycle(4)
+    cycle.setEdgeState(0, 1, 1)
+    cycle.setEdgeState(1, 2, 2)
+    cycle.setEdgeState(2, 3, 0)
+    cycle.setEdgeState(3, 0, 0)
+    # lap = cycle.laplacian
+    # snf = Utils.smithNormalForm(cycle.laplacian)
+    print(f"Cycle Picard of size {4}: {Utils.prettyCok(cycle.pic())}")
+
+    cycle.setEdgeState(3, 0, weight=0)
+    cycle.setEdgeState(2, 3, 2)
+    cycle.addEdge(3, 4, state=0)
+    cycle.setEdgeState(4, 0, 0)
+    # lap2 = cycle.laplacian
+    # snf2 = Utils.smithNormalForm(cycle.laplacian)
+    print(f"Cycle Picard of size {5}: {Utils.prettyCok(cycle.pic())}")
+
+    cycle.setEdgeState(4, 0, weight=0)
+    cycle.setEdgeState(3, 4, 2)
+    cycle.addEdge(4, 5, state=0)
+    cycle.setEdgeState(5, 0, 0)
+    # lap3 = cycle.laplacian
+    # snf3 = Utils.smithNormalForm(cycle.laplacian)
+    print(f"Cycle Picard of size {6}: {Utils.prettyCok(cycle.pic())}")
+    # 
     # [wheelOrientation(i) for i in range(3, 21)]
-    # cycleOrientation(4)
+    # cycleOrientation(4)"""
     """adjacency = [
         [0, 1, 0, 1, 1, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -176,7 +200,7 @@ if __name__ == "__main__":
     stick.visualize(title="A Tree Graph", positions={1: [.8, -.4], 2: [.9, .9], 0: [0, .5]})
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
-    print(f"Tree picard: {prettyCok(stick.pic())}")"""
+    print(f"Tree picard: {Utils.prettyCok(stick.pic())}")"""
     """graph = Graph([
         [0, 1, 0, 0, 0],
         [1, 0, 1, 0, 0],
@@ -188,7 +212,7 @@ if __name__ == "__main__":
     #graph.addEdge(4, 6, state=1)
     #graph.addEdge(5, 7, state=2)
     graph.visualize()
-    print(prettyCok(Utils.coKernel(graph.laplacian)))"""
+    print(Utils.prettyCok(Utils.coKernel(graph.laplacian)))"""
     """graph = Graph.complete(3)
     testSinkSource(graph)"""
     # print(graph.jac(divisor))

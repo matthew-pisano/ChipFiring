@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  12 SEP 2022 20:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  29 SEP 2022 23:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1100,89 +1100,52 @@ LaTeX Info: Redefining \nameref on input line 93.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
+
+Class amsart Warning: Abstract should precede \maketitle in AMS document classe
+s; reported on input line 116.
+
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+./SURE2022.tex:296: Undefined control sequence.
+l.296 			$C_3\dotsC
+                   _{30}$ by testing out all possible orientations for each ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 401.
+./SURE2022.tex:296: Double subscript.
+l.296 			$C_3\dotsC_
+                    {30}$ by testing out all possible orientations for each ...
+I treat `x_1_2' essentially like `x_1{}_2'.
 
+./SURE2022.tex:298: Undefined control sequence.
+l.298 			$C_3\dotsC
+                   _{80}$ by only looking as specific orientations of two pa...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathop' on input line 401.
+./SURE2022.tex:298: Double subscript.
+l.298 			$C_3\dotsC_
+                    {80}$ by only looking as specific orientations of two pa...
+I treat `x_1_2' essentially like `x_1{}_2'.
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathchardef' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\std@minus' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 2.43306pt
-(hyperref)                removed on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathgroup' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\symoperators' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 401.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 401.
-
-[4] (./SURE2022.bbl) [5]
+[4] (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.bbl) [5]
 (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.aux)
 Package rerunfilecheck Info: File `SURE2022.out' has not changed.
-(rerunfilecheck)             Checksum: 1DA6D299D94D2ADA55EEB503DDC3B4AA;2600.
+(rerunfilecheck)             Checksum: 4124CEACA8B0D31A8B2D13122227852F;2882.
  ) 
 Here is how much of TeX's memory you used:
- 27934 strings out of 480171
- 519118 string characters out of 5894489
- 841629 words of memory out of 5000000
- 45121 multiletter control sequences out of 15000+600000
+ 27920 strings out of 480171
+ 519119 string characters out of 5894489
+ 843644 words of memory out of 5000000
+ 45117 multiletter control sequences out of 15000+600000
  515813 words of font info for 142 fonts, out of 8000000 for 9000
  220 hyphenation exceptions out of 8191
- 85i,12n,90p,3240b,514s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 85i,12n,90p,3240b,441s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
@@ -1195,10 +1158,10 @@ l/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 Output written on /home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.pdf
- (5 pages, 132842 bytes).
+ (5 pages, 130627 bytes).
 PDF statistics:
- 191 PDF objects out of 1000 (max. 8388607)
- 160 compressed objects within 2 object streams
- 49 named destinations out of 1000 (max. 500000)
+ 178 PDF objects out of 1000 (max. 8388607)
+ 147 compressed objects within 2 object streams
+ 39 named destinations out of 1000 (max. 500000)
  117 words of extra memory for PDF output out of 10000 (max. 10000000)
 

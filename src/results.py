@@ -1,4 +1,5 @@
 from algorithms import *
+from src.utils import prettyCok
 
 
 def testPseudoTree(glueByVertex=True):
@@ -14,7 +15,7 @@ def testPseudoTree(glueByVertex=True):
     # cycle.visualize()
     audit = cycle.auditEdges()
     print(f"Cycle sources: {audit[0]}, Cycle sinks: {audit[1]}")
-    print(f"Cycle Picard: {prettyCok(cycle.pic())}")
+    print(f"Cycle Picard: {Utils.prettyCok(cycle.pic())}")
     adjacency = [
         [0, 0, 0],
         [1, 0, 1],
@@ -23,7 +24,7 @@ def testPseudoTree(glueByVertex=True):
     stick = Graph(adjacency)
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
-    print(f"Tree picard: {prettyCok(stick.pic())}")
+    print(f"Tree picard: {Utils.prettyCok(stick.pic())}")
     if glueByVertex:
         glued = Graph.glueByVertex(cycle, stick, 3, 0)
     else:
@@ -31,7 +32,7 @@ def testPseudoTree(glueByVertex=True):
     # glued.visualize()
     audit = glued.auditEdges()
     print(f"Pseudo-tree sources: {audit[0]}, Pseudo-tree sinks: {audit[1]}")
-    print(f"Pseudo-tree picard: {prettyCok(glued.pic())}")
+    print(f"Pseudo-tree picard: {Utils.prettyCok(glued.pic())}")
 
 
 def testPseudoTree(glueByVertex=True):
@@ -46,12 +47,12 @@ def testPseudoTree(glueByVertex=True):
     cycle.visualize()
     audit = cycle.auditEdges()
     print(f"Cycle sources: {audit[0]}, Cycle sinks: {audit[1]}")
-    print(f"Cycle Picard: {prettyCok(cycle.pic())}")
+    print(f"Cycle Picard: {Utils.prettyCok(cycle.pic())}")
     adjacency = [[0]]
     stick = Graph(adjacency)
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
-    print(f"Tree picard: {prettyCok(stick.pic())}")
+    print(f"Tree picard: {Utils.prettyCok(stick.pic())}")
     gluePoint = 1
     if glueByVertex:
         glued = Graph.glueByVertex(cycle, stick, gluePoint, 0)
@@ -60,7 +61,7 @@ def testPseudoTree(glueByVertex=True):
     glued.visualize()
     audit = glued.auditEdges()
     print(f"Pseudo-tree sources: {audit[0]}, Pseudo-tree sinks: {audit[1]}")
-    print(f"Pseudo-tree picard: {prettyCok(glued.pic())}")
+    print(f"Pseudo-tree picard: {Utils.prettyCok(glued.pic())}")
 
 
 def testPseudoTree(glueByVertex=True):
@@ -74,7 +75,7 @@ def testPseudoTree(glueByVertex=True):
     # cycle.visualize()
     audit = cycle.auditEdges()
     print(f"Cycle sources: {audit[0]}, Cycle sinks: {audit[1]}")
-    print(f"Cycle Picard: {prettyCok(cycle.pic())}")
+    print(f"Cycle Picard: {Utils.prettyCok(cycle.pic())}")
     adjacency = [
         [0, 1, 1],
         [0, 0, 0],
@@ -83,7 +84,7 @@ def testPseudoTree(glueByVertex=True):
     stick = Graph(adjacency)
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
-    print(f"Tree picard: {prettyCok(stick.pic())}")
+    print(f"Tree picard: {Utils.prettyCok(stick.pic())}")
     gluePoint = 1
     if glueByVertex:
         glued = Graph.glueByVertex(cycle, stick, gluePoint, 0)
@@ -92,4 +93,4 @@ def testPseudoTree(glueByVertex=True):
     glued.visualize()
     audit = glued.auditEdges()
     print(f"Pseudo-tree sources: {audit[0]}, Pseudo-tree sinks: {audit[1]}")
-    print(f"Pseudo-tree picard: {prettyCok(glued.pic())}")
+    print(f"Pseudo-tree picard: {Utils.prettyCok(glued.pic())}")
