@@ -156,7 +156,7 @@ if __name__ == "__main__":
     # testPseudoTree(glueByVertex=True)
     # testAllJacs()
     # cycleOrientation(6)
-    [wheelOrientation(i) for i in range(3, 10)]
+    # [wheelOrientation(i) for i in range(3, 10)]
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
         title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
     )"""
@@ -202,7 +202,7 @@ if __name__ == "__main__":
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
     print(f"Tree picard: {Utils.prettyCok(stick.pic())}")"""
-    """graph = Graph([
+    graph = Graph([
         [0, 1, 0, 0, 0],
         [1, 0, 1, 0, 0],
         [0, 0, 0, 0, 0],
@@ -213,7 +213,7 @@ if __name__ == "__main__":
     #graph.addEdge(4, 6, state=1)
     #graph.addEdge(5, 7, state=2)
     graph.visualize()
-    print(Utils.prettyCok(Utils.coKernel(graph.laplacian)))"""
+    print(Utils.prettyCok(Utils.coKernel(graph.laplacian)))
     """graph = Graph.complete(3)
     testSinkSource(graph)"""
     # print(graph.jac(divisor))

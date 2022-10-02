@@ -145,33 +145,33 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 \pagebreak
 
 \section{Introduction}
+	This project will study Chip-Firing games and how different combinations of directed and undirected edges
+	affect its winning strategies. We will focus on Research Project 11 in~\cite{glass2020chip}.
+	We plan to pursue this for trees, cycle graphs, pseudotrees, and wheel graphs.
 
-	We will focus on Research Project 11 in~\cite{glass2020chip}.
-	The following are more specific directions that we plan to pursue.
-
-	\begin{goal}[8/1/2022]$ $
-		\begin{enumerate}
-			\item
-			Prove/disprove: for an oriented graph $G$, one always has $\Pic(G)=\mathbb{Z} \times \Jac(G)$, 
-			i.e., as a finitely generated abelian group, the rank of $\Pic(G)$ is $1$.
-			\textcolor{red}{Jaiung: we disproved this by using~\cite{wagner2000critical}.}
-			\item
-			Prove/disprove: for $C_n$, and $0 \leq m \leq n$, one can always find an orientation
-			of $C_n$ so that $\Jac(C_n)=\mathbb{Z}_m$ (with the orientation).
-			\item
-			Prove/disprove: for an oriented graph $G$, if $v_0 \in V(G)$ is a sink (or a source)
-			and $G'$ is the graph obtained by reserving the direction for all arrows adjacent
-			to $v_0$ from $G$, then $\Jac(G)=\Jac(G')$. (Note: we believe that this should be true
-			for at least some classes of graphs such as cyclic graphs.)
-			\item
-			Prove/disprove: for an oriented planar graph $G$ and its planar dual (should be defined)
-			$\hat{G}$, one has $\Jac(G)=\Jac(\hat{G})$.
-			\item
-			Prove/disprove: for oriented graphs $G_1,G_2$, let $G$ be the graph obtained by
-			gluing $G_1$ and $G_2$ along one vertex. Then $\Jac(G)=\Jac(G_1) \times \Jac(G_2)$.
-			\textcolor{red}{Jaiung: we are currently working on this (8/31)}
-		\end{enumerate}
-	\end{goal}
+	%\begin{goal}[8/1/2022]$ $
+	%	\begin{enumerate}
+	%		\item
+	%		Prove/disprove: for an oriented graph $G$, one always has $\Pic(G)=\mathbb{Z} \times \Jac(G)$,
+	%		i.e., as a finitely generated abelian group, the rank of $\Pic(G)$ is $1$.
+	%		\textcolor{red}{Jaiung: we disproved this by using~\cite{wagner2000critical}.}
+	%		\item
+	%		Prove/disprove: for $C_n$, and $0 \leq m \leq n$, one can always find an orientation
+	%		of $C_n$ so that $\Jac(C_n)=\mathbb{Z}_m$ (with the orientation).
+	%		\item
+	%		Prove/disprove: for an oriented graph $G$, if $v_0 \in V(G)$ is a sink (or a source)
+	%		and $G'$ is the graph obtained by reserving the direction for all arrows adjacent
+	%		to $v_0$ from $G$, then $\Jac(G)=\Jac(G')$. (Note: we believe that this should be true
+	%		for at least some classes of graphs such as cyclic graphs.)
+	%		\item
+	%		Prove/disprove: for an oriented planar graph $G$ and its planar dual (should be defined)
+	%		$\hat{G}$, one has $\Jac(G)=\Jac(\hat{G})$.
+	%		\item
+	%		Prove/disprove: for oriented graphs $G_1,G_2$, let $G$ be the graph obtained by
+	%		gluing $G_1$ and $G_2$ along one vertex. Then $\Jac(G)=\Jac(G_1) \times \Jac(G_2)$.
+	%		\textcolor{red}{Jaiung: we are currently working on this (8/31)}
+	%	\end{enumerate}
+	%\end{goal}
 
 \bigskip
 
@@ -205,8 +205,8 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 \section{Describing The Picard Group of a Tree}
 
 	\begin{conj}
-		The Jacobian of a tree graph is always $\mathbb{Z}$ as follows from the matrix-tree theorem as a
-		tree graph only has one possible spanning tree. \textcolor{red}{Prove and cite}
+		The Jacobian of a tree graph is always trivial as follows from the matrix-tree theorem as a
+		tree graph only has one possible spanning tree. \textcolor{red}{[Citation Needed]}
 	\end{conj}
 
 	\begin{lem}
@@ -293,7 +293,7 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 		\end{conj}
 		\begin{proof}
 			We have proven this experimentally for cycles using two methods.  For the first, we proved this for
-			$C_3\dotsC_{30}$ by testing out all possible orientations for each size of cycle graph until at least one
+			$C_3 \dots C_{30}$ by testing out all possible orientations for each size of cycle graph until at least one
 			of each $\Jac(C_n)=\mathbb{Z}_k$ has been found.  By using our second method, we proved this for
 			$C_3\dotsC_{80}$ by only looking as specific orientations of two path cycle graphs of size $n$.
 		\end{proof}
@@ -324,7 +324,7 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 		to $\mathbb{Z}_n$.
 
 		\begin{conj}
-			For any cycle graph $C_n$, the orientation with no paths always has a Jacobian of $C_n$.
+			For any cycle graph $C_n$, the orientation with no paths always has a Jacobian of $\mathbb{Z}_n$.
 			Either of the single path orientations have a trivial Jacobian.
 			The set of all orientations with two paths always contains all single invariant factors
 			$\mathbb{Z}_2\dots\mathbb{Z}_n$.  For all graphs at least up to $C_{10}$ and likely well beyond that
@@ -345,7 +345,7 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 
 		\begin{conj}
 			For any given cycle graph, $\Jac(G)=\mathbb{Z}_{x-2}$, where $x$ is the number of
-			bidirectional edges clockwise of the counter-clockwise path (or counter-clockwise of the clockwise path).
+			bidirectional edges clockwise of the counter-clockwise path and counter-clockwise of the clockwise path.
 		\end{conj}
 		\begin{proof}
 			We have proven this completely for cycle graphs up to $C_{80}$ when using two continuous paths without
