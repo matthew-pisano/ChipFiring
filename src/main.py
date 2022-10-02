@@ -113,7 +113,7 @@ def cycleOrientation(size: int):
 
 
 def wheelOrientation(size: int):
-    wheel = Graph.wheel(size, direction=0, spokeDirection=0)
+    wheel = Graph.wheel(size, direction=2, spokeDirection=0)
     # wheel.setEdgeState(1, 2, 1)
     # wheel.setEdgeState(2, 3, 1)
     # wheel.setEdgeState(3, 4, 1)
@@ -124,7 +124,7 @@ def wheelOrientation(size: int):
     wheel.setEdgeState(8, 9, 0)
     wheel.setEdgeState(9, 10, 0)"""
     # wheel.setEdgeState(size - 1, 1, 1)
-    wheel.visualize()
+    # wheel.visualize()
     print(f"Wheel Picard of size {size}: {Utils.prettyCok(wheel.pic())}")
 
 
@@ -155,7 +155,8 @@ if __name__ == "__main__":
     # print(graph.auditEdges())
     # testPseudoTree(glueByVertex=True)
     # testAllJacs()
-    cycleOrientation(6)
+    # cycleOrientation(6)
+    [wheelOrientation(i) for i in range(3, 10)]
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
         title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
     )"""

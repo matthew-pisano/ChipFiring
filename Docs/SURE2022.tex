@@ -406,8 +406,31 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 		connect two graphs along one arrow. If we are lucky this should provide a way to compute Picard groups for
 		pseudotrees by using the tree case and the cycle case in the previous sections.}
 
-\section{Strongly connected directed graphs}
+\section{Describing The Picard Group for a Wheel}
 
+	\subsection{Patterns in The Jacobian}
+		For wheel graphs, we looked for patterns that arose within the invariant factors of the Jacobian as
+		a general formula was not immediately obvious.  For this strategy, we broke the edges of the wheel graph into
+		their two most obvious groups, those belonging to the rim of the wheel and those of the spokes.  By orienting
+		all the edges of either group the same way and trying all nine combinations, we noticed a well-defined pattern
+		for each as the size of the wheel graph changed.  These patterns fell into four distinct groups.
+
+		\begin{enumerate}
+			\item When the spoke edges all pointed towards the axel and the rim was not bidirectional, or when
+			the spoke edges were bidirectional, but the rim was not then a graph of size $n$ had a
+			Jacobian of $\mathbb{Z}_{2^(n-1)-1}$.
+			\item When the spoke edges all pointed away from the axel and the rim was not bidirectional,
+			a graph of size $n$ had a Jacobian of $\mathbb{Z}_{n-1}$.
+			\item When the spoke edges point away from the axel and the rim was bidirectional and a graph of size
+			$n$ had a Jacobian of $\mathbb{Z}_{n-1} \times \mathbb{Z}_{n-1}$ when $n$ was even
+			and $Z_{\frac{n-1}{2}} x Z_{(n-1) \times 2}$ when $n$ was odd.
+			\item When all edges were bidirectional or when the spoke direction was towards the axel and
+			the rim was bidirectional, a graph of size $n$ had a Jacobian of
+			$\mathbb{Z}_{\alpha\phi^{n}} \times \mathbb{Z}_{5\alpha\phi^{n}}$ when the size
+			was odd where $\alpha \approxeq 0.27555$ and $\mathbb{Z}_{\beta\phi^{n}} \times \mathbb{Z}_{\beta\phi^{n}}$
+			when the size was even where $\beta \approxeq 0.618035$. In both of these patterns,
+			$\phi$ represents the golden ratio.
+		\end{enumerate}
 \bibliography{Jacobian}
 \bibliographystyle{alpha}
 

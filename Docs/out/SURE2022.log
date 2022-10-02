@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  29 SEP 2022 23:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  1 OCT 2022 20:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1136,13 +1136,13 @@ I treat `x_1_2' essentially like `x_1{}_2'.
 [4] (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.bbl) [5]
 (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.aux)
 Package rerunfilecheck Info: File `SURE2022.out' has not changed.
-(rerunfilecheck)             Checksum: 4124CEACA8B0D31A8B2D13122227852F;2882.
+(rerunfilecheck)             Checksum: 80FB4C79F1A3646D0244245869133169;3131.
  ) 
 Here is how much of TeX's memory you used:
- 27920 strings out of 480171
- 519119 string characters out of 5894489
- 843644 words of memory out of 5000000
- 45117 multiletter control sequences out of 15000+600000
+ 27926 strings out of 480171
+ 519173 string characters out of 5894489
+ 843647 words of memory out of 5000000
+ 45118 multiletter control sequences out of 15000+600000
  515813 words of font info for 142 fonts, out of 8000000 for 9000
  220 hyphenation exceptions out of 8191
  85i,12n,90p,3240b,441s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1158,10 +1158,10 @@ l/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 Output written on /home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.pdf
- (5 pages, 130627 bytes).
+ (5 pages, 134267 bytes).
 PDF statistics:
- 178 PDF objects out of 1000 (max. 8388607)
- 147 compressed objects within 2 object streams
- 39 named destinations out of 1000 (max. 500000)
- 117 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 187 PDF objects out of 1000 (max. 8388607)
+ 156 compressed objects within 2 object streams
+ 44 named destinations out of 1000 (max. 500000)
+ 125 words of extra memory for PDF output out of 10000 (max. 10000000)
 
