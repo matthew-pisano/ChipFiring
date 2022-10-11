@@ -132,10 +132,28 @@ class Utils:
         return product, invFactors, len(infs)
 
     @staticmethod
-    def prettyCok(coKernel: tuple):
+    def prettyCok(coKernel: tuple, compact=False):
         cokStr = ""
-        for factor in coKernel[1]:
-            cokStr += f"\u2124_{factor} x "
+        mult = 1
+        lastFactor = None
+        if not compact:
+            for factor in coKernel[1]:
+                cokStr += f"\u2124_{factor} x "
+        else:
+            for factor in coKernel[1]:
+                if lastFactor == factor:
+                    mult += 1
+                elif mult > 1:
+                    cokStr += f"({mult})\u2124_{lastFactor} x "
+                    mult = 1
+                elif lastFactor is not None:
+                    cokStr += f"\u2124_{lastFactor} x "
+                lastFactor = factor
+            if mult > 1:
+                cokStr += f"({mult})\u2124_{lastFactor} x "
+            else:
+                cokStr += f"\u2124_{lastFactor} x "
+
         if coKernel[2] > 0:
             cokStr += "\u2124" + (f"^{coKernel[2]}" if coKernel[2] > 1 else "")
         else:

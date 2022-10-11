@@ -113,18 +113,18 @@ def cycleOrientation(size: int):
 
 
 def wheelOrientation(size: int):
-    wheel = Graph.wheel(size, direction=2, spokeDirection=0)
-    # wheel.setEdgeState(1, 2, 1)
-    # wheel.setEdgeState(2, 3, 1)
-    # wheel.setEdgeState(3, 4, 1)
-    # wheel.setEdgeState(4, 5, 1)
+    wheel = Graph.wheel(size, direction=0, spokeDirection=0)
+    wheel.setEdgeState(1, 2, 1)
+    wheel.setEdgeState(2, 3, 2)
+    wheel.setEdgeState(3, 4, 1)
+    wheel.setEdgeState(4, 5, 1)
     """wheel.setEdgeState(5, 6, 0)
     wheel.setEdgeState(6, 7, 0)
     wheel.setEdgeState(7, 8, 0)
     wheel.setEdgeState(8, 9, 0)
     wheel.setEdgeState(9, 10, 0)"""
     # wheel.setEdgeState(size - 1, 1, 1)
-    # wheel.visualize()
+    # wheel.visualize(positions={0: (0, 0)})
     print(f"Wheel Picard of size {size}: {Utils.prettyCok(wheel.pic())}")
 
 
@@ -156,7 +156,11 @@ if __name__ == "__main__":
     # testPseudoTree(glueByVertex=True)
     # testAllJacs()
     # cycleOrientation(6)
-    # [wheelOrientation(i) for i in range(3, 10)]
+    # [wheelOrientation(i) for i in range(6, 16)]
+    for i in range(1, 16):
+        network = Graph.network([i, 10, 38])
+        # print(f"{i} Picard: {Utils.prettyCok(network.pic())}")
+        print(f"{i} Picard: {Utils.prettyCok(network.pic(), compact=True)}")
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
         title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
     )"""
@@ -202,7 +206,7 @@ if __name__ == "__main__":
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
     print(f"Tree picard: {Utils.prettyCok(stick.pic())}")"""
-    graph = Graph([
+    """graph = Graph([
         [0, 1, 0, 0, 0],
         [1, 0, 1, 0, 0],
         [0, 0, 0, 0, 0],
@@ -213,7 +217,7 @@ if __name__ == "__main__":
     #graph.addEdge(4, 6, state=1)
     #graph.addEdge(5, 7, state=2)
     graph.visualize()
-    print(Utils.prettyCok(Utils.coKernel(graph.laplacian)))
+    print(Utils.prettyCok(Utils.coKernel(graph.laplacian)))"""
     """graph = Graph.complete(3)
     testSinkSource(graph)"""
     # print(graph.jac(divisor))

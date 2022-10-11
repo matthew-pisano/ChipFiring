@@ -225,6 +225,7 @@ class Graph:
         self._refreshState()
 
     def spanningTree(self):
+        """Returns the spanning tree for this graph"""
         size = len(self.matrix)
         selectedNode = [0]*size
         noEdge = 0
@@ -251,8 +252,7 @@ class Graph:
         return tree
 
     def lend(self, divisor: Divisor, vertexes: list | np.ndarray | int, amount, forceLegal=False):
-        """Lend from a vertex amount number of times.
-        Borrows if amount is negative"""
+        """Lend from a vertex amount number of times. Borrows if amount is negative"""
         if type(vertexes) is int:
             vertexes = [vertexes]
 
@@ -311,6 +311,7 @@ class Graph:
         plt.show()
 
     def countPaths(self, cycleRange=None):
+        """Counts the number of paths in a cycle graph"""
         if cycleRange is None:
             cycleRange = (0, len(self)-1)
         paths = 0
@@ -342,6 +343,7 @@ class Graph:
 
     @classmethod
     def build(cls, form: str, size: int, **kwargs):
+        """Returns a graph of the given form"""
         return getattr(cls, form)(size, **kwargs)
 
     @classmethod
@@ -369,17 +371,31 @@ class Graph:
         return graph
 
     @classmethod
-    def random(cls, size):
-        """Returns a random graph of the given size"""
-        graph = cls.empty(size)
-        for i in range(0, size):
-            for j in range(0, size):
-                if i != j and not graph.getEdge(i, j, directed=False) \
-                        and random.randint(0, 1) == 0:
-                    graph.addEdge(i, j, refreshState=False)
-                    graph.setEdgeState(i, j, random.randint(0, 2), refreshState=False)
+    def network(cls, shape: list):
+        """Returns a network graph with the given shape.  Each element of the shape is
+        the number of nodes in that layer of the network"""
+        graph = cls.empty(sum(shape))
+        prevNodes = 0
+        layer = 0
+        i = 0
+        while i < shape[layer]:
+            for j in range(0, shape[layer+1]):
+                graph.addEdge(prevNodes+i, prevNodes+shape[layer]+j, state=cls.FWD, refreshState=False)
+            i += 1
+            if i == shape[layer]:
+                prevNodes += shape[layer]
+                i = 0
+                layer += 1
+                if layer == len(shape)-1:
+                    break
         graph._refreshState()
+
         return graph
+
+    @classmethod
+    def empty(cls, size):
+        """Returns an empty graph of the given size"""
+        return Graph(np.zeros((size, size)))
 
     @classmethod
     def complete(cls, size):

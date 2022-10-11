@@ -54,3 +54,37 @@ in growing smith itself or growing laplacian
 Check 4, 6, 8 ... paths for cyclic graphs to determine if they all have Z ... Z_n invariant factors
 
 bipartite graph
+
+Layers in the form of f -> s -> t the number of nodes in each layer
+
+if t is odd:
+    if s is odd:
+        if s is not a factor of t:
+            if f <= s:
+                (s-f-1)Z_(t) x (f)Z_(s*t) x Z^t
+            else:
+                (f-s+1)Z_s x (s-1)Z_(s*t) x Z^t
+
+        else:
+            (f-1)Z_s x Z_t x Z_(s*t) x Z^t
+
+    else:
+        if f <= s:
+                (s-f-1)Z_(t) x (f)Z_(s*t) x Z^t
+        else:
+            (f-s+1)Z_s x (s-1)Z_(s*t) x Z^t
+
+else:
+    if s is odd:
+        if s is not a factor of t:
+            if f <= s:
+                (s-f-1)Z_(t) x (f)Z_(s*t) x Z^t
+            else:
+                (f-s+1)Z_s x (s-1)Z_(s*t) x Z^t
+        else:
+            (f-1)Z_s x Z_t x Z_(s*t) x Z^t
+    else:
+        if s is a factor of t:
+            (f-1)Z_s x Z_t x Z_(s*t) x Z^t
+        else:
+            (f-1)Z_2 x (s-f-1)Z_t x (f-1)Z_(s*t/2) x Z_(s*t) x Z^t
