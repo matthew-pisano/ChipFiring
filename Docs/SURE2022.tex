@@ -113,37 +113,6 @@
 
 \maketitle
 
-\begin{abstract}
-	We explore a combinatorial game on finite graphs, called Chip-Firing Games,
-	which has various connections to other areas, such as algebraic geometry, number theory and economics.
-	To play the game, one first puts an integer amount of chips at each vertex. Then,
-	each vertex is allowed to borrow or lend chips from its neighbors equally as the game progresses.
-	One can study chip-firing games on a graph $G$ through a finitely generated abelian group
-	$\textrm{Pic}(G)$ (Picard group) and its torsion subgroup $\textrm{Jac}(G)$ (Jacobian) which can
-	be computed by using the Laplacian matrix of $G$.
-
-	When a graph $G$ is directed, one may define $\textrm{Pic}(G)$ and $\textrm{Jac}(G)$ as in the case of undirected
-	graphs by using Laplacian matrices, but computations become much more complicated in this case. For example,
-	$\textrm{Pic}(G)=\mathbb{Z}$, when $G$ is a tree, from the matrix-tree theorem, which tells us that $|\textrm{Jac}(G)|$ is
-	the number of spanning trees of $G$ in the undirected case.
-	In the case of directed trees, even the rank of $\textrm{Pic}(T)$ can be arbitrarily large.
-	For example, for any natural number $n$ we can construct a tree $T_n$ such that the rank of $\textrm{Pic}(T_n)$ is $n$.
-
-	In our ongoing project, we study Picard groups and Jacobians for directed trees, cycles, and pseudotrees.
-	Even in these seemingly simple cases, we find some new phenomenon. For instance, for the undirected cycle $C_n$,
-	$\textrm{Jac}(C_n)=\mathbb{Z}_n$, however, we prove that in the directed case, for any given $m \leq n$, one can
-	always find an orientation of $C_n$ in such a way that $\textrm{Jac}(C_n)$ is $\mathbb{Z}_m$.
-	By closely examining trees and cycles, and how Picard groups and Jacobians change with (suitably defined)
-	vertex and edge gluing, we obtain several results for pseudotrees.
-\end{abstract}
-
-\vspace*{\fill}
-
-\textbf{Acknowledgment}\hspace{0.1cm} This research was supported by Research and Creative Activities (RSCA) at
-SUNY New Paltz. We would like to thank RSCA for their support.
-
-\pagebreak
-
 \section{Introduction}
 	This project will study Chip-Firing games and how different combinations of directed and undirected edges
 	affect its winning strategies. We will focus on Research Project 11 in~\cite{glass2020chip}.
@@ -173,7 +142,32 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 	%	\end{enumerate}
 	%\end{goal}
 
+		We explore a combinatorial game on finite graphs, called Chip-Firing Games,
+	which has various connections to other areas, such as algebraic geometry, number theory and economics.
+	To play the game, one first puts an integer amount of chips at each vertex. Then,
+	each vertex is allowed to borrow or lend chips from its neighbors equally as the game progresses.
+	One can study chip-firing games on a graph $G$ through a finitely generated abelian group
+	$\textrm{Pic}(G)$ (Picard group) and its torsion subgroup $\textrm{Jac}(G)$ (Jacobian) which can
+	be computed by using the Laplacian matrix of $G$.
+
+	When a graph $G$ is directed, one may define $\textrm{Pic}(G)$ and $\textrm{Jac}(G)$ as in the case of undirected
+	graphs by using Laplacian matrices, but computations become much more complicated in this case. For example,
+	$\textrm{Pic}(G)=\mathbb{Z}$, when $G$ is a tree, from the matrix-tree theorem, which tells us that $|\textrm{Jac}(G)|$ is
+	the number of spanning trees of $G$ in the undirected case.
+	In the case of directed trees, even the rank of $\textrm{Pic}(T)$ can be arbitrarily large.
+	For example, for any natural number $n$ we can construct a tree $T_n$ such that the rank of $\textrm{Pic}(T_n)$ is $n$.
+
+	In our ongoing project, we study Picard groups and Jacobians for directed trees, cycles, and pseudotrees.
+	Even in these seemingly simple cases, we find some new phenomenon. For instance, for the undirected cycle $C_n$,
+	$\textrm{Jac}(C_n)=\mathbb{Z}_n$, however, we prove that in the directed case, for any given $m \leq n$, one can
+	always find an orientation of $C_n$ in such a way that $\textrm{Jac}(C_n)$ is $\mathbb{Z}_m$.
+	By closely examining trees and cycles, and how Picard groups and Jacobians change with (suitably defined)
+	vertex and edge gluing, we obtain several results for pseudotrees.
+
 \bigskip
+
+
+\textbf{Acknowledgment}\hspace{0.1cm} This research was supported by Research and Creative Activities (RSCA) at SUNY New Paltz. We would like to thank RSCA for their support.
 
 \section{Preliminaries}
 
@@ -202,31 +196,22 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 		Here, we represent the Picard Group as $\Pic(G)=\Jac(G)\times\mathbb{Z}^n$.
 
 
-\section{Describing The Picard Group of a Tree}
+\section{Gluing of directed graphs and their Jacobians}
 
-	\begin{conj}
-		The Jacobian of a tree graph is always trivial as follows from the matrix-tree theorem as a
-		tree graph only has one possible spanning tree. \textcolor{red}{[Citation Needed]}
-	\end{conj}
-
-	\begin{lem}
-		Let $G$ be a graph with any orientation. If we attach either an incoming arrow or a two-sided
-		arrow to create a directed graph $G'$, then $\Pic(G)=\Pic(G')$. \label{proposition: gluing an arrow proposition}
-	\end{lem}
-	\begin{proof}
-		Let $\alpha$ be an arrow which is glued to $G$. Let $|V(G)|=n$. We label the vertexes of
-		$G$ as $1,2,\dots,n$. Suppose first that $\alpha$ is incoming and $\alpha$ is glued at the vertex $n$.
-		Let $A_G=(a_{ij})$ (resp.~$A_{G'}$) be the Laplacian of $G$ (resp.~$G'$). In this case, one can easily
-		observe that the matrix $A_{G'}$ is of the following form:
-		\begin{equation}
-			A_{G'}=\left[\begin{array}{ccc|c|c}
-				a_{11}&a_{12}&\cdots &a_{1n}&0\\
-				a_{21}&a_{22}&\cdots &a_{2n}&0\\
-				\vdots & \vdots &\ddots & \vdots & \vdots \\ \hline
-					\vdots & \vdots & \cdots&a_n & 0\\ \hline
-				0&0&\cdots &-1&1\\
-			\end{array}\right]
-		\end{equation}
+\begin{lem}\label{proposition: gluing an arrow proposition}
+Let $G$ be a directed graph. If we attach either an incoming arrow or a two-sided arrow to create another directed graph $G'$, then $\Pic(G)=\Pic(G')$.
+\end{lem}
+\begin{proof}
+Let $\alpha$ be an arrow which is glued to $G$. Let $|V(G)|=n$. We label the vertexes of $G$ as $1,2,\dots,n$. Suppose first that $\alpha$ is incoming and $\alpha$ is glued at the vertex $n$. Let $L_G=(a_{ij})$ (resp.~$L_{G'}$) be the Laplacian matrix of $G$ (resp.~$G'$). In this case, one can easily observe that the matrix $L_{G'}$ is of the following form:
+\begin{equation}
+L_{G'}=\left[\begin{array}{ccc|c|c}
+a_{11}&a_{12}&\cdots &a_{1n}&0\\
+a_{21}&a_{22}&\cdots &a_{2n}&0\\
+\vdots & \vdots &\ddots & \vdots & \vdots \\ \hline
+\vdots & \vdots & \cdots&a_n & 0\\ \hline
+0&0&\cdots &-1&1\\
+\end{array}\right]
+\end{equation}
 		By a column operation between the last two columns, we obtain the following matrix:
 		\begin{equation}\label{eq: arrow adding matrix}
 			\left[\begin{array}{ccc|c|c}
@@ -239,9 +224,9 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 		\end{equation}
 		This shows that $\Pic(G)=\Pic(G')$.
 
-		Next, suppose that $\alpha$ is a two-sided arrow. Then similar to the above, we obtain the following matroid for $G'$:
+		Next, suppose that $\alpha$ is a two-sided arrow. Then similar to the above, we obtain the following Laplacian matrix for $G'$:
 		\begin{equation}\label{eq: eq two-sided}
-			A_{G'}=\left[\begin{array}{ccc|c|c}
+			L_{G'}=\left[\begin{array}{ccc|c|c}
 				a_{11}&a_{12}&\cdots &a_{1n}&0\\
 				a_{21}&a_{22}&\cdots &a_{2n}&0\\
 				\vdots & \vdots &\ddots & \vdots & \vdots \\ \hline
@@ -253,38 +238,267 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 		This shows that $\Pic(G)=\Pic(G')$.
 	\end{proof}
 
-	\begin{pro}
-		Let $T$ be a tree with any orientation. Then $\Pic(T)=\mathbb{Z}^n$, where $n$ is the number of sinks of $T$.
+\section{Picard groups of oriented trees}
+
+	\begin{conj}
+	The Jacobian of a tree graph is always trivial as follows from the matrix-tree theorem as a
+	tree graph only has one possible spanning tree. \textcolor{red}{[Citation Needed]}
+\end{conj}
+
+The following example shows that if we change the direction of arrows, it changes Picard groups drastically.
+
+\begin{myeg}
+Consider the following directed tree:
+\begin{equation}
+T=\left(\begin{tikzcd}
+	& 1 \arrow[d] & \\
+2 \arrow[r]& 3 & 4 \arrow[l]\\
+& 5 \arrow[u] &
+\end{tikzcd} \right)
+\end{equation}
+We have
+\[
+L_T = \begin{bmatrix}
+ 1& 0& -1&0 &0 \\
+ 0 & 1 & -1 & 0 &0\\
+ 0& 0& 0& 0 &0\\
+ 0& 0&-1&1 & 0\\
+ 0& 0&-1&0 & 1
+\end{bmatrix} \implies SNF(L_T)=\left[\begin{array}{c|c}
+I_4 & 0 \\ \hline
+0 & 0
+\end{array}\right]
+\]
+Hence, $\Pic(T)=\mathbb{Z}$. \textcolor{red}{Jaiung; $T$ can be decomposed into $1,2,3$ and $3,4,5$. This shows that the gluing along one vertex does not work for directed graphs.} On the other hand, consider the following
+\begin{equation}
+T'=\left(\begin{tikzcd}
+		& 1 & \\
+		2 & 3 \arrow[u] \arrow[r]\arrow[l] \arrow[d]& 4 \\
+		& 5  &
+	\end{tikzcd} \right)
+\end{equation}
+We have
+\[
+L_T = \begin{bmatrix}
+	0& 0& 0&0 &0 \\
+	0 & 0 & 0 & 0 &0\\
+	1& 1& 4& 1 &1\\
+	0& 0&0&0 & 0\\
+	0& 0&0&0 & 0
+\end{bmatrix} \implies \Pic(T')=\mathbb{Z}^4.
+\]
+\end{myeg}
+
+\begin{mydef}
+\textcolor{red}{Jaiung: Recall terminal strong components}
+\end{mydef}
+
+\begin{pro}
+		Let $T$ be a tree with any orientation. Then $\Pic(T)=\mathbb{Z}^r$, where $r$ is the number of the terminal strong components of $T$. In particular, if $T$ has no two-sided arrow, then $r$ is the number of sinks.
 	\end{pro}
-	\begin{proof}
+\begin{proof}
+Note that from~\cite[Corollary 3.5]{wagner2000critical} that the rank of $\Pic(T)$ is the number of sinks of $T$.
 
-		Note that from~\cite[Corollary 3.5]{wagner2000critical} that the rank of $\Pic(T)$ is the number of sinks of $T$.
+Now, we can inductively prove this. When $T_0$ is a tree with one arrow, one can easily check that $\Pic(T_0) =\mathbb{Z}$ or $\{0\}$ (depending on the number of sinks). Suppose that $T_k$ is an oriented tree with $k$ arrows. When we add one arrow $\alpha$ to $T_k$ to construct $T_{k+1}$, there are three cases; $\alpha$ is $(1)$ incoming, $(2)$ outgoing, and $(3)$ two-sided. When $\alpha$ is either incoming or two-sided arrow, then it follows from Lemma \ref{proposition: gluing an arrow proposition} that $\Pic(T_k)=\Pic(T_{k+1})=\mathbb{Z}^r$, where $r$ is the number of sinks of $T_k$ and $T_{k+1}$, since in this case it does not increase the number of sinks.
 
-		Now, we can inductively prove this. When $T_0$ is a tree with one arrow, one can easily check that
-		$\Pic(T_0) =\mathbb{Z}$ or $\{0\}$ (depending on the number of sinks). Suppose that $T_k$ is a directed tree
-		with $k$ arrows. When we add one arrow $\alpha$ to $T_k$ to construct $T_{k+1}$, there are three cases; $(1)$ incoming,
-		$(2)$ outgoing, and $(3)$ two-sided. When $\alpha$ is either incoming or two-sided arrow, then it follows from Lemma
-		~\ref{proposition: gluing an arrow proposition} that $\Pic(T_k)=\Pic(T_{k+1})=\mathbb{Z}^n$, where $n$ is the
-		number of sinks of $T_k$ and $T_{k+1}$, since in this case it does not increase the number of sinks.
+Next, suppose that $\alpha$ is an outgoing arrow. Let's label the vertexes of $G$ as $v_1,v_2,\dots,v_n$. Suppose that the arrow $\alpha$ is attached to the vertex $v_j$. Let $L_{k}=(a_{ij})$ be the Laplacian matrix of $T_k$. Then we have the following:
+\begin{equation}\label{eq: tree case}
+L_{{k+1}}=\left[\begin{array}{ccccc|c|c}
+a_{11}&a_{12}&\cdots& a_{1j}& \cdots&a_{1n}&0\\
+a_{21}&a_{22}&\cdots& a_{2j}& \cdots&a_{2n}&0\\
+\vdots & \vdots &\ddots&\vdots & \vdots&\vdots & \vdots \\
+a_{j1}&a_{j2}&\cdots& a_{jj}+1 & \cdots&a_{jn}&-1\\
+\vdots & \vdots & \cdots&\vdots &\vdots &\vdots & \vdots\\
+a_{n1}&a_{n2}&\cdots& a_{nj} & \cdots&a_{nn}& 0\\  \hline
+0&0&\cdots&\cdots &0 &0&0\\
+\end{array}\right]
+\end{equation}
+To compute the Smith normal form, by relabeling vertices, we may assume $L_{k+1}$ is the following matrix:
+\begin{equation}\label{eq: tree case2}
+\left[\begin{array}{ccc|c|c}
+		a_{11}&a_{12}&\cdots &a_{1n}&0\\
+		a_{21}&a_{22}&\cdots &a_{2n}&0\\
+		\vdots & \vdots &\ddots & \vdots & \vdots \\ \hline
+		\vdots & \vdots & \cdots&a_n & 1\\ \hline
+		0&0&\cdots &0&0\\
+	\end{array}\right]
+\end{equation}
+Since $\Pic(T_k)=\mathbb{Z}^r$, there exist $P, Q \in \textrm{GL}_n(\mathbb{Z})$ such that
+\begin{equation}
+PL_kQ = \left[\begin{array}{c|c}
+			I_{n-r} & 0 \\ \hline
+	0 & 0_r
+\end{array}\right]
+\end{equation}
+where $0_r$ is an $r\times r$ zero matrix. Consider the following block matrices of size $(n+1)\times(n+1)$:
+\begin{equation}
+P' = \left[\begin{array}{c|c}
+	P & 0 \\ \hline
+	0 & 1
+\end{array}\right], \quad Q' = \left[\begin{array}{c|c}
+Q & 0 \\ \hline
+0 & 1
+\end{array}\right]
+\end{equation}
+Then, we have
+\begin{equation}\label{eq: matrix comp}
+P'L_{k+1}Q' =  \left[\begin{array}{c|c}
+	P & 0 \\ \hline
+	0 & 1
+\end{array}\right]  \left[\begin{array}{c|c}
+L_k & e_n \\ \hline
+0 & 0
+\end{array}\right]\left[\begin{array}{c|c}
+Q & 0 \\ \hline
+0 & 1
+\end{array}\right]=\left[\begin{array}{c|c}
+	PL_kQ & Pe_n \\ \hline
+	0 & 0
+\end{array}\right]
+\end{equation}
 
-		Next, suppose that $\alpha$ is an outgoing arrow. In this case, $T_{k+1}$ has one more sink than $T_{k}$.
-		We claim that $\Pic(T_{k+1})=\Pic(T_k)\times \mathbb{Z}$. We label the vertexes of $G$ as $1,2,\dots,n$ and
-		suppose that the arrow $\alpha$ is attached to the vertex $n$. Let $A_{T_k}=(a_{ij})$ be the Laplacian of $T_k$.
-		Then we have the following:
-		\begin{equation}\label{eq: tree case}
-			A_{T_{k+1}}=\left[\begin{array}{ccc|c|c}
-				a_{11}&a_{12}&\cdots &a_{1n}&0\\
-				a_{21}&a_{22}&\cdots &a_{2n}&0\\
-				\vdots & \vdots &\ddots & \vdots & \vdots \\ \hline
-				\vdots & \vdots & \cdots&a_n+1 & -1\\ \hline
-				0&0&\cdots &0&0\\
-			\end{array}\right]
-		\end{equation}
-		\textcolor{red}{Jaiung: I will finish writing down the proof before our next meeting.}
-	\end{proof}
+We first consider the case when $v_n$ is a sink. In particular, $T_{k+1}$ and $T_{k}$ have the same number of terminal strong components. In this case, the $n^{\textrm{th}}$ row of $L_{k+1}$ in \eqref{eq: tree case2} is the zero row. In particular, we can take $P$ so that
+\begin{equation}
+Pe_n=e_n
+\end{equation}
+Therefore, we have
+\begin{equation}
+P'L_{k+1}Q' = \left[\begin{array}{c|c}
+	PL_kQ & Pe_n \\ \hline
+	0 & 0
+\end{array}\right] =\left[\begin{array}{c|c}
+PL_kQ & e_n \\ \hline
+0 & 0
+\end{array}\right] =\left[\begin{array}{c|c|c|c}
+I_{n-r} & & 0&0\\ \hline
+   &0_{r-1} &0& 0\\ \hline
+0 &0& 0&1\\ \hline
+0 &0& 0&0\\
+\end{array}\right]
+\end{equation}
+It follows that $\Pic(T_{k+1})=\Pic(T_k)$. Now, suppose that $v_n$ is not a sink.
+\begin{equation}\label{eq: tree case3}
+L_{k+1}=	\left[\begin{array}{ccc|c|c}
+		a_{11}&a_{12}&\cdots &a_{1n}&0\\
+		a_{21}&a_{22}&\cdots &a_{2n}&0\\
+		\vdots & \vdots &\ddots & \vdots & \vdots \\ \hline
+		\vdots & \vdots & \cdots&a_n & 1\\ \hline
+		0&0&\cdots &0&0\\
+	\end{array}\right]
+\end{equation}
+Note that $\textrm{rank}(L_{k+1})$ is same either we look at it over integers or rational numbers. Since $v_n$ is not a sink, the $n^{\textrm{th}}$ row of $L_k$ is not a zero row.
+
+So, we have $\Pic(T_{k+1})=\mathbb{Z}\times \Pic(T_k)$.
+
+\end{proof}
+
+\begin{myeg}\label{example: oriented tree}
+Consider the following oriented tree:
+\[
+T=\left(\begin{tikzcd}
+1
+	& 2 \arrow[d,swap] &  3 \arrow[d] & \\
+	& 4\arrow[r,swap] \arrow[ul] & 5 \arrow[l] \arrow[u]\arrow[r,swap] & 6
+\end{tikzcd}\right)
+\]
+The Laplacian matrix of $T$ is the following:
+\[
+L_T = D_T - A_T = \begin{bmatrix}
+0& 0& 0& 0& 0&0 \\
+0& 1&0 & 0& 0&0 \\
+0& 0& 1& 0& 0&0 \\
+0&0 &0 &2 &0 & 0\\
+0&0 &0 &0 &3 &0 \\
+0& 0& 0& 0& 0&0
+\end{bmatrix} - \begin{bmatrix}
+0 & 0& 0& 0& 0& 0\\
+0& 0& 0&1 &0 & 0\\
+0&0 &0 &0 &1 &0 \\
+1& 0& 0& 0&1 &0 \\
+0& 0& 1&1 &0 &1 \\
+0& 0& 0& 0& 0& 0
+\end{bmatrix} = \begin{bmatrix}
+0&0 &0 &0 &0 &0 \\
+0&1 &0 &-1 &0 &0 \\
+0& 0& 1&0 &-1 &0 \\
+-1& 0& 0& 2&-1 &0 \\
+0&0 &-1 &-1 &3 &-1 \\
+0& 0&0 &0 &0 &0
+\end{bmatrix}
+\]
+The Smith normal form of $L_T$ is the following $6\times 6$ matrix:
+\[
+\left[\begin{array}{c|c}
+	I_4 & 0 \\ \hline
+	0 & 0_2
+\end{array}\right]
+\]
+This shows that $\Pic(T)=\mathbb{Z}^2$.
+\end{myeg}
+
+\begin{myeg}
+Consider the following oriented tree obtain from Example \ref{example: oriented tree} by gluing an outgoing arrow $\alpha$:
+\[
+T'=\left(\begin{tikzcd}
+	1 	& 2 \arrow[d,swap] &  3 \arrow[d] & \\
+	7& 4\arrow[r,swap] \arrow[ul] \arrow[l,"\alpha"] & 5 \arrow[l] \arrow[u]\arrow[r,swap] & 6
+\end{tikzcd}\right)
+\]
+Now, we have
+\[
+L_{T'} = \begin{bmatrix}
+	0&0 &0 &0 &0 &0 &0 \\
+	0&1 &0 &-1 &0 &0 &0\\
+	0& 0& 1&0 &-1 &0 &0\\
+	-1& 0& 0& 3&-1 &0 &-1\\
+	0&0 &-1 &-1 &3 &-1 &0\\
+	0& 0&0 &0 &0 &0 & 0 \\
+	0& 0&0 &0 &0 &0 & 0
+\end{bmatrix}
+\]
+The Smith normal form of $L_{T'}$ is the following $7 \times 7$ matrix:
+\[
+\left[\begin{array}{c|c}
+	I_4 & 0 \\ \hline
+	0 & 0_3
+\end{array}\right]
+\]
+This shows that $\Pic(T)=\mathbb{Z}^3$.
+\end{myeg}
+
+\begin{myeg}
+Consider the following oriented tree obtain from Example \ref{example: oriented tree} by gluing an outgoing arrow $\alpha$:
+\[
+T''=\left(\begin{tikzcd}
+	1
+	& 2 \arrow[d,swap] &  3 \arrow[d] & 7\\
+	& 4\arrow[r,swap] \arrow[ul] & 5 \arrow[l] \arrow[u]\arrow[r,swap] & 6 \arrow[u,swap,"\alpha"]
+\end{tikzcd}\right)
+\]
+Now, we have
+\[
+L_{T''}=\begin{bmatrix}
+	0&0 &0 &0 &0 &0 &0 \\
+	0&1 &0 &-1 &0 &0 &0\\
+	0& 0& 1&0 &-1 &0 &0\\
+	-1& 0& 0& 2&-1 &0 &0\\
+	0&0 &-1 &-1 &3 &-1 &0\\
+	0& 0&0 &0 &0 &1 & -1 \\
+	0& 0&0 &0 &0 &0 & 0
+\end{bmatrix}
+\]
+The Smith normal form of $L_{T''}$ is the following $7 \times 7$ matrix:
+\[
+\left[\begin{array}{c|c}
+	I_5 & 0  \\ \hline
+	0 & 0_2
+\end{array}\right]
+\]
+This shows that $\Pic(T'')=\mathbb{Z}^2$.
+\end{myeg}
 
 
-\section{Describing The Picard Group for a Cycle}
+\section{Picard groups of oriented cycles}
 
 	\subsection{Representing Single Term Jacobians}
 		\begin{conj}
@@ -295,7 +509,7 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 			We have proven this experimentally for cycles using two methods.  For the first, we proved this for
 			$C_3 \dots C_{30}$ by testing out all possible orientations for each size of cycle graph until at least one
 			of each $\Jac(C_n)=\mathbb{Z}_k$ has been found.  By using our second method, we proved this for
-			$C_3\dotsC_{80}$ by only looking as specific orientations of two path cycle graphs of size $n$.
+			$C_3\dots C_{80}$ by only looking as specific orientations of two path cycle graphs of size $n$.
 		\end{proof}
 
 		The following examples shows the conjecture for $C_3$.
@@ -337,7 +551,7 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 		large cycle graphs.
 
 	\subsection{Describing Two Path Cycle Graphs}
-		Here, a \emph{path} represents a region of a cycle graph in which all arrows are oriented in a single
+		Here, a \textit{path} represents a region of a cycle graph in which all arrows are oriented in a single
 		direction or are bidirectional.  In graphs with exactly two of these paths, a consistent pattern arises
 		that allows for the rapid calculation of the Jacobian in only $O(n)$ time compared to the $O(n^4)$ time
 		that calculating the smith normal form takes. This pattern relies on calculating the number
@@ -400,13 +614,13 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 		will follow this pattern, this algorithm will prove $\Pic(C_n)=\mathbb{Z}$ for all $C_n$.
 	\end{proof}
 
-\section{Example: Pseudotrees}
+\section{Picard groups of oriented pseudotrees}
 
 	\textcolor{red}{Jaiung: here we study how Picard groups change when we glue two directed graphs along one vertex or
 		connect two graphs along one arrow. If we are lucky this should provide a way to compute Picard groups for
 		pseudotrees by using the tree case and the cycle case in the previous sections.}
 
-\section{Describing The Picard Group for a Wheel}
+\section{Picard groups of oriented wheel graphs}
 
 	\subsection{Patterns in The Jacobian}
 		For wheel graphs, we looked for patterns that arose within the invariant factors of the Jacobian as
@@ -417,20 +631,78 @@ SUNY New Paltz. We would like to thank RSCA for their support.
 
 		\begin{enumerate}
 			\item When the spoke edges all pointed towards the axel and the rim was not bidirectional, or when
-			the spoke edges were bidirectional, but the rim was not then a graph of size $n$ had a
-			Jacobian of $\mathbb{Z}_{2^(n-1)-1}$.
+				the spoke edges were bidirectional, but the rim was not then a graph of size $n$ had a
+				Jacobian of $\mathbb{Z}_{2^(n-1)-1}$.
 			\item When the spoke edges all pointed away from the axel and the rim was not bidirectional,
-			a graph of size $n$ had a Jacobian of $\mathbb{Z}_{n-1}$.
+				a graph of size $n$ had a Jacobian of $\mathbb{Z}_{n-1}$.
 			\item When the spoke edges point away from the axel and the rim was bidirectional and a graph of size
-			$n$ had a Jacobian of $\mathbb{Z}_{n-1} \times \mathbb{Z}_{n-1}$ when $n$ was even
-			and $Z_{\frac{n-1}{2}} x Z_{(n-1) \times 2}$ when $n$ was odd.
+				$n$ had a Jacobian of $\mathbb{Z}_{n-1} \times \mathbb{Z}_{n-1}$ when $n$ was even
+				and $Z_{\frac{n-1}{2}} x Z_{(n-1) \times 2}$ when $n$ was odd.
 			\item When all edges were bidirectional or when the spoke direction was towards the axel and
-			the rim was bidirectional, a graph of size $n$ had a Jacobian of
-			$\mathbb{Z}_{\alpha\phi^{n}} \times \mathbb{Z}_{5\alpha\phi^{n}}$ when the size
-			was odd where $\alpha \approxeq 0.27555$ and $\mathbb{Z}_{\beta\phi^{n}} \times \mathbb{Z}_{\beta\phi^{n}}$
-			when the size was even where $\beta \approxeq 0.618035$. In both of these patterns,
-			$\phi$ represents the golden ratio.
+				the rim was bidirectional, a graph of size $n$ had a Jacobian of
+				$\mathbb{Z}_{\alpha\phi^{n}} \times \mathbb{Z}_{5\alpha\phi^{n}}$ when the size
+				was odd where $\alpha \approxeq 0.27555$ and $\mathbb{Z}_{\beta\phi^{n}} \times \mathbb{Z}_{\beta\phi^{n}}$
+				when the size was even where $\beta \approxeq 0.618035$. In both of these patterns,
+				$\phi$ represents the golden ratio.
 		\end{enumerate}
+
+\section{Picard groups of oriented multipartite graphs}
+	For our purposes, a multipartite graph is a graph whos vertices can be partitioned between several independent
+	groups, arranged in a linear order.  Vertices have no connections to members of their own group, but are strongly
+	connected to all vertices of their two adjacent groups.
+
+	The structure of the graphs that we investigate are intentionally designed to resemble artificial neural networks.
+	To further facilitate this comparison, we direct all edges \textit{forward} such that, after numbering the groupings
+	of these vertices in some order, edges always point towards the next highest numbered grouping.
+
+	We were able to find notable patterns in both a \textit{Perceptron} style model with two layers and a
+	\textit{Hidden Layer} model with three layers.
+
+	\subsection{Picard groups for two layers}
+		For two layers in the form of $f \rightarrow s$ where $f$ and $s$ are the number of nodes in the first and
+		second layers, respectively, $\Pic(G) = \mathbb{Z}_{s}^{f-1} \times \mathbb{Z}^s$.
+
+	\subsection{Picard groups for three layers}
+		For three layers in the form of $f \rightarrow s \rightarrow t$ where $f$, $s$, and $t$ are the number of nodes
+		in the first, second, and third layers, respectively the Picard group is significantly more complex.
+
+		\begin{enumerate}
+			\item When $s$ is odd, $s$ is not a factor of $t$ and $f <= s$,
+				$\Pic(G) = Z_{t}^{s-f-1} \times Z_{s \times t}^{f} \times Z^t$
+		\end{enumerate}
+
+%if t is odd:
+%    if s is odd:
+%        if s is not a factor of t:
+%            if f <= s:
+%                (s-f-1)Z_(t) x (f)Z_(s*t) x Z^t
+%            else:
+%                (f-s+1)Z_s x (s-1)Z_(s*t) x Z^t
+%        else:
+%            (f-1)Z_s x Z_t x Z_(s*t) x Z^t
+%    else:
+%        if f <= s:
+%            (s-f-1)Z_(t) x (f)Z_(s*t) x Z^t
+%        else:
+%            (f-s+1)Z_s x (s-1)Z_(s*t) x Z^t
+%
+%else:
+%    if s is odd:
+%        if s is not a factor of t:
+%            if f <= s:
+%                (s-f-1)Z_(t) x (f)Z_(s*t) x Z^t
+%            else:
+%                (f-s+1)Z_s x (s-1)Z_(s*t) x Z^t
+%        else:
+%            (f-1)Z_s x Z_t x Z_(s*t) x Z^t
+%    else:
+%        if s is a factor of t:
+%            (f-1)Z_s x Z_t x Z_(s*t) x Z^t
+%        else:
+%            (f-1)Z_2 x (s-f-1)Z_t x (f-1)Z_(s*t/2) x Z_(s*t) x Z^t%
+
+
+\section{Experimental Results}
 \bibliography{Jacobian}
 \bibliographystyle{alpha}
 

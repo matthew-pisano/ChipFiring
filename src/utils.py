@@ -149,9 +149,9 @@ class Utils:
                 elif lastFactor is not None:
                     cokStr += f"\u2124_{lastFactor} x "
                 lastFactor = factor
-            if mult > 1:
+            if mult > 1 and lastFactor is not None:
                 cokStr += f"({mult})\u2124_{lastFactor} x "
-            else:
+            elif lastFactor is not None:
                 cokStr += f"\u2124_{lastFactor} x "
 
         if coKernel[2] > 0:

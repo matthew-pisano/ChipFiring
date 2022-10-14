@@ -55,7 +55,7 @@ Check 4, 6, 8 ... paths for cyclic graphs to determine if they all have Z ... Z_
 
 bipartite graph
 
-Layers in the form of f -> s -> t the number of nodes in each layer
+Three layers in the form of f -> s -> t where f, s, t are the number of nodes in each layer
 
 if t is odd:
     if s is odd:
@@ -64,13 +64,11 @@ if t is odd:
                 (s-f-1)Z_(t) x (f)Z_(s*t) x Z^t
             else:
                 (f-s+1)Z_s x (s-1)Z_(s*t) x Z^t
-
         else:
             (f-1)Z_s x Z_t x Z_(s*t) x Z^t
-
     else:
         if f <= s:
-                (s-f-1)Z_(t) x (f)Z_(s*t) x Z^t
+            (s-f-1)Z_(t) x (f)Z_(s*t) x Z^t
         else:
             (f-s+1)Z_s x (s-1)Z_(s*t) x Z^t
 
@@ -88,3 +86,6 @@ else:
             (f-1)Z_s x Z_t x Z_(s*t) x Z^t
         else:
             (f-1)Z_2 x (s-f-1)Z_t x (f-1)Z_(s*t/2) x Z_(s*t) x Z^t
+
+Two layers in the form of f -> s where f, s are the number of nodes in each layer
+(f-1)Z_(s) x Z^s

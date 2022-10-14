@@ -158,7 +158,7 @@ if __name__ == "__main__":
     # cycleOrientation(6)
     # [wheelOrientation(i) for i in range(6, 16)]
     for i in range(1, 16):
-        network = Graph.network([i, 10, 38])
+        network = Graph.network([i, 100])
         # print(f"{i} Picard: {Utils.prettyCok(network.pic())}")
         print(f"{i} Picard: {Utils.prettyCok(network.pic(), compact=True)}")
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
