@@ -146,7 +146,7 @@ if __name__ == "__main__":
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)
     graph.visualize(divisor)"""
-    # [plotFactors('cycle', (size, 8), includePaths=(2,), bySize=False) for size in range(4, 9)]
+    [plotFactors('cycle', (size, 8), includePaths=(2,), bySize=False) for size in range(8, 9)]
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
     # logger.info(cokDict)
     # testBruteForce((3, 40))
@@ -155,12 +155,27 @@ if __name__ == "__main__":
     # print(graph.auditEdges())
     # testPseudoTree(glueByVertex=True)
     # testAllJacs()
+    # Utils.setVerbose(True)
+    """for i in range(9, 10):
+        logger.info(f"Cycle graph of size {i}")
+        cycle = Graph.cycle(i, direction=Graph.REV)
+        # cycle.setEdgeState(i - 8, i - 9, Graph.REV)
+        # cycle.setEdgeState(i - 8, i - 7, Graph.BI)
+        # cycle.setEdgeState(i - 7, i - 6, Graph.BI)
+        # cycle.setEdgeState(i - 6, i - 5, Graph.BI)
+        # cycle.setEdgeState(i - 5, i - 4, Graph.BI)
+        cycle.setEdgeState(i - 4, i - 3, Graph.BI)
+        cycle.setEdgeState(i - 3, i - 2, Graph.BI)
+        cycle.setEdgeState(i - 2, i - 1, Graph.BI)
+        cycle.setEdgeState(i - 1, 0, Graph.FWD)
+        cycle.visualize()
+        logger.info(f"Cycle graph of size {i} Pic: {Utils.prettyCok(cycle.pic())}")"""
     # cycleOrientation(6)
     # [wheelOrientation(i) for i in range(6, 16)]
-    for i in range(1, 16):
+    """for i in range(1, 16):
         network = Graph.network([i, 100])
         # print(f"{i} Picard: {Utils.prettyCok(network.pic())}")
-        print(f"{i} Picard: {Utils.prettyCok(network.pic(), compact=True)}")
+        print(f"{i} Picard: {Utils.prettyCok(network.pic(), compact=True)}")"""
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
         title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
     )"""

@@ -89,3 +89,15 @@ else:
 
 Two layers in the form of f -> s where f, s are the number of nodes in each layer
 (f-1)Z_(s) x Z^s
+
+
+directed matrix tree theorem
+proving cycle graphs by splitting laplacian between paths
+
+
+Clear central diagonal by adding element of diagonal upwards and downwards.  This allows previous element in diagonal
+to be able to freely clear its column since its entire row is now clear.  By definition, any bidirectional edges in
+the diagonal have to have one -1 above or below it.  By only clearing the 1's first, all the 2's will be made into
+ones by the time the first sweep has completed.  The new 1's can then clear their columns since their rows had
+already been cleared, converting more 2's if there are any adjacent.  This results in a prefect identity matrix.
+

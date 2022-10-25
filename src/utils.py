@@ -8,7 +8,7 @@ import typing
 import numpy as np
 import sys
 
-DEBUG = {"debug_out": False, "log_file": None, "snfDepth": None, "snfMoves": False}
+DEBUG = {"debug_out": False, "log_file": None, "snfDepth": None}
 
 
 loglevel = logging.INFO

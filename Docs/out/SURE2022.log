@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  14 OCT 2022 00:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  19 OCT 2022 20:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1101,16 +1101,38 @@ LaTeX Info: Redefining \nameref on input line 93.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6]
+Overfull \hbox (2.08049pt too wide) in paragraph at lines 577--596
+[]$ $[]$ 
+ []
+
+
+Overfull \hbox (2.08049pt too wide) in paragraph at lines 597--613
+$[]$ $[]$ 
+ []
+
+
+./SURE2022.tex:614: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.614 			\\\noindent
+                    \begin{minipage}{.5\linewidth}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 [7] (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.bbl) [8]
-(/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.aux)
+[9] (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.aux)
 Package rerunfilecheck Info: File `SURE2022.out' has not changed.
-(rerunfilecheck)             Checksum: 249238DAEF562AAD8C49B6A0AC070BA1;4398.
+(rerunfilecheck)             Checksum: 39F81E957E381EE92678D86A5052A71B;4689.
  ) 
 Here is how much of TeX's memory you used:
- 28326 strings out of 480171
- 529005 string characters out of 5894489
- 861859 words of memory out of 5000000
- 45508 multiletter control sequences out of 15000+600000
+ 28335 strings out of 480171
+ 529119 string characters out of 5894489
+ 861864 words of memory out of 5000000
+ 45509 multiletter control sequences out of 15000+600000
  511320 words of font info for 132 fonts, out of 8000000 for 9000
  220 hyphenation exceptions out of 8191
  85i,16n,90p,3240b,1075s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1126,10 +1148,10 @@ l/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 Output written on /home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.pdf
- (8 pages, 147740 bytes).
+ (9 pages, 149269 bytes).
 PDF statistics:
- 237 PDF objects out of 1000 (max. 8388607)
- 202 compressed objects within 3 object streams
- 62 named destinations out of 1000 (max. 500000)
- 165 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 252 PDF objects out of 1000 (max. 8388607)
+ 216 compressed objects within 3 object streams
+ 70 named destinations out of 1000 (max. 500000)
+ 173 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -562,12 +562,65 @@ This shows that $\Pic(T'')=\mathbb{Z}^2$.
 			bidirectional edges clockwise of the counter-clockwise path and counter-clockwise of the clockwise path.
 		\end{conj}
 		\begin{proof}
-			We have proven this completely for cycle graphs up to $C_{80}$ when using two continuous paths without
-			any bidirectional arrows separating them on the other size.  This has also held true for many other
-			arbitrary orientations that still meet the two-path definition.
-		\end{proof}
+			Suppose we have an oriented cycle graph of size $n$, $C_n$.  $C_n$ should be oriented in a way such that
+			it has exactly two \textit{paths} as described above.  In this orientation, its Laplacian will always
+			follow the form of
+			\begin{equation}
+				L_{C_n}=\left[\begin{array}{ccccccccc}
+				2 & -1 & 0 & \cdots & 0 & 0 & -1 \\ \hline
+				0 & 1 & -1 & 0 & \cdots & 0 & 0 \\
+				\vdots & \ddots & \ddots & \ddots & \vdots \\
+				0 & \cdots & 0 & 0 & -1 & 1 & \cdots & 0 \\ \hline
+				0 & \cdots & 0 & -1 & 2 & -1 & \cdots & 0\\
+				-1 & 0 & \cdots & 0 & -1 & 2\\
+				\end{array}\right]
+			\end{equation}
+			In the center section of the graph, there can be any number of bidirectional edges in any location.
+			These combinations in the Laplacian are \\
+			\noindent\begin{minipage}{.5\linewidth}
+				\begin{equation}
+				  	\left[\begin{array}{cccccccc}
+						0 & \cdots & 1 & -1 & 0 & 0 & \cdots \\
+						0 & \cdots & -1 & 2 & -1 & 0 & \cdots \\
+					\end{array}\right]
+				\end{equation}
+			\end{minipage}
+			\begin{minipage}{.5\linewidth}
+				\begin{equation}
+					\left[\begin{array}{cccccccc}
+						0 & \cdots & -1 & 2 & -1 & 0 & 0 & \cdots \\
+						0 & \cdots & 0 & -1 & 2 & -1 & 0 & \cdots \\
+					\end{array}\right]
+				\end{equation}
+			\end{minipage}
 
-		This holds true for nearly every graph tested, with very few exceptions.
+			\noindent\begin{minipage}{.5\linewidth}
+				\begin{equation}
+					\left[\begin{array}{cccccccc}
+						0 & \cdots & -1 & 1 & 0 & 0 & 0 & \cdots \\
+						0 & \cdots & 0 & -1 & 2 & -1 & 0 & \cdots \\
+					\end{array}\right]
+				\end{equation}
+			\end{minipage}
+			\begin{minipage}{.5\linewidth}
+				\begin{equation}
+					\left[\begin{array}{cccccccc}
+						0 & \cdots & -1 & 2 & -1 & & 0 & \cdots \\
+						0 & \cdots & 0 & -1 & 1 & 0 & 0 & \cdots \\
+					\end{array}\right]
+				\end{equation}
+			\end{minipage}
+
+			\\\noindent\begin{minipage}{.5\linewidth}
+				\begin{equation}
+				  	\left[\begin{array}{cccccccc}
+						0 & \cdots & -1 & 2 & -1 & 0 & \cdots \\
+						0 & \cdots & 0 & 0 & 1 & -1 & \cdots \\
+					\end{array}\right]
+				\end{equation}
+			\end{minipage}
+
+		\end{proof}
 
 	\subsection{Representing The Rank of the Picard Group for Cycle Graphs}
 		The following example shows that the rank of $\Pic(C_n)$ (with an orientation) does not have to be $1$;
@@ -703,6 +756,10 @@ This shows that $\Pic(T'')=\mathbb{Z}^2$.
 
 
 \section{Experimental Results}
+	\subsection{Calculations for two path cycle graphs}
+		We have proven this completely for cycle graphs up to $C_{80}$ when using two continuous paths without
+		any bidirectional arrows separating them on the other size.  This has also held true for many other
+		arbitrary orientations that still meet the two-path definition.
 \bibliography{Jacobian}
 \bibliographystyle{alpha}
 

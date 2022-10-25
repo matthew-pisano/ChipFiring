@@ -536,6 +536,7 @@ def allStats(graph: Graph, includeBi=True, skipRotations=False, includePaths: tu
             pathInvFactors[paths][cok[1][0]] = 0
         invFactors[cok[1][0]] += 1
         pathInvFactors[paths][cok[1][0]] += 1
+        logger.info(f"Path factors: {pathInvFactors}")
 
     if len(invFactors) == 0:
         logger.warning("No graphs matched selection.  Exiting.")
