@@ -29,7 +29,7 @@
 \makeatletter
 \renewcommand{\@secnumfont}{\bfseries}
 \makeatother
-\xyoption{all}
+% \xyoption{all}
 \thispagestyle{empty}
 
 \DeclareMathOperator{\Hom}{Hom}
@@ -39,23 +39,27 @@
 \DeclareMathOperator{\Img}{Img}
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Jac}{Jac}
 \DeclareMathOperator{\Div}{Div}
 \DeclareMathOperator{\dv}{Div}
 \DeclareMathOperator{\Deg}{deg}
 \DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\CSpec}{Cspec}
+
 \newcommand{\angles}[1]{\langle #1 \rangle}
-\newcommand{\Jac}{\textrm{Jac}}{}
 \newcommand{\R}{\mathbb{R}}  
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\I}{\mathbf{I}}
 
-\input xy
-\xyoption{all}
-\thispagestyle{empty}
+\newcommand{\jaiung}[1]{{\textcolor{red}{Jaiung: #1}}}
+\newcommand{\youngsu}[1]{{\textcolor{blue}{Youngsu: #1}}}
+\newcommand{\matt}[1]{{\textcolor{cyon}{Matt: #1}}}
 
+% \input xy
+% \xyoption{all}
+\thispagestyle{empty}
 
 %\usepackage{secdot}
 
@@ -88,7 +92,6 @@
 \newtheorem{cor}[mydef]{\textbf{Corollary}}
 \newtheorem{con}[mydef]{\textbf{Construction}}
 
-
 \patchcmd{\abstract}{\scshape\abstractname}{\normalsize{\textbf{\abstractname}}}{}{}
 \begin{document}
 
@@ -97,6 +100,11 @@
 \author{Jaiung Jun}
 \address{Department of Mathematics, State University of New York at New Paltz, NY 12561, USA}
 \email{junj@newpaltz.edu}
+
+\author{Youngsu Kim}
+\address{Department of Mathematics, California State University San Bernardino, San Bernardino, CA 92407}
+% \curraddr{}
+\email{youngsu.kim@csusb.edu}
 
 \author{Matthew Pisano}
 \address{Department of Mathematics, State University of New York at New Paltz, NY 12561, USA}
@@ -114,53 +122,56 @@
 \maketitle
 
 \section{Introduction}
-	This project will study Chip-Firing games and how different combinations of directed and undirected edges
-	affect its winning strategies. We will focus on Research Project 11 in~\cite{glass2020chip}.
-	We plan to pursue this for trees, cycle graphs, pseudotrees, and wheel graphs.
+%\begin{goal}[8/1/2022]$ $
+%	\begin{enumerate}
+%		\item
+%		Prove/disprove: for an oriented graph $G$, one always has $\Pic(G)=\mathbb{Z} \times \Jac(G)$,
+%		i.e., as a finitely generated abelian group, the rank of $\Pic(G)$ is $1$.
+%		\textcolor{red}{Jaiung: we disproved this by using~\cite{wagner2000critical}.}
+%		\item
+%		Prove/disprove: for $C_n$, and $0 \leq m \leq n$, one can always find an orientation
+%		of $C_n$ so that $\Jac(C_n)=\mathbb{Z}_m$ (with the orientation).
+%		\item
+%		Prove/disprove: for an oriented graph $G$, if $v_0 \in V(G)$ is a sink (or a source)
+%		and $G'$ is the graph obtained by reserving the direction for all arrows adjacent
+%		to $v_0$ from $G$, then $\Jac(G)=\Jac(G')$. (Note: we believe that this should be true
+%		for at least some classes of graphs such as cyclic graphs.)
+%		\item
+%		Prove/disprove: for an oriented planar graph $G$ and its planar dual (should be defined)
+%		$\hat{G}$, one has $\Jac(G)=\Jac(\hat{G})$.
+%		\item
+%		Prove/disprove: for oriented graphs $G_1,G_2$, let $G$ be the graph obtained by
+%		gluing $G_1$ and $G_2$ along one vertex. Then $\Jac(G)=\Jac(G_1) \times \Jac(G_2)$.
+%		\textcolor{red}{Jaiung: we are currently working on this (8/31)}
+%	\end{enumerate}
+%\end{goal}
 
-	%\begin{goal}[8/1/2022]$ $
-	%	\begin{enumerate}
-	%		\item
-	%		Prove/disprove: for an oriented graph $G$, one always has $\Pic(G)=\mathbb{Z} \times \Jac(G)$,
-	%		i.e., as a finitely generated abelian group, the rank of $\Pic(G)$ is $1$.
-	%		\textcolor{red}{Jaiung: we disproved this by using~\cite{wagner2000critical}.}
-	%		\item
-	%		Prove/disprove: for $C_n$, and $0 \leq m \leq n$, one can always find an orientation
-	%		of $C_n$ so that $\Jac(C_n)=\mathbb{Z}_m$ (with the orientation).
-	%		\item
-	%		Prove/disprove: for an oriented graph $G$, if $v_0 \in V(G)$ is a sink (or a source)
-	%		and $G'$ is the graph obtained by reserving the direction for all arrows adjacent
-	%		to $v_0$ from $G$, then $\Jac(G)=\Jac(G')$. (Note: we believe that this should be true
-	%		for at least some classes of graphs such as cyclic graphs.)
-	%		\item
-	%		Prove/disprove: for an oriented planar graph $G$ and its planar dual (should be defined)
-	%		$\hat{G}$, one has $\Jac(G)=\Jac(\hat{G})$.
-	%		\item
-	%		Prove/disprove: for oriented graphs $G_1,G_2$, let $G$ be the graph obtained by
-	%		gluing $G_1$ and $G_2$ along one vertex. Then $\Jac(G)=\Jac(G_1) \times \Jac(G_2)$.
-	%		\textcolor{red}{Jaiung: we are currently working on this (8/31)}
-	%	\end{enumerate}
-	%\end{goal}
+	This project will study Chip-Firing games and how different combinations of directed and undirected edges affect its winning strategies. 
+	We will focus on Research Project 11 in~\cite{glass2020chip}.
+	Our plan is to pursue this for trees, cycle graphs, pseudotrees, and wheel graphs.
+
+	% \youngsu{test}
 
 		We explore a combinatorial game on finite graphs, called Chip-Firing Games,
 	which has various connections to other areas, such as algebraic geometry, number theory and economics.
-	To play the game, one first puts an integer amount of chips at each vertex. Then,
-	each vertex is allowed to borrow or lend chips from its neighbors equally as the game progresses.
+	To play the game, one first puts an integer amount of chips at each vertex. 
+	Then, each vertex is allowed to borrow or lend chips from its neighbors equally as the game progresses.
 	One can study chip-firing games on a graph $G$ through a finitely generated abelian group
-	$\textrm{Pic}(G)$ (Picard group) and its torsion subgroup $\textrm{Jac}(G)$ (Jacobian) which can
+	$\Pic(G)$ (Picard group) and its torsion subgroup $\Jac (G)$ (Jacobian) which can
 	be computed by using the Laplacian matrix of $G$.
 
-	When a graph $G$ is directed, one may define $\textrm{Pic}(G)$ and $\textrm{Jac}(G)$ as in the case of undirected
-	graphs by using Laplacian matrices, but computations become much more complicated in this case. For example,
-	$\textrm{Pic}(G)=\mathbb{Z}$, when $G$ is a tree, from the matrix-tree theorem, which tells us that $|\textrm{Jac}(G)|$ is
-	the number of spanning trees of $G$ in the undirected case.
-	In the case of directed trees, even the rank of $\textrm{Pic}(T)$ can be arbitrarily large.
-	For example, for any natural number $n$ we can construct a tree $T_n$ such that the rank of $\textrm{Pic}(T_n)$ is $n$.
+	When a graph $G$ is directed, one may extend the definition of $\Pic(G)$ and $\Jac (G)$ for undirected
+	graphs by using Laplacian matrices. 
+	However, computations become much more complicated. 
+	For example, $\Pic(G)=\mathbb{Z}$ for any undirected tree $G$. 
+	This follows from the matrix-tree theorem, which tells us that $|\Jac (G)|$ is
+	the number of spanning trees of an undirected graph $G$.
+	In the case of directed trees, even the rank of $\Pic(T)$ can be arbitrarily large.
+	Particularly, for any natural number $n$, we can construct a tree $T_n$ such that the rank of $\Pic(T_n)$ is $n$.  \youngsu{What is $T_n$?}
 
 	In our ongoing project, we study Picard groups and Jacobians for directed trees, cycles, and pseudotrees.
 	Even in these seemingly simple cases, we find some new phenomenon. For instance, for the undirected cycle $C_n$,
-	$\textrm{Jac}(C_n)=\mathbb{Z}_n$, however, we prove that in the directed case, for any given $m \leq n$, one can
-	always find an orientation of $C_n$ in such a way that $\textrm{Jac}(C_n)$ is $\mathbb{Z}_m$.
+	$\Jac (C_n)=\mathbb{Z}_n$, however, we prove that in the directed case, for any given $0 \le m \leq n$, one can always find an orientation of $C_n$ in such a way that $\Jac (C_n)$ is $\mathbb{Z}_m$.
 	By closely examining trees and cycles, and how Picard groups and Jacobians change with (suitably defined)
 	vertex and edge gluing, we obtain several results for pseudotrees.
 
@@ -182,15 +193,15 @@
 	\subsection{Divisors and Equivalence Relations}
 		In the study of this game a \textbf{Divisor} of a graph ($\Div(G)$) is an integer vector $v\in\mathbb{Z}^n$
 		where \textit{n} is the number of vertices in the graph.  The $i^{th}$ element of the vector \textit{v}
-		is the number of chips on the $i^{th}$ vertex of the graph.  Two divisors have an \textbf{Equivalence Relation}
+		is the number of chips on the $i^{th}$ vertex of the graph.  Two divisors have an \textbf{equivalence relation}
 		($\sim$) if one divisor can be gotten from the other by a finite series of lending or borrowing moves
-		$D_1 \sim D_2 \xleftrightarrow{} (D_1 \xleftrightarrow{\text{moves}} D_2)$.  An \textbf{Equivalence Class} \textit{[D]}
+		$D_1 \sim D_2 \xleftrightarrow{} (D_1 \xleftrightarrow{\text{moves}} D_2)$.  For a divisor $D$, the \textbf{equivalence class} {$[D]$}
 		is the set of all divisors that are equivalent to each other, $[D] = \{D_i~|~D_i \sim D\}$.
 
 	\subsection{The Picard Group and The Jacobian}
 		The \textbf{Picard Group} of a graph $\Pic(G)$ is the set of all equivalence classes that the
 		divisors of that graph can be a  part of. The \textbf{Jacobian} of a graph  $\Jac(G)$ is a subset
-		of $\Pic(G)$ such that every divisor in each equivalency class has a degree of $0$ where the
+		of $\Pic(G)$ such that every divisor in each equivalence class has a degree of $0$, where the
 		degree of a divisor $\Deg(D)$ is the sum of each of the divisor's elements.
 		If a divisor is in one of the Jacobian's classes, it can be made winning after a finite series of moves.
 		Here, we represent the Picard Group as $\Pic(G)=\Jac(G)\times\mathbb{Z}^n$.
@@ -202,7 +213,9 @@
 Let $G$ be a directed graph. If we attach either an incoming arrow or a two-sided arrow to create another directed graph $G'$, then $\Pic(G)=\Pic(G')$.
 \end{lem}
 \begin{proof}
-Let $\alpha$ be an arrow which is glued to $G$. Let $|V(G)|=n$. We label the vertexes of $G$ as $1,2,\dots,n$. Suppose first that $\alpha$ is incoming and $\alpha$ is glued at the vertex $n$. Let $L_G=(a_{ij})$ (resp.~$L_{G'}$) be the Laplacian matrix of $G$ (resp.~$G'$). In this case, one can easily observe that the matrix $L_{G'}$ is of the following form:
+Let $\alpha$ be an arrow which is glued to $G$. Let $|V(G)|=n$. We label the vertexes of $G$ as $1,2,\dots,n$. Suppose first that $\alpha$ is incoming and $\alpha$ is glued at the vertex $n$. Let $L_G=(a_{ij})$ (resp.~$L_{G'}$) be the Laplacian matrix of $G$ (resp.~$G'$). 
+Then the matrix $L_{G'}$ is of the following form.
+% In this case, one can easily observe that the matrix $L_{G'}$ is of the following form:
 \begin{equation}
 L_{G'}=\left[\begin{array}{ccc|c|c}
 a_{11}&a_{12}&\cdots &a_{1n}&0\\
@@ -240,12 +253,12 @@ a_{21}&a_{22}&\cdots &a_{2n}&0\\
 
 \section{Picard groups of oriented trees}
 
-	\begin{conj}
-	The Jacobian of a tree graph is always trivial as follows from the matrix-tree theorem as a
-	tree graph only has one possible spanning tree. \textcolor{red}{[Citation Needed]}
+\begin{conj}
+	The Jacobian of a tree graph is always trivial. 
+	It follows from the matrix-tree theorem as a tree graph only has one possible spanning tree. \textcolor{red}{[Citation Needed]}
 \end{conj}
 
-The following example shows that if we change the direction of arrows, it changes Picard groups drastically.
+The following example shows that if we change the direction of arrows, Picard groups can change drastically.
 
 \begin{myeg}
 Consider the following directed tree:
@@ -505,38 +518,285 @@ This shows that $\Pic(T'')=\mathbb{Z}^2$.
 			Let $C_n$ be the cycle graph with $n$ vertices. For each $k \leq n$, there exists an orientation of $C_n$
 			such that $\Jac(C_n)$ (with that orientation) is $\mathbb{Z}_k$.
 		\end{conj}
-		\begin{proof}
-			We have proven this experimentally for cycles using two methods.  For the first, we proved this for
-			$C_3 \dots C_{30}$ by testing out all possible orientations for each size of cycle graph until at least one
-			of each $\Jac(C_n)=\mathbb{Z}_k$ has been found.  By using our second method, we proved this for
-			$C_3\dots C_{80}$ by only looking as specific orientations of two path cycle graphs of size $n$.
-		\end{proof}
 
-		The following examples shows the conjecture for $C_3$.
+		The following examples confirms the conjecture for the class of $C_3$.
 
 		\begin{myeg}
-			%cycle = Graph.cycle(3)
-			%cycle.setEdgeState(0, 1, 2)
-			%cycle.setEdgeState(1, 2, 2)
-			%cycle.setEdgeState(2, 0, 2)
-			%Trivial
+		\begin{figure}[h!]
+		\includegraphics[width=0.3\textwidth]{3-vertices1.PNG}
+		\includegraphics[width=0.3\textwidth]{3-vertices2.PNG}
+		\includegraphics[width=0.3\textwidth]{3-vertices3.PNG}
+		\caption{Digrphs with Jacobians $0, \mathbb{Z}_2$, and $\mathbb{Z}_3$}
+		\end{figure}
+			% cycle = Graph.cycle(3)
+			% cycle.setEdgeState(0, 1, 2)
+			% cycle.setEdgeState(1, 2, 2)
+			% cycle.setEdgeState(2, 0, 2)
+			% Trivial
 
-			%cycle = Graph.cycle(3)
-			%cycle.setEdgeState(0, 1, 1)
-			%cycle.setEdgeState(1, 2, 2)
-			%cycle.setEdgeState(2, 0, 2)
-			%Z_2
+			% cycle = Graph.cycle(3)
+			% cycle.setEdgeState(0, 1, 1)
+			% cycle.setEdgeState(1, 2, 2)
+			% cycle.setEdgeState(2, 0, 2)
+			% Z_2
 
-			%cycle = Graph.cycle(3)
-			%cycle.setEdgeState(0, 1, 0)
-			%cycle.setEdgeState(1, 2, 0)
-			%cycle.setEdgeState(2, 0, 0)
-			%Z_3
+			% cycle = Graph.cycle(3)
+			% cycle.setEdgeState(0, 1, 0)
+			% cycle.setEdgeState(1, 2, 0)
+			% cycle.setEdgeState(2, 0, 0)
+			% Z_3
 		\end{myeg}
 
 		The number of paths in the cycle graph also plays a role in if it can represent all single term Jacobians up
 		to $\mathbb{Z}_n$.
+		
+		\begin{rmk}
+			Let $M$ be an $m$ by $n$ matrix, 
+			and let $I_k(M)$ denote the ideal generated by $k \times k$ minors of $M$, 
+			where $I_k(M) = 0$ if $k > \min\{m,n\}$ and $I_k = (1)$ if $k \le 0$. 
+			For a matrix $N = \left( \begin{array}{c|c}
+				M & 0 \\
+				\hline
+				0 & 1
+			\end{array} \right)$ and for any $k$, $I_k(M) = I_{k+1}(N)$, and the cokernels of $M$ and $N$ are isomorphic. 
+		\end{rmk}
 
+		\begin{lem}
+		Let $C_n$ be a directed cycle graph on $n$ vertices. If not every edge is bidirectional, there is a directed cycle graph $C_{n+1}$ such that $\Pic (C_n) \cong \Pic (C_{n+1})$. 
+		\end{lem}
+
+		\begin{proof}
+			Let $D_{C_n} = (d_{ij})$. Since not every edge is bidirectional, there exists $i$ such that $d_{i,i} = 0$ or $1$.
+			Without loss of generality, we may assume $i = n$ so that the nearby vertices are $V_{n-1}$ and $V_1$.
+			If $d_{n,n} = 0$, 
+			then the Laplacian matric of $C_n$ is the following. 
+			$$
+			L_{C_n} = 
+			\begin{bmatrix}
+				l + 1 & -l & 0 & \cdots & 0 & -1 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & 0 & -k & k+1 & -1 \\
+				0 & \cdots & 0 & 0 & 0 & 0 
+			\end{bmatrix}$$
+			where $l, k \in \{ 0, 1 \}$. 
+			We define $C_{n+1}$ extending $C_n$ as follows. 
+			Add a vertex $V_{n+1}$ to $C_n$, replace the edge $E_{1\to n}$ by $E_{1 \to n+1}$, and add a new edge $E_{n \to n+1}$. 
+			Pictorially, we have the following
+			\[
+				C_n: \left( \cdots \begin{tikzcd}
+					V_{n-1} \arrow[r] & V_n & V_1 \arrow[l] 
+				\end{tikzcd} \cdots \right)
+				\longrightarrow
+				C_{n+1}: \left( \cdots \begin{tikzcd}
+					V_{n-1} \arrow[r] & V_n \arrow[r] & V_{n+1} &  V_1 \arrow[l] 
+				\end{tikzcd} \cdots \right).
+			\]
+			Now, one has the following equivalence of matrices.
+			\begin{align}
+			L_{C_{n+1}} &= 
+			\begin{bmatrix} 
+				l + 1 & -l & 0 & \cdots & 0 & -1 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & -k & k+1 & -1 &0 \\
+				0 & \cdots & 0 & 0 & 1 & -1 \\
+				0 & \cdots & 0 & 0 & 0 & 0 
+			\end{bmatrix} 
+			\stackrel{R_{1} \to R_1 + R_{n-1}}\sim 
+			\begin{bmatrix} 
+				l + 1 & -l & 0 & \cdots & -1 & 0 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & -k & k+1 & -1 &0 \\
+				0 & \cdots & 0 & 0 & 1 & -1 \\
+				0 & \cdots & 0 & 0 & 0 & 0 
+			\end{bmatrix} \\
+			&\stackrel{C_{n-1} \to C_{n-1} + C_{n}}\sim
+			\begin{bmatrix} 
+				l + 1 & -l & 0 & \cdots & -1 & 0 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & -k & k+1 & -1 &0 \\
+				0 & \cdots & 0 & 0 & 0 & -1 \\
+				0 & \cdots & 0 & 0 & 0 & 0 
+			\end{bmatrix}
+			\sim
+			\begin{bmatrix} 
+				l + 1 & -l & 0 & \cdots & -1 & 0 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & -k & k+1 & -1 &0 \\
+				0 & \cdots & 0 & 0 & 0 & 0 \\
+				0 & \cdots & 0 & 0 & 0 & 1 
+			\end{bmatrix}\\
+			&=
+			\left( \begin{array}{c|c}
+				L_C & 0 \\
+				\hline
+				0 & 1
+			\end{array} \right).
+			\end{align}
+			Then the remark above proves the claim.
+
+			Now suppose $d_{n,n} = 1$. Without loss of generality, we may assume the vertex $V_n$ has an one outgoing edge to $V_1$. 
+			There are two cases, depending on the exsitence of $E_{1\to n}$.
+			The Laplacian of these two graphs are equivlent. 
+			$$
+			L_{C_n} = \begin{bmatrix}
+				l  & -l & 0 & \cdots & 0 & 0 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & 0 & -k & k+1 & -1 \\
+				-1 & \cdots & 0 & 0 & 0 & 1 
+			\end{bmatrix}
+			\stackrel{R_{1}\to R_1  - R_n}\sim
+			\begin{bmatrix}
+				l+1  & -l & 0 & \cdots & 0 & -1 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & 0 & -k & k+1 & -1 \\
+				-1 & \cdots & 0 & 0 & 0 & 1 
+			\end{bmatrix},
+			$$
+			where $l, k \in \{ 0, 1 \}$. 
+			Therefore, we may assume that $L_{C_n}$ the first matrix.
+			We define $C_{n+1}$ extending $C_n$ as follows. 
+			Add a vertex $V_{n+1}$ to $C_n$, 
+			replace the edge $E_{n \to 1}$ by $E_{n+1 \to 1}$, and 
+			add a new edge $E_{n \to n+1}$. 
+			Pictorially, we have the following
+			\[
+				C_n: \left( \cdots \begin{tikzcd}
+					V_{n-1} \arrow[r] & V_n \arrow[r] & V_1 
+				\end{tikzcd} \cdots \right)
+				\longrightarrow
+				C_{n+1}: \left( \cdots \begin{tikzcd}
+					V_{n-1} \arrow[r] & V_n \arrow[r] & V_{n+1} \arrow[r] & V_1 
+				\end{tikzcd} \cdots \right).
+			\]
+			Then we have the following equivalence of matrices.
+			\begin{align}
+			L_{C_{n+1}} &= 
+			\begin{bmatrix} 
+				l  & -l & 0 & \cdots & 0 & 0 & 0 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & 0 & -k & k+1 & -1 & 0  \\
+				0 & \cdots & 0 & 0 & 0 & 1 & -1 \\ 
+				-1 & \cdots & 0 & 0 & 0 & 0 & 1 
+			\end{bmatrix} \stackrel{R_{n-1}\leftrightarrow R_{n}}{\sim}
+			\begin{bmatrix} 
+				l  & -l & 0 & \cdots & 0 & 0 & 0 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & 0 & -k & k+1 & -1 & 0  \\
+				-1 & \cdots & 0 & 0 & 0 & 0 & 1 \\
+				0 & \cdots & 0 & 0 & 0 & 1 & -1 
+			\end{bmatrix} \\ 
+			&\stackrel{R_{n-1} \to R_{n-1} + R_{n}}\sim 
+			\begin{bmatrix} 
+				l  & -l & 0 & \cdots & 0 & 0 & 0 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & 0 & -k & k+1 & -1 & 0  \\
+				-1 & \cdots & 0 & 0 & 0 & 1 & 0 \\ 
+				0 & \cdots & 0 & 0 & 0 & 1 & -1 \\ 
+			\end{bmatrix}
+			\stackrel{C_{n-1} \to C_{n-1} - C_{n}}\sim 
+			\begin{bmatrix} 
+				l  & -l & 0 & \cdots & 0 & 0 & 0 \\
+				\vdots & \vdots & \vdots & \cdots \\
+				0 & \cdots & 0 & -k & k+1 & -1 & 0  \\
+				-1 & \cdots & 0 & 0 & 0 & 1 & 0 \\ 
+				0 & \cdots & 0 & 0 & 0 & 0 & -1 \\ 
+			\end{bmatrix} \\
+			&\sim 
+			\left( \begin{array}{c|c}
+				L_C & 0 \\
+				\hline
+				0 & 1
+			\end{array} \right).
+			\end{align}
+			Again, the remark above proves the claim.
+		\end{proof}
+
+		\begin{lem}
+			For any $n \ge 4$ and any $m \in \{ n-1, n \}$, there exists a direct graph $C_n$ on $n$ vertices such that $\Jac (C_n) = \Z_m$. 
+		\end{lem}
+
+		\begin{proof}
+			The directed cyclic graph $C_n$ with all bidirectional edges has $\Pic (C_n) \cong \Z_n$. 
+			We claim that a directed cyclic graph $C_n$ such that 
+			\[
+			C_n: \left( \cdots \begin{tikzcd}
+				V_n \arrow[r] & V_1 & V_2 \arrow[l] & V_3 \arrow[l]
+			\end{tikzcd} \cdots \right)
+			\]
+			and all other edges are bidirection has the Picard group $Z_{n-1}$. 
+			We have the following equivalnec of matrices.
+			\begin{align}
+			L_{C_n} &= \begin{bmatrix}
+				0 & 0 & 0 & 0 & 0 & 0 & 0 & 0   \\
+				-1 & 1 & 0 & \cdots & 0 & 0 & 0 & 0  \\
+				0 & -1 & 2 & -1 & \cdots & 0 & 0 & 0 \\
+				0 & 0 & -1 & 2 & -1 & \cdots & 0 & 0  \\
+				\vdots \\
+				-1 & 0 & 0 & 0 & 0 & \cdots & -1 & 2 \\
+			\end{bmatrix}
+			\stackrel{R_{n} \to R_{n} - R_{2}}\sim 
+			\begin{bmatrix}
+				0 & 0 & 0 & 0 & 0 & 0 & 0 & 0   \\
+				-1 & 1 & 0 & \cdots & 0 & 0 & 0 & 0  \\
+				0 & -1 & 2 & -1 & \cdots & 0 & 0 & 0 \\
+				0 & 0 & -1 & 2 & -1 & \cdots & 0 & 0  \\
+				\vdots \\
+				0 & -1 & 0 & 0 & 0 & \cdots & -1 & 2 \\
+			\end{bmatrix}\\
+			&\stackrel{C_2 \to C_2+C_1}\sim 
+			\begin{bmatrix}
+				0 & 0 & 0 & 0 & 0 & 0 & 0 & 0   \\
+				-1 & 0 & 0 & \cdots & 0 & 0 & 0 & 0 \\
+				0 & -1 & 2 & -1 & \cdots & 0 & 0 & 0 \\
+				0 & 0 & -1 & 2 & -1 & \cdots & 0 & 0  \\
+				\vdots \\
+				0 & -1 & 0 & 0 & 0 & \cdots & -1 & 2 \\
+			\end{bmatrix}
+			\sim 
+			\begin{bmatrix}
+				1 & 0 & 0 & \cdots & 0 & 0 & 0 & 0 \\
+				0 & 0 & 0 & 0 & 0 & 0 & 0 & 0   \\
+				0 & -1 & 2 & -1 & \cdots & 0 & 0 & 0 \\
+				0 & 0 & -1 & 2 & -1 & \cdots & 0 & 0  \\
+				\vdots \\
+				0 & -1 & 0 & 0 & 0 & \cdots & -1 & 2 \\
+			\end{bmatrix}\\
+			&\sim \begin{bmatrix}
+				1 & 0 & 0 & \cdots & 0 & 0 & 0 & 0 \\
+				0 & 2 & -1 & 0 & 0 & 0 & 0 & -1   \\
+				0 & -1 & 2 & -1 & \cdots & 0 & 0 & 0 \\
+				0 & 0 & -1 & 2 & -1 & \cdots & 0 & 0  \\
+				\vdots \\
+				0 & -1 & 0 & 0 & 0 & \cdots & -1 & 2 \\
+			\end{bmatrix} \tag{See the remark below for the last equivalance}
+			\end{align}
+			Now the $n-1 \times n-1$ bottom right submatrix is that of $C_{n-1}$ with all bidirecional edges and the remark above proves the claim.
+		\end{proof}
+
+		\begin{rmk}
+			For $n \ge 3$, the Laplacian of $C_n$ each of its edge is bidirecional, the Laplacian of $C_n$ is of the form
+			$$
+			L = 
+			\begin{bmatrix}
+				2 & -1 & 0 & 0 & 0 & 0 & -1   \\
+				-1 & 2 & -1 & \cdots & 0 & 0 & 0 \\
+				0 & -1 & 2 & -1 & \cdots & 0 & 0  \\
+				\vdots \\
+				-1 & 0 & 0 & 0 & \cdots & -1 & 2 \\
+			\end{bmatrix}
+			$$
+			Since $[1 \cdots 1] L = 0$, 
+			the first row is a $\Z$-linear combination of the next $n-1$ rows. 
+			This justifies the last equivalance in the proof above.  
+		\end{rmk}
+
+		\begin{proof}[Proof of the Conjecture]
+		We induct on the number of edges. The base case is when $n = 3$ which is our example. 
+		For $n > 3$, by the lemma above, have have a directed graph $C_n$ with $\Jac(C_n) = n, n-1$. 
+		Now the rest follows from the previous lemma. 
+		``This needs to be argued more carefully using maps between the set of the Jacobians for $C_n$ except for one.''
+		\end{proof}
+			
 		\begin{conj}
 			For any cycle graph $C_n$, the orientation with no paths always has a Jacobian of $\mathbb{Z}_n$.
 			Either of the single path orientations have a trivial Jacobian.
@@ -561,66 +821,7 @@ This shows that $\Pic(T'')=\mathbb{Z}^2$.
 			For any given cycle graph, $\Jac(G)=\mathbb{Z}_{x-2}$, where $x$ is the number of
 			bidirectional edges clockwise of the counter-clockwise path and counter-clockwise of the clockwise path.
 		\end{conj}
-		\begin{proof}
-			Suppose we have an oriented cycle graph of size $n$, $C_n$.  $C_n$ should be oriented in a way such that
-			it has exactly two \textit{paths} as described above.  In this orientation, its Laplacian will always
-			follow the form of
-			\begin{equation}
-				L_{C_n}=\left[\begin{array}{ccccccccc}
-				2 & -1 & 0 & \cdots & 0 & 0 & -1 \\ \hline
-				0 & 1 & -1 & 0 & \cdots & 0 & 0 \\
-				\vdots & \ddots & \ddots & \ddots & \vdots \\
-				0 & \cdots & 0 & 0 & -1 & 1 & \cdots & 0 \\ \hline
-				0 & \cdots & 0 & -1 & 2 & -1 & \cdots & 0\\
-				-1 & 0 & \cdots & 0 & -1 & 2\\
-				\end{array}\right]
-			\end{equation}
-			In the center section of the graph, there can be any number of bidirectional edges in any location.
-			These combinations in the Laplacian are \\
-			\noindent\begin{minipage}{.5\linewidth}
-				\begin{equation}
-				  	\left[\begin{array}{cccccccc}
-						0 & \cdots & 1 & -1 & 0 & 0 & \cdots \\
-						0 & \cdots & -1 & 2 & -1 & 0 & \cdots \\
-					\end{array}\right]
-				\end{equation}
-			\end{minipage}
-			\begin{minipage}{.5\linewidth}
-				\begin{equation}
-					\left[\begin{array}{cccccccc}
-						0 & \cdots & -1 & 2 & -1 & 0 & 0 & \cdots \\
-						0 & \cdots & 0 & -1 & 2 & -1 & 0 & \cdots \\
-					\end{array}\right]
-				\end{equation}
-			\end{minipage}
-
-			\noindent\begin{minipage}{.5\linewidth}
-				\begin{equation}
-					\left[\begin{array}{cccccccc}
-						0 & \cdots & -1 & 1 & 0 & 0 & 0 & \cdots \\
-						0 & \cdots & 0 & -1 & 2 & -1 & 0 & \cdots \\
-					\end{array}\right]
-				\end{equation}
-			\end{minipage}
-			\begin{minipage}{.5\linewidth}
-				\begin{equation}
-					\left[\begin{array}{cccccccc}
-						0 & \cdots & -1 & 2 & -1 & & 0 & \cdots \\
-						0 & \cdots & 0 & -1 & 1 & 0 & 0 & \cdots \\
-					\end{array}\right]
-				\end{equation}
-			\end{minipage}
-
-			\\\noindent\begin{minipage}{.5\linewidth}
-				\begin{equation}
-				  	\left[\begin{array}{cccccccc}
-						0 & \cdots & -1 & 2 & -1 & 0 & \cdots \\
-						0 & \cdots & 0 & 0 & 1 & -1 & \cdots \\
-					\end{array}\right]
-				\end{equation}
-			\end{minipage}
-
-		\end{proof}
+		\textcolor{green}{Matthew: For proof, perhaps see above}
 
 	\subsection{Representing The Rank of the Picard Group for Cycle Graphs}
 		The following example shows that the rank of $\Pic(C_n)$ (with an orientation) does not have to be $1$;
@@ -674,6 +875,8 @@ This shows that $\Pic(T'')=\mathbb{Z}^2$.
 		pseudotrees by using the tree case and the cycle case in the previous sections.}
 
 \section{Picard groups of oriented wheel graphs}
+
+	\textcolor{red}{Jaiung: the following conjecture should generalize the results in \cite{biggs1999chip}.}
 
 	\subsection{Patterns in The Jacobian}
 		For wheel graphs, we looked for patterns that arose within the invariant factors of the Jacobian as
@@ -756,6 +959,7 @@ This shows that $\Pic(T'')=\mathbb{Z}^2$.
 
 
 \section{Experimental Results}
+
 	\subsection{Calculations for two path cycle graphs}
 		We have proven this completely for cycle graphs up to $C_{80}$ when using two continuous paths without
 		any bidirectional arrows separating them on the other size.  This has also held true for many other

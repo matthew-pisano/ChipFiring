@@ -1,5 +1,8 @@
 import datetime
+import logging
+
 from algorithms import *
+import time
 
 
 # Do komplete 4 and 5
@@ -64,6 +67,8 @@ def testAllJacs():
 
 
 def testPseudoTree(glueByVertex=True):
+    Utils.setLogged(True)
+    LoggedMatrixOps.startOps()
     cycle = Graph.cycle(5)
     cycle.setEdgeState(0, 1, 1)
     cycle.setEdgeState(1, 2, 1)
@@ -83,15 +88,42 @@ def testPseudoTree(glueByVertex=True):
     audit = stick.auditEdges()
     print(f"Tree sources: {audit[0]}, Tree sinks: {audit[1]}")
     print(f"Tree picard: {Utils.prettyCok(stick.pic())}")
-    gluePoint = 1
+    gluePoint = 4
     if glueByVertex:
         glued = Graph.glueByVertex(cycle, stick, gluePoint, 0)
     else:
-        glued = Graph.glueByEdge(cycle, stick, gluePoint, 0, state=2)
-    glued.visualize()
+        glued = Graph.glueByEdge(cycle, stick, gluePoint, 0, state=Graph.FWD)
+    # glued.visualize()
+    print(f"Pseudo-tree picard: {Utils.prettyCok(glued.pic())}")
+    check = time.time()
+    LoggedMatrixOps.startOps()
+    finished = Utils.smithNormalForm(glued.laplacian)
+    logger.info(f"Operations: {LoggedMatrixOps.opNumber}")
+    logger.info(f"Pseudo-tree picard: {finished[0]}")
+    logger.info(f"Monolithic Time diff: {time.time()-check}")
+    logging.info("======================================================")
+    check = time.time()
+    LoggedMatrixOps.startOps()
+    DEBUG["snfRange"] = (0, 5)
+
+    def prepare(matrix):
+        mimic = np.identity(len(matrix))
+        MatrixOps.addRows(matrix, mimic, 5, 4)
+        MatrixOps.addCols(matrix, mimic, 4, 5)
+
+    DEBUG["snfPrepare"] = prepare
+    partial = Utils.smithNormalForm(glued.laplacian)
+    DEBUG["snfPrepare"] = None
+    DEBUG["snfRange"] = (5, 9)
+    final = Utils.smithNormalForm(partial[0])
+    DEBUG["snfRange"] = None
+    finishedd = Utils.smithNormalForm(final[0])
+    logger.info(f"Operations: {LoggedMatrixOps.opNumber}")
+    logger.info(f"Pseudo-tree picard: {finishedd[0]}")
+    logger.info(f"Dispersed Time diff: {time.time() - check}")
+    logger.info(f"Match? {finishedd[0].all() == finished[0].all()}")
     audit = glued.auditEdges()
     print(f"Pseudo-tree sources: {audit[0]}, Pseudo-tree sinks: {audit[1]}")
-    print(f"Pseudo-tree picard: {Utils.prettyCok(glued.pic())}")
 
 
 def cycleOrientation(size: int):
@@ -146,14 +178,40 @@ if __name__ == "__main__":
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)
     graph.visualize(divisor)"""
-    [plotFactors('cycle', (size, 8), includePaths=(2,), bySize=False) for size in range(8, 9)]
+    # [plotFactors('cycle', (size, 8), includePaths=(2,), bySize=False) for size in range(8, 9)]
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
     # logger.info(cokDict)
     # testBruteForce((3, 40))
     # graph = Graph(adjacency)
     # graph.visualize()
     # print(graph.auditEdges())
-    # testPseudoTree(glueByVertex=True)
+    # testPseudoTree(glueByVertex=False)
+    def loop(size):
+        Utils.setLogged(True)
+        LoggedMatrixOps.startOps()
+        wheel = Graph.wheel(size)
+        cycle = Graph.cycle(size)
+        complete = Graph.complete(size)
+        cycle2 = Graph.cycle(size)
+        glued = Graph.glueByEdge(wheel, cycle, 0, 0)
+        check = time.time()
+        finished = Utils.subSmith(glued.laplacian, 0)
+        logger.info(f"({2*size}) Whole Operations: {LoggedMatrixOps.opNumber}")
+        LoggedMatrixOps.endOps()
+        wholeDiff = time.time() - check
+        logger.info(f"({2*size}) Whole Time diff: {wholeDiff}")
+
+        check = time.time()
+        LoggedMatrixOps.startOps()
+        finished = Utils.subSmith(wheel.laplacian, 1)
+        logger.info(f"({2*size}) Split Operations: {LoggedMatrixOps.opNumber}")
+        splitDiff = time.time() - check
+        logger.info(f"({2*size}) Split Time diff: {splitDiff}")
+        LoggedMatrixOps.endOps()
+
+        return wholeDiff, splitDiff
+
+    times = [loop(size) for size in range(3, 15)]
     # testAllJacs()
     # Utils.setVerbose(True)
     """for i in range(9, 10):

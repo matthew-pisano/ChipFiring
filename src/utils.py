@@ -8,7 +8,7 @@ import typing
 import numpy as np
 import sys
 
-DEBUG = {"debug_out": False, "log_file": None, "snfDepth": None}
+DEBUG = {"debug_out": False, "log_file": None, "snfRange": None, "snfPrepare": None}
 
 
 loglevel = logging.INFO
@@ -30,30 +30,33 @@ logging.basicConfig(handlers=handlers, level=loglevel,
 
 class Utils:
 
-    verbose = False
+    _logged = False
 
     @classmethod
-    def setVerbose(cls, vSet):
-        cls.verbose = vSet
+    def setLogged(cls, lSet):
+        cls._logged = lSet
 
     @classmethod
     def smithNormalForm(cls, matrix: np.ndarray):
         """Calculates the smith normal form of the given matrix"""
         smith: np.ndarray = matrix.copy()
-        if cls.verbose:
-            ops = VerboseMatrixOps
-            ops.endOps()
-            ops.startOps()
+        if DEBUG["snfPrepare"]:
+            DEBUG["snfPrepare"](smith)
+        if cls._logged:
+            ops = LoggedMatrixOps
+            # ops.endOps()
+            # ops.startOps()
         else:
             ops = MatrixOps
-        matrixSize = len(smith) if not DEBUG["snfDepth"] else DEBUG["snfDepth"]
+        rangeMax = len(smith) if not DEBUG["snfRange"] else DEBUG["snfRange"][1]
+        rangeMin = 0 if not DEBUG["snfRange"] else DEBUG["snfRange"][0]
 
         def minAij(s):
             """Find the minimum non-zero element below and to the right of matrix[s][s]"""
             element = [s, s]
             globalMin = float('inf')
-            for i in (range(s, matrixSize)):
-                for j in (range(s, matrixSize)):
+            for i in range(s, rangeMax):
+                for j in range(s, rangeMax):
                     if smith[i][j] != 0 and abs(smith[i][j]) <= globalMin:
                         element = [i, j]
                         globalMin = abs(smith[i][j])
@@ -62,33 +65,33 @@ class Utils:
         def isLone(s):
             """Checks if matrix[s][s] is the only non-zero in col s below matrix[s][s] and the only
             non-zero in row s to the right of matrix[s][s]"""
-            if [smith[s][x] for x in range(s + 1, matrixSize) if smith[s][x] != 0] + [smith[y][s]
-                    for y in range(s + 1, matrixSize) if smith[y][s] != 0] == []:
+            if [smith[s][x] for x in range(s + 1, rangeMax) if smith[s][x] != 0] + [smith[y][s]
+                    for y in range(s + 1, rangeMax) if smith[y][s] != 0] == []:
                 return True
             else:
                 return False
 
         def findNonDivisible(s):
             """Finds the first element which is not divisible by matrix[s][s]"""
-            for x in range(s + 1, matrixSize):
-                for y in range(s + 1, matrixSize):
+            for x in range(s + 1, rangeMax):
+                for y in range(s + 1, rangeMax):
                     if smith[x][y] % smith[s][s] != 0:
                         return x, y
             return None
 
-        p = np.identity(matrixSize)
-        q = np.identity(matrixSize)
-        for s in range(0, matrixSize):
+        p = np.identity(rangeMax)
+        q = np.identity(rangeMax)
+        for s in range(rangeMin, rangeMax):
             while not isLone(s):
                 # Get min location
                 i, j = minAij(s)
                 ops.exchangeRows(smith, p, s, i)
                 ops.exchangeCols(smith, q, s, j)
-                for x in range(s + 1, matrixSize):
+                for x in range(s + 1, rangeMax):
                     if smith[x][s] != 0:
                         k = smith[x][s] // smith[s][s]
                         ops.addRows(smith, p, x, s, -k)
-                for x in range(s + 1, matrixSize):
+                for x in range(s + 1, rangeMax):
                     if smith[s][x] != 0:
                         k = smith[s][x] // smith[s][s]
                         ops.addCols(smith, q, x, s, -k)
@@ -103,6 +106,25 @@ class Utils:
             if smith[s][s] < 0:
                 ops.scaleRow(smith, p, s, -1)
         return smith, p, q
+
+    @classmethod
+    def subSmith(cls, matrix: np.ndarray, depth: int = 0, minRange: int = 0, maxRange: int = None):
+        if maxRange is None:
+            maxRange = len(matrix)
+        if depth > 0:
+            def prepare(mtx):
+                mimic = np.identity(len(matrix))
+                LoggedMatrixOps.addRows(mtx, mimic, (maxRange-minRange)//2, (maxRange-minRange)//2 - 1)
+                LoggedMatrixOps.addCols(mtx, mimic, (maxRange-minRange)//2 - 1, (maxRange-minRange)//2)
+
+            DEBUG["snfPrepare"] = prepare
+            partial1 = cls.subSmith(matrix, depth=depth-1, minRange=minRange, maxRange=(maxRange-minRange)//2)
+            DEBUG["snfPrepare"] = None
+            partial2 = cls.subSmith(partial1, depth=depth-1, minRange=(maxRange-minRange)//2, maxRange=maxRange)
+            DEBUG["snfRange"] = None
+            return Utils.smithNormalForm(partial2)[0]
+        DEBUG["snfRange"] = (minRange, maxRange)
+        return Utils.smithNormalForm(matrix)[0]
 
     @classmethod
     def coKernel(cls, matrix: np.ndarray, divisor: typing.Any | np.ndarray = None):
@@ -189,22 +211,25 @@ class MatrixOps:
         mimic[i, :] = scale * mimic[i, :]
 
 
-class VerboseMatrixOps:
+class LoggedMatrixOps:
 
     stepNumber = None
+    opNumber = None
+    verbose = False
 
     @classmethod
     def startOps(cls):
         cls.stepNumber = 0
+        cls.opNumber = 0
 
     @classmethod
     def endOps(cls):
         cls.stepNumber = None
+        cls.opNumber = None
 
     @classmethod
     def printMatrix(cls, prev, current, opStr):
-        if cls.stepNumber is not None:
-            cls.stepNumber += 1
+        cls.stepNumber += 1
         logStr = "" if cls.stepNumber is None else f"Step {cls.stepNumber}"
         for i in range(0, len(current)):
             logStr += "\n["
@@ -222,32 +247,42 @@ class VerboseMatrixOps:
         prevMatrix = np.copy(matrix)
         matrix[[i, j]] = matrix[[j, i]]
         mimic[[i, j]] = mimic[[j, i]]
-        cls.printMatrix(prevMatrix, matrix, f"R{i} <-> R{j}")
+        cls.opNumber += len(matrix)
+        if cls.verbose:
+            cls.printMatrix(prevMatrix, matrix, f"R{i} <-> R{j}")
 
     @classmethod
     def exchangeCols(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, j: int):
         prevMatrix = np.copy(matrix)
         matrix[:, [i, j]] = matrix[:, [j, i]]
         mimic[:, [i, j]] = mimic[:, [j, i]]
-        cls.printMatrix(prevMatrix, matrix, f"C{i} <-> C{j}")
+        cls.opNumber += len(matrix)
+        if cls.verbose:
+            cls.printMatrix(prevMatrix, matrix, f"C{i} <-> C{j}")
 
     @classmethod
     def addRows(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, j: int, scale=1):
         prevMatrix = np.copy(matrix)
         matrix[i, :] = matrix[i, :] + scale * matrix[j, :]
         mimic[i, :] = mimic[i, :] + scale * mimic[j, :]
-        cls.printMatrix(prevMatrix, matrix, f"R{i} -> R{i} + {scale}*R{j}")
+        cls.opNumber += len(matrix)
+        if cls.verbose:
+            cls.printMatrix(prevMatrix, matrix, f"R{i} -> R{i} + {scale}*R{j}")
 
     @classmethod
     def addCols(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, j: int, scale=1):
         prevMatrix = np.copy(matrix)
         matrix[:, i] = matrix[:, i] + scale * matrix[:, j]
         mimic[:, i] = mimic[:, i] + scale * mimic[:, j]
-        cls.printMatrix(prevMatrix, matrix, f"C{i} -> C{i} + {scale}*C{j}")
+        cls.opNumber += len(matrix)
+        if cls.verbose:
+            cls.printMatrix(prevMatrix, matrix, f"C{i} -> C{i} + {scale}*C{j}")
 
     @classmethod
     def scaleRow(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, scale):
         prevMatrix = np.copy(matrix)
         matrix[i, :] = scale * matrix[i, :]
         mimic[i, :] = scale * mimic[i, :]
-        cls.printMatrix(prevMatrix, matrix, f"R{i} -> {scale}*R{i}")
+        cls.opNumber += len(matrix)
+        if cls.verbose:
+            cls.printMatrix(prevMatrix, matrix, f"R{i} -> {scale}*R{i}")

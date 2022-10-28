@@ -1,5 +1,10 @@
 \begin{thebibliography}{Wag00}
 
+\bibitem[Big99]{biggs1999chip}
+Norman~L Biggs.
+\newblock Chip-firing and the critical group of a graph.
+\newblock {\em Journal of Algebraic Combinatorics}, 9(1):25--45, 1999.
+
 \bibitem[GK20]{glass2020chip}
 Darren Glass and Nathan Kaplan.
 \newblock Chip-firing games and critical groups.

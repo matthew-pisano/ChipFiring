@@ -1,10 +1,7 @@
 from __future__ import annotations
-import random
-import time
-import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
-from utils import logger, Utils
+from utils import *
 
 
 class Divisor:

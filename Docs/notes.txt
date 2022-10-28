@@ -101,3 +101,4 @@ the diagonal have to have one -1 above or below it.  By only clearing the 1's fi
 ones by the time the first sweep has completed.  The new 1's can then clear their columns since their rows had
 already been cleared, converting more 2's if there are any adjacent.  This results in a prefect identity matrix.
 
+Merge sort for smith normal form
