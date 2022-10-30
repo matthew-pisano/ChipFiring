@@ -1,5 +1,4 @@
 from algorithms import *
-from src.utils import prettyCok
 
 
 def testPseudoTree(glueByVertex=True):

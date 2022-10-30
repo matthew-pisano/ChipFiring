@@ -90,9 +90,9 @@ def testPseudoTree(glueByVertex=True):
     print(f"Tree picard: {Utils.prettyCok(stick.pic())}")
     gluePoint = 4
     if glueByVertex:
-        glued = Graph.glueByVertex(cycle, stick, gluePoint, 0)
+        glued = Graph.glueByVertex((cycle, gluePoint), (stick, 0))
     else:
-        glued = Graph.glueByEdge(cycle, stick, gluePoint, 0, state=Graph.FWD)
+        glued = Graph.glueByEdge((cycle, gluePoint), (stick, 0), state=Graph.FWD)
     # glued.visualize()
     print(f"Pseudo-tree picard: {Utils.prettyCok(glued.pic())}")
     check = time.time()
@@ -146,10 +146,10 @@ def cycleOrientation(size: int):
 
 def wheelOrientation(size: int):
     wheel = Graph.wheel(size, direction=0, spokeDirection=0)
-    wheel.setEdgeState(1, 2, 1)
-    wheel.setEdgeState(2, 3, 2)
-    wheel.setEdgeState(3, 4, 1)
-    wheel.setEdgeState(4, 5, 1)
+    # wheel.setEdgeState(1, 2, 1)
+    # wheel.setEdgeState(2, 3, 2)
+    # wheel.setEdgeState(3, 4, 1)
+    # wheel.setEdgeState(4, 5, 1)
     """wheel.setEdgeState(5, 6, 0)
     wheel.setEdgeState(6, 7, 0)
     wheel.setEdgeState(7, 8, 0)
@@ -193,7 +193,8 @@ if __name__ == "__main__":
         cycle = Graph.cycle(size)
         complete = Graph.complete(size)
         cycle2 = Graph.cycle(size)
-        glued = Graph.glueByEdge(wheel, cycle, 0, 0)
+        # glued = Graph.glueByEdge((wheel, 0), (cycle, 0), (complete, 0), (cycle2, 0))
+        glued = Graph.glueByEdge((wheel, 0), (cycle, 0))
         check = time.time()
         finished = Utils.subSmith(glued.laplacian, 0)
         logger.info(f"({2*size}) Whole Operations: {LoggedMatrixOps.opNumber}")
@@ -203,7 +204,7 @@ if __name__ == "__main__":
 
         check = time.time()
         LoggedMatrixOps.startOps()
-        finished = Utils.subSmith(wheel.laplacian, 1)
+        finished = Utils.subSmith(glued.laplacian, 1)
         logger.info(f"({2*size}) Split Operations: {LoggedMatrixOps.opNumber}")
         splitDiff = time.time() - check
         logger.info(f"({2*size}) Split Time diff: {splitDiff}")
@@ -211,7 +212,7 @@ if __name__ == "__main__":
 
         return wholeDiff, splitDiff
 
-    times = [loop(size) for size in range(3, 15)]
+    # times = [loop(size) for size in range(3, 15)]
     # testAllJacs()
     # Utils.setVerbose(True)
     """for i in range(9, 10):
@@ -230,6 +231,10 @@ if __name__ == "__main__":
         logger.info(f"Cycle graph of size {i} Pic: {Utils.prettyCok(cycle.pic())}")"""
     # cycleOrientation(6)
     # [wheelOrientation(i) for i in range(6, 16)]
+    # [wheelOrientation(i) for i in range(6, 21)
+    n = 800
+    cycle = Graph.cycle(n)
+    print(f"Cycle Picard of size {n}: {Utils.prettyCok(cycle.pic())}")
     """for i in range(1, 16):
         network = Graph.network([i, 100])
         # print(f"{i} Picard: {Utils.prettyCok(network.pic())}")
@@ -237,6 +242,18 @@ if __name__ == "__main__":
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
         title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
     )"""
+    """cycle = Graph.cycle(7)
+    cycle.setEdgeState(0, 1, 0)
+    cycle.setEdgeState(1, 2, 1)
+    cycle.setEdgeState(2, 3, 2)
+    cycle.setEdgeState(3, 4, 2)
+    cycle.setEdgeState(4, 5, 2)
+    cycle.setEdgeState(5, 6, 0)
+    cycle.setEdgeState(6, 0, 0)
+    cycle.visualize()
+    # lap = cycle.laplacian
+    # snf = Utils.smithNormalForm(cycle.laplacian)
+    print(f"Cycle Picard of size {4}: {Utils.prettyCok(cycle.pic())}")"""
     """Utils.setVerbose(True)
     cycle = Graph.cycle(4)
     cycle.setEdgeState(0, 1, 1)
@@ -263,7 +280,7 @@ if __name__ == "__main__":
     # snf3 = Utils.smithNormalForm(cycle.laplacian)
     print(f"Cycle Picard of size {6}: {Utils.prettyCok(cycle.pic())}")
     # 
-    # [wheelOrientation(i) for i in range(3, 21)]
+    
     # cycleOrientation(4)"""
     """adjacency = [
         [0, 1, 0, 1, 1, 0, 0],

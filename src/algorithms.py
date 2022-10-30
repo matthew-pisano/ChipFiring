@@ -390,11 +390,6 @@ class Graph:
         return graph
 
     @classmethod
-    def empty(cls, size):
-        """Returns an empty graph of the given size"""
-        return Graph(np.zeros((size, size)))
-
-    @classmethod
     def complete(cls, size):
         """Returns a complete graph of the given size"""
         return Graph(np.ones((size, size))-np.identity(size))
@@ -405,38 +400,47 @@ class Graph:
         return Graph(np.zeros((size, size)))
 
     @classmethod
-    def _glue(cls, graph1: Graph, graph2: Graph, vertex1: int, vertex2: int, byVertex: bool, edgeState: int = BI):
-        matrix1 = np.copy(graph1.matrix)
-        matrix2 = np.copy(graph2.matrix)
+    def _glue(cls, baseGraph: tuple[Graph, int], *subGraphs: tuple[Graph, int], byVertex: bool, edgeState: int = BI):
+        baseMatrix = np.copy(baseGraph[0].matrix)
         # Make desired rows and columns last and first for easy connection
-        if vertex1 != len(matrix1)-1:
-            matrix1[:, [len(matrix1)-1, vertex1]] = matrix1[:, [vertex1, len(matrix1)-1]]
-            matrix1[[len(matrix1)-1, vertex1]] = matrix1[[vertex1, len(matrix1)-1]]
-        if vertex2 != 0:
-            matrix2[:, [0, vertex2]] = matrix2[:, [vertex2, 0]]
-            matrix2[[0, vertex2]] = matrix2[[vertex2, 0]]
+        if baseGraph[1] != len(baseMatrix)-1:
+            baseMatrix[:, [len(baseMatrix) - 1, baseGraph[1]]] = baseMatrix[:, [baseGraph[1], len(baseMatrix) - 1]]
+            baseMatrix[[len(baseMatrix) - 1, baseGraph[1]]] = baseMatrix[[baseGraph[1], len(baseMatrix) - 1]]
 
-        m1Len = len(matrix1)
         offset = 1 if byVertex else 0
-        glued = np.zeros((m1Len+len(matrix2)-offset, m1Len+len(matrix2)-offset))
-        glued[0:0 + matrix1.shape[0], 0:0 + matrix1.shape[1]] = matrix1
-        glued[m1Len-offset:m1Len-offset + matrix2.shape[0], m1Len-offset:m1Len-offset + matrix2.shape[1]] += matrix2
 
-        if not byVertex:
-            if edgeState == cls.BI or edgeState == cls.FWD:
-                glued[m1Len-1][m1Len] = 1
-            if edgeState == cls.BI or edgeState == cls.REV:
-                glued[m1Len][m1Len-1] = 1
+        matrices = []
+        for subGraph in subGraphs:
+            subMatrix = np.copy(subGraph[0].matrix)
+            if subGraph[1] != 0:
+                subMatrix[:, [0, subGraph[1]]] = subMatrix[:, [subGraph[1], 0]]
+                subMatrix[[0, subGraph[1]]] = subMatrix[[subGraph[1], 0]]
+            matrices.append(subMatrix)
 
-        return Graph(glued)
+        gluedMatrix = baseMatrix
+        for matrix in matrices:
+            g1Len = len(gluedMatrix)
+            glueBase = np.zeros((g1Len+len(matrix)-offset, g1Len+len(matrix)-offset))
+            glueBase[0:0 + gluedMatrix.shape[0], 0:0 + gluedMatrix.shape[1]] = gluedMatrix
+            glueBase[g1Len-offset:g1Len-offset + matrix.shape[0], g1Len-offset:g1Len-offset + matrix.shape[1]] += matrix
+
+            if not byVertex:
+                if edgeState == cls.BI or edgeState == cls.FWD:
+                    glueBase[g1Len-1][g1Len] = 1
+                if edgeState == cls.BI or edgeState == cls.REV:
+                    glueBase[g1Len][g1Len-1] = 1
+
+            gluedMatrix = glueBase
+
+        return Graph(gluedMatrix)
 
     @classmethod
-    def glueByVertex(cls, graph1: Graph, graph2: Graph, vertex1: int, vertex2: int):
-        return cls._glue(graph1, graph2, vertex1, vertex2, byVertex=True)
+    def glueByVertex(cls, baseGraph: tuple[Graph, int], *subGraphs: tuple[Graph, int]):
+        return cls._glue(baseGraph, *subGraphs, byVertex=True)
 
     @classmethod
-    def glueByEdge(cls, graph1: Graph, graph2: Graph, vertex1: int, vertex2: int, state=0):
-        return cls._glue(graph1, graph2, vertex1, vertex2, byVertex=False, edgeState=state)
+    def glueByEdge(cls, baseGraph: tuple[Graph, int], *subGraphs: tuple[Graph, int], state=0):
+        return cls._glue(baseGraph, *subGraphs, byVertex=False, edgeState=state)
 
 
 def allOrientations(graph: Graph, skipRotations=True, includeBi=True, includePaths: tuple = None):
