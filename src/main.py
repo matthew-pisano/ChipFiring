@@ -160,6 +160,33 @@ def wheelOrientation(size: int):
     print(f"Wheel Picard of size {size}: {Utils.prettyCok(wheel.pic())}")
 
 
+def picTimes(size):
+    Utils.setLogged(True)
+    LoggedMatrixOps.startOps()
+    wheel = Graph.wheel(size)
+    cycle = Graph.cycle(size)
+    complete = Graph.complete(size)
+    cycle2 = Graph.cycle(size)
+    # glued = Graph.glueByEdge((wheel, 0), (cycle, 0), (complete, 0), (cycle2, 0))
+    glued = Graph.glueByEdge((wheel, 0), (cycle, 0))
+    check = time.time()
+    finished = Utils.subSmith(glued.laplacian, 0)
+    logger.info(f"({2*size}) Whole Operations: {LoggedMatrixOps.opNumber}")
+    LoggedMatrixOps.endOps()
+    wholeDiff = time.time() - check
+    logger.info(f"({2*size}) Whole Time diff: {wholeDiff}")
+
+    check = time.time()
+    LoggedMatrixOps.startOps()
+    finished = Utils.subSmith(glued.laplacian, 1)
+    logger.info(f"({2*size}) Split Operations: {LoggedMatrixOps.opNumber}")
+    splitDiff = time.time() - check
+    logger.info(f"({2*size}) Split Time diff: {splitDiff}")
+    LoggedMatrixOps.endOps()
+
+    return wholeDiff, splitDiff
+
+
 if __name__ == "__main__":
     start = time.time()
     logger.info(f"=====\nEntering program at {datetime.datetime.fromtimestamp(start).strftime('%H:%M:%S')}\n=====")
@@ -178,7 +205,9 @@ if __name__ == "__main__":
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)
     graph.visualize(divisor)"""
-    # [plotFactors('cycle', (size, 8), includePaths=(2,), bySize=False) for size in range(8, 9)]
+    maxGraph = 11
+    minGraph = 10
+    [plotFactors('cycle', (size, maxGraph), includePaths=(2,), bySize=False) for size in range(minGraph, maxGraph)]
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
     # logger.info(cokDict)
     # testBruteForce((3, 40))
@@ -186,33 +215,7 @@ if __name__ == "__main__":
     # graph.visualize()
     # print(graph.auditEdges())
     # testPseudoTree(glueByVertex=False)
-    def loop(size):
-        Utils.setLogged(True)
-        LoggedMatrixOps.startOps()
-        wheel = Graph.wheel(size)
-        cycle = Graph.cycle(size)
-        complete = Graph.complete(size)
-        cycle2 = Graph.cycle(size)
-        # glued = Graph.glueByEdge((wheel, 0), (cycle, 0), (complete, 0), (cycle2, 0))
-        glued = Graph.glueByEdge((wheel, 0), (cycle, 0))
-        check = time.time()
-        finished = Utils.subSmith(glued.laplacian, 0)
-        logger.info(f"({2*size}) Whole Operations: {LoggedMatrixOps.opNumber}")
-        LoggedMatrixOps.endOps()
-        wholeDiff = time.time() - check
-        logger.info(f"({2*size}) Whole Time diff: {wholeDiff}")
-
-        check = time.time()
-        LoggedMatrixOps.startOps()
-        finished = Utils.subSmith(glued.laplacian, 1)
-        logger.info(f"({2*size}) Split Operations: {LoggedMatrixOps.opNumber}")
-        splitDiff = time.time() - check
-        logger.info(f"({2*size}) Split Time diff: {splitDiff}")
-        LoggedMatrixOps.endOps()
-
-        return wholeDiff, splitDiff
-
-    # times = [loop(size) for size in range(3, 15)]
+    # times = [picTimes(size) for size in range(3, 15)]
     # testAllJacs()
     # Utils.setVerbose(True)
     """for i in range(9, 10):
@@ -232,9 +235,9 @@ if __name__ == "__main__":
     # cycleOrientation(6)
     # [wheelOrientation(i) for i in range(6, 16)]
     # [wheelOrientation(i) for i in range(6, 21)
-    n = 800
+    """n = 800
     cycle = Graph.cycle(n)
-    print(f"Cycle Picard of size {n}: {Utils.prettyCok(cycle.pic())}")
+    print(f"Cycle Picard of size {n}: {Utils.prettyCok(cycle.pic())}")"""
     """for i in range(1, 16):
         network = Graph.network([i, 100])
         # print(f"{i} Picard: {Utils.prettyCok(network.pic())}")
