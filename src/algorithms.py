@@ -76,9 +76,6 @@ class Orientor:
                     return False
             return True
 
-        # print(f"Checking range up to {(3 if params.includeBi else 2) ** params.edges}")
-        # print(f"Skip rot {params.skipRotations}")
-        # queue.put(((3 if params.includeBi else 2) ** params.edges, params.skipRotations, len(params.graph), "", ""))
         # Offset to desired index
         increment(params.idx)
         while True:

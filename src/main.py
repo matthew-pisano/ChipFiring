@@ -145,7 +145,7 @@ def cycleOrientation(size: int):
 
 
 def wheelOrientation(size: int):
-    wheel = Graph.wheel(size, direction=0, spokeDirection=0)
+    wheel = Graph.wheel(size, direction=1, spokeDirection=2)
     # wheel.setEdgeState(1, 2, 1)
     # wheel.setEdgeState(2, 3, 2)
     # wheel.setEdgeState(3, 4, 1)
@@ -157,6 +157,7 @@ def wheelOrientation(size: int):
     wheel.setEdgeState(9, 10, 0)"""
     # wheel.setEdgeState(size - 1, 1, 1)
     # wheel.visualize(positions={0: (0, 0)})
+    # wheel.visualize()
     print(f"Wheel Picard of size {size}: {Utils.prettyCok(wheel.pic())}")
 
 
@@ -207,7 +208,7 @@ if __name__ == "__main__":
     graph.visualize(divisor)"""
     maxGraph = 11
     minGraph = 10
-    [plotFactors('cycle', (size, maxGraph), includePaths=(2,), bySize=False) for size in range(minGraph, maxGraph)]
+    # [plotFactors('cycle', (size, maxGraph), includePaths=(2,), bySize=False) for size in range(minGraph, maxGraph)]
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
     # logger.info(cokDict)
     # testBruteForce((3, 40))
@@ -218,20 +219,34 @@ if __name__ == "__main__":
     # times = [picTimes(size) for size in range(3, 15)]
     # testAllJacs()
     # Utils.setVerbose(True)
-    """for i in range(9, 10):
+    """for i in range(10, 11):
         logger.info(f"Cycle graph of size {i}")
         cycle = Graph.cycle(i, direction=Graph.REV)
-        # cycle.setEdgeState(i - 8, i - 9, Graph.REV)
-        # cycle.setEdgeState(i - 8, i - 7, Graph.BI)
-        # cycle.setEdgeState(i - 7, i - 6, Graph.BI)
-        # cycle.setEdgeState(i - 6, i - 5, Graph.BI)
-        # cycle.setEdgeState(i - 5, i - 4, Graph.BI)
-        cycle.setEdgeState(i - 4, i - 3, Graph.BI)
+        cycle.setEdgeState(i - 9, i - 10, Graph.FWD)
+        cycle.setEdgeState(i - 8, i - 9, Graph.REV)
+        cycle.setEdgeState(i - 8, i - 7, Graph.FWD)
+        cycle.setEdgeState(i - 7, i - 6, Graph.BI)
+        cycle.setEdgeState(i - 6, i - 5, Graph.FWD)
+        cycle.setEdgeState(i - 5, i - 4, Graph.REV)
+        cycle.setEdgeState(i - 4, i - 3, Graph.REV)
         cycle.setEdgeState(i - 3, i - 2, Graph.BI)
-        cycle.setEdgeState(i - 2, i - 1, Graph.BI)
+        cycle.setEdgeState(i - 2, i - 1, Graph.REV)
         cycle.setEdgeState(i - 1, 0, Graph.FWD)
-        cycle.visualize()
+        # cycle.visualize()
+        Utils.setLogged(True)
         logger.info(f"Cycle graph of size {i} Pic: {Utils.prettyCok(cycle.pic())}")"""
+    Utils.setLogged(True)
+    cycle = Graph.cycle(10)
+    LoggedMatrixOps.startOps()
+    Utils.smithNormalForm(cycle.laplacian)
+    ops = LoggedMatrixOps.opNumber
+
+    mimic = np.identity(len(cycle.laplacian))
+    LoggedMatrixOps.startOps()
+    prepped = Utils.prepSmith(cycle.laplacian, mimic, mimic, ops=LoggedMatrixOps)
+    Utils.smithNormalForm(prepped)
+    preppedOps = LoggedMatrixOps.opNumber
+    logger.info(f"Unprepared: {ops}, prepared: {preppedOps}")
     # cycleOrientation(6)
     # [wheelOrientation(i) for i in range(6, 16)]
     # [wheelOrientation(i) for i in range(6, 21)

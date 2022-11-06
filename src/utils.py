@@ -1,10 +1,8 @@
 from __future__ import annotations
-
 import logging
 import os.path
 import time
 import typing
-
 import numpy as np
 import sys
 
@@ -37,19 +35,67 @@ class Utils:
         cls._logged = lSet
 
     @classmethod
+    def prepSmith(cls, matrix: np.ndarray, p: np.ndarray, q: np.ndarray, ops=None):
+        smith: np.ndarray = matrix.copy()
+
+        if ops is None:
+            ops = MatrixOps
+
+        def zeroColumns():
+            for i in range(1, len(smith) - 1):
+                if smith[i][i] == 1 and smith[i][i - 1] == 0 and smith[i][i + 1] == 0:
+                    for j in range(0, len(smith)):
+                        if i != j and smith[j][i] != 0:
+                            ops.addRows(smith, p, j, i, -smith[j][i])
+
+        for i in range(len(smith) - 2):
+            initial = (smith[i][i + 1], smith[i + 1][i + 1])
+            result = (smith[i][i] + smith[i][i + 1], smith[i + 1][i] + smith[i + 1][i + 1])
+            if (initial[1] != 1 and result[1] == 1 and abs(initial[0]) >= abs(result[0])) or \
+                    (initial[1] == result[1] and abs(initial[0]) > abs(result[0])):
+                ops.addCols(smith, q, i + 1, i)
+
+        for i in range(len(smith) - 1, 0, -1):
+            initial = (smith[i - 1][i - 1], smith[i][i - 1])
+            result = (smith[i - 1][i] + smith[i - 1][i - 1], smith[i][i] + smith[i][i - 1])
+            if (initial[0] != 1 and result[0] == 1 and abs(initial[1]) >= abs(result[1])) or \
+                    (initial[0] == result[0] and abs(initial[1]) > abs(result[1])):
+                ops.addCols(smith, q, i - 1, i)
+
+        zeroColumns()
+        zeroColumns()
+
+        if smith[0][0] != 0:
+            for i in range(1, len(smith)):
+                if smith[0][i] != 0 and smith[0][i] % smith[0][0] == 0:
+                    ops.addCols(smith, q, i, 0, -smith[0][i] / smith[0][0])
+
+        if smith[len(smith) - 1][len(smith) - 1] != 0:
+            for i in range(0, len(smith) - 1):
+                if smith[len(smith) - 1][i] != 0 and smith[len(smith) - 1][i] % smith[len(smith) - 1][
+                    len(smith) - 1] == 0:
+                    ops.addCols(smith, q, i, len(smith) - 1,
+                                -smith[len(smith) - 1][i] / smith[len(smith) - 1][len(smith) - 1])
+
+        return smith
+
+    @classmethod
     def smithNormalForm(cls, matrix: np.ndarray):
         """Calculates the smith normal form of the given matrix"""
         smith: np.ndarray = matrix.copy()
-        if DEBUG["snfPrepare"]:
+        ops = LoggedMatrixOps
+        """if DEBUG["snfPrepare"]:
             DEBUG["snfPrepare"](smith)
         if cls._logged:
             ops = LoggedMatrixOps
-            # ops.endOps()
-            # ops.startOps()
+            ops.startOps()
         else:
-            ops = MatrixOps
+            ops = MatrixOps"""
+
         rangeMax = len(smith) if not DEBUG["snfRange"] else DEBUG["snfRange"][1]
         rangeMin = 0 if not DEBUG["snfRange"] else DEBUG["snfRange"][0]
+        p = np.identity(rangeMax)
+        q = np.identity(rangeMax)
 
         def minAij(s):
             """Find the minimum non-zero element below and to the right of matrix[s][s]"""
@@ -79,8 +125,6 @@ class Utils:
                         return x, y
             return None
 
-        p = np.identity(rangeMax)
-        q = np.identity(rangeMax)
         for s in range(rangeMin, rangeMax):
             while not isLone(s):
                 # Get min location
@@ -215,17 +259,20 @@ class LoggedMatrixOps:
 
     stepNumber = None
     opNumber = None
+    weightedOpNumber = None
     verbose = False
 
     @classmethod
     def startOps(cls):
         cls.stepNumber = 0
         cls.opNumber = 0
+        cls.weightedOpNumber = 0
 
     @classmethod
     def endOps(cls):
         cls.stepNumber = None
         cls.opNumber = None
+        cls.weightedOpNumber = None
 
     @classmethod
     def printMatrix(cls, prev, current, opStr):
@@ -247,7 +294,8 @@ class LoggedMatrixOps:
         prevMatrix = np.copy(matrix)
         matrix[[i, j]] = matrix[[j, i]]
         mimic[[i, j]] = mimic[[j, i]]
-        cls.opNumber += len(matrix)
+        cls.opNumber += 1
+        cls.weightedOpNumber += len(matrix)
         if cls.verbose:
             cls.printMatrix(prevMatrix, matrix, f"R{i} <-> R{j}")
 
@@ -256,7 +304,8 @@ class LoggedMatrixOps:
         prevMatrix = np.copy(matrix)
         matrix[:, [i, j]] = matrix[:, [j, i]]
         mimic[:, [i, j]] = mimic[:, [j, i]]
-        cls.opNumber += len(matrix)
+        cls.opNumber += 1
+        cls.weightedOpNumber += len(matrix)
         if cls.verbose:
             cls.printMatrix(prevMatrix, matrix, f"C{i} <-> C{j}")
 
@@ -265,7 +314,8 @@ class LoggedMatrixOps:
         prevMatrix = np.copy(matrix)
         matrix[i, :] = matrix[i, :] + scale * matrix[j, :]
         mimic[i, :] = mimic[i, :] + scale * mimic[j, :]
-        cls.opNumber += len(matrix)
+        cls.opNumber += 1
+        cls.weightedOpNumber += len(matrix)
         if cls.verbose:
             cls.printMatrix(prevMatrix, matrix, f"R{i} -> R{i} + {scale}*R{j}")
 
@@ -274,7 +324,8 @@ class LoggedMatrixOps:
         prevMatrix = np.copy(matrix)
         matrix[:, i] = matrix[:, i] + scale * matrix[:, j]
         mimic[:, i] = mimic[:, i] + scale * mimic[:, j]
-        cls.opNumber += len(matrix)
+        cls.opNumber += 1
+        cls.weightedOpNumber += len(matrix)
         if cls.verbose:
             cls.printMatrix(prevMatrix, matrix, f"C{i} -> C{i} + {scale}*C{j}")
 
@@ -283,6 +334,7 @@ class LoggedMatrixOps:
         prevMatrix = np.copy(matrix)
         matrix[i, :] = scale * matrix[i, :]
         mimic[i, :] = scale * mimic[i, :]
-        cls.opNumber += len(matrix)
+        cls.opNumber += 1
+        cls.weightedOpNumber += len(matrix)
         if cls.verbose:
             cls.printMatrix(prevMatrix, matrix, f"R{i} -> {scale}*R{i}")
