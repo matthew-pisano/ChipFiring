@@ -66,9 +66,22 @@ def testAllJacs():
     print(times)
 
 
+def wheelJacs(n):
+    if n == 0:
+        return 4, 4
+    elif n == 1:
+        return 3, 15
+
+    if n % 2 == 0:
+        num = 5 * wheelJacs(n - 1)[0] - wheelJacs(n - 2)[0]
+        return num, num
+    num = wheelJacs(n - 1)[0] - wheelJacs(n - 2)[0]
+    return num, 5 * num
+
+
 def testPseudoTree(glueByVertex=True):
     Utils.setLogged(True)
-    LoggedMatrixOps.startOps()
+    LoggedMatrixOps.resetLogging()
     cycle = Graph.cycle(5)
     cycle.setEdgeState(0, 1, 1)
     cycle.setEdgeState(1, 2, 1)
@@ -96,14 +109,14 @@ def testPseudoTree(glueByVertex=True):
     # glued.visualize()
     print(f"Pseudo-tree picard: {Utils.prettyCok(glued.pic())}")
     check = time.time()
-    LoggedMatrixOps.startOps()
+    LoggedMatrixOps.resetLogging()
     finished = Utils.smithNormalForm(glued.laplacian)
     logger.info(f"Operations: {LoggedMatrixOps.opNumber}")
     logger.info(f"Pseudo-tree picard: {finished[0]}")
     logger.info(f"Monolithic Time diff: {time.time()-check}")
     logging.info("======================================================")
     check = time.time()
-    LoggedMatrixOps.startOps()
+    LoggedMatrixOps.resetLogging()
     DEBUG["snfRange"] = (0, 5)
 
     def prepare(matrix):
@@ -145,7 +158,7 @@ def cycleOrientation(size: int):
 
 
 def wheelOrientation(size: int):
-    wheel = Graph.wheel(size, direction=1, spokeDirection=2)
+    wheel = Graph.wheel(size, direction=0, spokeDirection=0)
     # wheel.setEdgeState(1, 2, 1)
     # wheel.setEdgeState(2, 3, 2)
     # wheel.setEdgeState(3, 4, 1)
@@ -163,7 +176,7 @@ def wheelOrientation(size: int):
 
 def picTimes(size):
     Utils.setLogged(True)
-    LoggedMatrixOps.startOps()
+    LoggedMatrixOps.resetLogging()
     wheel = Graph.wheel(size)
     cycle = Graph.cycle(size)
     complete = Graph.complete(size)
@@ -173,17 +186,15 @@ def picTimes(size):
     check = time.time()
     finished = Utils.subSmith(glued.laplacian, 0)
     logger.info(f"({2*size}) Whole Operations: {LoggedMatrixOps.opNumber}")
-    LoggedMatrixOps.endOps()
     wholeDiff = time.time() - check
     logger.info(f"({2*size}) Whole Time diff: {wholeDiff}")
 
     check = time.time()
-    LoggedMatrixOps.startOps()
+    LoggedMatrixOps.resetLogging()
     finished = Utils.subSmith(glued.laplacian, 1)
     logger.info(f"({2*size}) Split Operations: {LoggedMatrixOps.opNumber}")
     splitDiff = time.time() - check
     logger.info(f"({2*size}) Split Time diff: {splitDiff}")
-    LoggedMatrixOps.endOps()
 
     return wholeDiff, splitDiff
 
@@ -206,9 +217,37 @@ if __name__ == "__main__":
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)
     graph.visualize(divisor)"""
-    maxGraph = 11
-    minGraph = 10
+    Utils.setLogged(True)
+    maxGraph = 6
+    minGraph = 5
     # [plotFactors('cycle', (size, maxGraph), includePaths=(2,), bySize=False) for size in range(minGraph, maxGraph)]
+    # logger.info(f"Total ops: {LoggedMatrixOps.opNumber}, weighted ops: {LoggedMatrixOps.weightedOpNumber}")
+
+    def cycleWheel(cycleSize: int):
+        LoggedMatrixOps.resetLogging()
+        cycle = Graph.cycle(cycleSize)
+        logger.info(Utils.prettyCok(cycle.pic()))
+        opsList = LoggedMatrixOps.ops
+        LoggedMatrixOps.resetLogging()
+        wheel = Graph.wheel(cycleSize+1, direction=0, spokeDirection=1)
+        logger.info(Utils.prettyCok(wheel.pic()))
+        return LoggedMatrixOps.operate(wheel.laplacian, opsList, lambda x: x + 1)
+
+
+    cycleSize = 9
+    cycle = Graph.cycle(cycleSize)
+    cycle.setEdgeState(1, 2, Graph.FWD)
+    cycle.setEdgeState(2, 3, Graph.REV)
+    cycle.setEdgeState(3, 4, Graph.REV)
+    logger.info(Utils.prettyCok(cycle.pic()))
+    wheel = Graph.wheel(cycleSize + 1, direction=0, spokeDirection=1)
+    wheel.setEdgeState(0, 3, Graph.REV)
+    wheel.setEdgeState(0, 5, Graph.REV)
+    # wheel.setEdgeState(1, 2, Graph.FWD)
+    # wheel.setEdgeState(2, 3, Graph.REV)
+    # wheel.setEdgeState(3, 4, Graph.REV)
+
+    logger.info(Utils.prettyCok(wheel.pic()))
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
     # logger.info(cokDict)
     # testBruteForce((3, 40))
@@ -235,7 +274,8 @@ if __name__ == "__main__":
         # cycle.visualize()
         Utils.setLogged(True)
         logger.info(f"Cycle graph of size {i} Pic: {Utils.prettyCok(cycle.pic())}")"""
-    Utils.setLogged(True)
+
+    """Utils.setLogged(True)
     cycle = Graph.cycle(10)
     LoggedMatrixOps.startOps()
     Utils.smithNormalForm(cycle.laplacian)
@@ -244,12 +284,15 @@ if __name__ == "__main__":
     mimic = np.identity(len(cycle.laplacian))
     LoggedMatrixOps.startOps()
     prepped = Utils.prepSmith(cycle.laplacian, mimic, mimic, ops=LoggedMatrixOps)
-    Utils.smithNormalForm(prepped)
+    Utils.smithNormalForm(prepped, resetLogCount=False)
     preppedOps = LoggedMatrixOps.opNumber
-    logger.info(f"Unprepared: {ops}, prepared: {preppedOps}")
+    logger.info(f"Unprepared: {ops}, prepared: {preppedOps}")"""
     # cycleOrientation(6)
     # [wheelOrientation(i) for i in range(6, 16)]
-    # [wheelOrientation(i) for i in range(6, 21)
+    """[wheelOrientation(i) for i in range(3, 21)]
+    for i in range(0, 21):
+        logger.info(f"{i}: {wheelJacs(i)}")"""
+
     """n = 800
     cycle = Graph.cycle(n)
     print(f"Cycle Picard of size {n}: {Utils.prettyCok(cycle.pic())}")"""

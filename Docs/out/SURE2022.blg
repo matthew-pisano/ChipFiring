@@ -3,44 +3,46 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: SURE2022.aux
 The style file: alpha.bst
 Database file #1: Jacobian.bib
-You've used 3 entries,
+Warning--I didn't find a database entry for "jacobson2003critical"
+You've used 2 entries,
             2543 wiz_defined-function locations,
-            577 strings with 4839 characters,
-and the built_in function-call counts, 1176 in all, are:
-= -- 123
-> -- 35
-< -- 3
-+ -- 11
-- -- 10
-* -- 72
-:= -- 190
-add.period$ -- 10
-call.type$ -- 3
-change.case$ -- 16
-chr.to.int$ -- 3
-cite$ -- 3
-duplicate$ -- 56
-empty$ -- 93
-format.name$ -- 15
-if$ -- 248
+            572 strings with 4691 characters,
+and the built_in function-call counts, 629 in all, are:
+= -- 62
+> -- 16
+< -- 2
++ -- 5
+- -- 4
+* -- 40
+:= -- 112
+add.period$ -- 6
+call.type$ -- 2
+change.case$ -- 10
+chr.to.int$ -- 2
+cite$ -- 2
+duplicate$ -- 29
+empty$ -- 49
+format.name$ -- 8
+if$ -- 122
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 3
-newline$ -- 18
-num.names$ -- 9
-pop$ -- 16
+missing$ -- 2
+newline$ -- 13
+num.names$ -- 6
+pop$ -- 8
 preamble$ -- 1
-purify$ -- 19
+purify$ -- 12
 quote$ -- 0
-skip$ -- 47
+skip$ -- 23
 stack$ -- 0
-substring$ -- 73
-swap$ -- 12
-text.length$ -- 3
+substring$ -- 34
+swap$ -- 2
+text.length$ -- 2
 text.prefix$ -- 2
 top$ -- 0
-type$ -- 24
+type$ -- 16
 warning$ -- 0
-while$ -- 12
-width$ -- 4
-write$ -- 41
+while$ -- 6
+width$ -- 3
+write$ -- 27
+(There was 1 warning)

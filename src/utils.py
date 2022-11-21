@@ -42,12 +42,16 @@ class Utils:
             ops = MatrixOps
 
         def zeroColumns():
+            nonZeroed = False
             for i in range(1, len(smith) - 1):
                 if smith[i][i] == 1 and smith[i][i - 1] == 0 and smith[i][i + 1] == 0:
                     for j in range(0, len(smith)):
                         if i != j and smith[j][i] != 0:
                             ops.addRows(smith, p, j, i, -smith[j][i])
+                            nonZeroed = True
+            return nonZeroed
 
+        # Add columns to eliminate -1s above diagonal and ensure diagonal is 1s
         for i in range(len(smith) - 2):
             initial = (smith[i][i + 1], smith[i + 1][i + 1])
             result = (smith[i][i] + smith[i][i + 1], smith[i + 1][i] + smith[i + 1][i + 1])
@@ -55,6 +59,7 @@ class Utils:
                     (initial[1] == result[1] and abs(initial[0]) > abs(result[0])):
                 ops.addCols(smith, q, i + 1, i)
 
+        # Add columns to eliminate -1s below diagonal and ensure diagonal is 1s
         for i in range(len(smith) - 1, 0, -1):
             initial = (smith[i - 1][i - 1], smith[i][i - 1])
             result = (smith[i - 1][i] + smith[i - 1][i - 1], smith[i][i] + smith[i][i - 1])
@@ -62,8 +67,9 @@ class Utils:
                     (initial[0] == result[0] and abs(initial[1]) > abs(result[1])):
                 ops.addCols(smith, q, i - 1, i)
 
-        zeroColumns()
-        zeroColumns()
+        # Use free diagonal ones to eliminate all other non zeroes in their column
+        while zeroColumns():
+            ...
 
         if smith[0][0] != 0:
             for i in range(1, len(smith)):
@@ -72,25 +78,25 @@ class Utils:
 
         if smith[len(smith) - 1][len(smith) - 1] != 0:
             for i in range(0, len(smith) - 1):
-                if smith[len(smith) - 1][i] != 0 and smith[len(smith) - 1][i] % smith[len(smith) - 1][
-                    len(smith) - 1] == 0:
+                if smith[len(smith) - 1][i] != 0 and \
+                        smith[len(smith) - 1][i] % smith[len(smith) - 1][len(smith) - 1] == 0:
                     ops.addCols(smith, q, i, len(smith) - 1,
                                 -smith[len(smith) - 1][i] / smith[len(smith) - 1][len(smith) - 1])
 
         return smith
 
     @classmethod
-    def smithNormalForm(cls, matrix: np.ndarray):
+    def smithNormalForm(cls, matrix: np.ndarray, resetLogCount=True):
         """Calculates the smith normal form of the given matrix"""
         smith: np.ndarray = matrix.copy()
-        ops = LoggedMatrixOps
-        """if DEBUG["snfPrepare"]:
+        if DEBUG["snfPrepare"]:
             DEBUG["snfPrepare"](smith)
         if cls._logged:
             ops = LoggedMatrixOps
-            ops.startOps()
+            if resetLogCount:
+                ...#ops.startOps()
         else:
-            ops = MatrixOps"""
+            ops = MatrixOps
 
         rangeMax = len(smith) if not DEBUG["snfRange"] else DEBUG["snfRange"][1]
         rangeMin = 0 if not DEBUG["snfRange"] else DEBUG["snfRange"][0]
@@ -124,6 +130,8 @@ class Utils:
                     if smith[x][y] % smith[s][s] != 0:
                         return x, y
             return None
+
+        # smith = cls.prepSmith(smith, p, q, ops=ops)
 
         for s in range(rangeMin, rangeMax):
             while not isLone(s):
@@ -257,22 +265,18 @@ class MatrixOps:
 
 class LoggedMatrixOps:
 
-    stepNumber = None
-    opNumber = None
-    weightedOpNumber = None
+    stepNumber = 0
+    opNumber = 0
+    weightedOpNumber = 0
     verbose = False
+    ops = []
 
     @classmethod
-    def startOps(cls):
+    def resetLogging(cls):
         cls.stepNumber = 0
         cls.opNumber = 0
         cls.weightedOpNumber = 0
-
-    @classmethod
-    def endOps(cls):
-        cls.stepNumber = None
-        cls.opNumber = None
-        cls.weightedOpNumber = None
+        cls.ops = []
 
     @classmethod
     def printMatrix(cls, prev, current, opStr):
@@ -296,6 +300,7 @@ class LoggedMatrixOps:
         mimic[[i, j]] = mimic[[j, i]]
         cls.opNumber += 1
         cls.weightedOpNumber += len(matrix)
+        cls.ops.append((0, i, j, 1))
         if cls.verbose:
             cls.printMatrix(prevMatrix, matrix, f"R{i} <-> R{j}")
 
@@ -306,6 +311,7 @@ class LoggedMatrixOps:
         mimic[:, [i, j]] = mimic[:, [j, i]]
         cls.opNumber += 1
         cls.weightedOpNumber += len(matrix)
+        cls.ops.append((1, i, j, 1))
         if cls.verbose:
             cls.printMatrix(prevMatrix, matrix, f"C{i} <-> C{j}")
 
@@ -316,6 +322,7 @@ class LoggedMatrixOps:
         mimic[i, :] = mimic[i, :] + scale * mimic[j, :]
         cls.opNumber += 1
         cls.weightedOpNumber += len(matrix)
+        cls.ops.append((2, i, j, scale))
         if cls.verbose:
             cls.printMatrix(prevMatrix, matrix, f"R{i} -> R{i} + {scale}*R{j}")
 
@@ -326,15 +333,40 @@ class LoggedMatrixOps:
         mimic[:, i] = mimic[:, i] + scale * mimic[:, j]
         cls.opNumber += 1
         cls.weightedOpNumber += len(matrix)
+        cls.ops.append((3, i, j, scale))
         if cls.verbose:
             cls.printMatrix(prevMatrix, matrix, f"C{i} -> C{i} + {scale}*C{j}")
 
     @classmethod
-    def scaleRow(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, scale):
+    def scaleRow(cls, matrix: np.ndarray, mimic: np.ndarray, i: int, scale=1):
         prevMatrix = np.copy(matrix)
         matrix[i, :] = scale * matrix[i, :]
         mimic[i, :] = scale * mimic[i, :]
         cls.opNumber += 1
         cls.weightedOpNumber += len(matrix)
+        cls.ops.append((4, i, None, scale))
         if cls.verbose:
             cls.printMatrix(prevMatrix, matrix, f"R{i} -> {scale}*R{i}")
+
+    @classmethod
+    def operate(cls, matrix: np.ndarray, opsList: list[typing.Tuple] = None, transform: typing.Callable[[int], int] = None):
+        operated = np.copy(matrix)
+        mimic = np.identity(len(matrix))
+        opsTmp = cls.ops.copy()
+        cls.ops = []
+        if opsList is None:
+            opsList = opsTmp
+        for op in opsList:
+            match op[0]:
+                case 0:
+                    cls.exchangeRows(operated, mimic, transform(op[1]), transform(op[2]))
+                case 1:
+                    cls.exchangeCols(operated, mimic, transform(op[1]), transform(op[2]))
+                case 2:
+                    cls.addRows(operated, mimic, transform(op[1]), transform(op[2]), op[3])
+                case 3:
+                    cls.addCols(operated, mimic, transform(op[1]), transform(op[2]), op[3])
+                case 4:
+                    cls.scaleRow(operated, mimic, transform(op[1]), op[3])
+        cls.ops = opsTmp
+        return operated

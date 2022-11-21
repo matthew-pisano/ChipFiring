@@ -38,10 +38,14 @@ Wheel graphs:
     Graph.wheel(size, direction=0, spoke_direction=0) inv factors followed
         .618035(golden_ratio^{x}) x .618035(golden_ratio^{x}) x Z for even sizes
 
+    Sequence of numbers starting with 0:4, 1:3 if the index of the next number in the sequence (n) is even,
+    the next number S(n) = 5*S(n-1) - S(n-2).  If n is odd then S(n) = S(n-1) - S(n-2).
+    Jacobian values are: Z_(S(n)) x Z_(S(n)) for even n and Z_(S(n)) x Z_(5*S(n)) for odd n
+
     Graph.wheel(size, direction=0, spoke_direction=1) inv factors followed Z_(n-1) x Z_(n-1) X Z for even sizes
     Graph.wheel(size, direction=0, spoke_direction=1) inv factors followed Z_((n-1)/2) x Z_((n-1)*2) X Z for odd sizes
 
-    Graph.wheel(size, direction=0, spoke_direction=2) same as Graph.wheel(size, direction=0, spoke_direction=0)
+    Graph.wheel(size, direction=0, spoke_direction=2) =>[similar to]<= Graph.wheel(size, direction=0, spoke_direction=0) [second is times 4 NOT times 5]
 
     Graph.wheel(size, direction=2, spoke_direction=0) same as Graph.wheel(size, direction=1, spoke_direction=2)
 
@@ -100,3 +104,34 @@ to be able to freely clear its column since its entire row is now clear.  By def
 the diagonal have to have one -1 above or below it.  By only clearing the 1's first, all the 2's will be made into
 ones by the time the first sweep has completed.  The new 1's can then clear their columns since their rows had
 already been cleared, converting more 2's if there are any adjacent.  This results in a prefect identity matrix.
+
+
+20:57:46 [INFO] Frequencies: ℤ_1: 1398, ℤ_2: 3522, ℤ_3: 996, ℤ_4: 388, ℤ_5: 160, ℤ_6: 64, ℤ_7: 24, ℤ_8: 10,
+20:57:46 [INFO] Total graphs processed: 6562
+20:57:46 [INFO] Finished after 13.42s
+
+20:59:05 [INFO] Frequencies: ℤ_1: 1398, ℤ_2: 3522, ℤ_3: 996, ℤ_4: 388, ℤ_5: 160, ℤ_6: 64, ℤ_7: 24, ℤ_8: 10,
+20:59:05 [INFO] Total graphs processed: 6562
+20:59:05 [INFO] Finished after 13.405s
+21:04:31 [INFO] Total ops: 227891, weighted ops: 1823128
+--------------
+
+20:59:34 [INFO] Frequencies: ℤ_1: 1398, ℤ_2: 3522, ℤ_3: 996, ℤ_4: 388, ℤ_5: 160, ℤ_6: 64, ℤ_7: 24, ℤ_8: 10,
+20:59:34 [INFO] Total graphs processed: 6562
+20:59:34 [INFO] Finished after 14.28s
+
+21:00:31 [INFO] Frequencies: ℤ_1: 1398, ℤ_2: 3522, ℤ_3: 996, ℤ_4: 388, ℤ_5: 160, ℤ_6: 64, ℤ_7: 24, ℤ_8: 10,
+21:00:31 [INFO] Total graphs processed: 6562
+21:00:31 [INFO] Finished after 13.985s
+21:11:24 [INFO] Total ops: 188929, weighted ops: 1511432
+
+
+21:12:55 [INFO] Finished after 10.097s
+21:12:56 [INFO] Total ops: 4844, weighted ops: 24220
+
+21:12:16 [INFO] Finished after 10.1s
+21:12:16 [INFO] Total ops: 4214, weighted ops: 21070
+
+
+Arbitrary picard groups of wheel graphs of size n appear to be Z_{(n-1)*a} x Z where a is in the picard group
+of cycle graph n-1 Z_a X Z when all spokes point outward
