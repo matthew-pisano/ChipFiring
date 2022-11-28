@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  11 NOV 2022 18:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  27 NOV 2022 23:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -739,7 +739,7 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 )
 \c@mydef=\count314
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
-01.
+02.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -752,66 +752,66 @@ File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.aux)
 \openout1 = `SURE2022.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 102.
+LaTeX Font Info:    ... okay on input line 102.
 LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line
- 101.
+ 102.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line
- 101.
+ 102.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line
- 101.
+ 102.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line
- 101.
+ 102.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 101
+LaTeX Font Info:    Trying to load font information for U+msa on input line 102
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 101
+LaTeX Font Info:    Trying to load font information for U+msb on input line 102
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 101.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 102.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 101.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 102.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 101.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 102.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -835,7 +835,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 101.
+Package hyperref Info: Link coloring OFF on input line 102.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -848,9 +848,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count322
 )
-LaTeX Info: Redefining \ref on input line 101.
-LaTeX Info: Redefining \pageref on input line 101.
-LaTeX Info: Redefining \nameref on input line 101.
+LaTeX Info: Redefining \ref on input line 102.
+LaTeX Info: Redefining \pageref on input line 102.
+LaTeX Info: Redefining \nameref on input line 102.
 
 (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.out)
 (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.out)
@@ -894,52 +894,56 @@ LaTeX Info: Redefining \nameref on input line 101.
 
 
 Class amsart Warning: Abstract should precede \maketitle in AMS document classe
-s; reported on input line 128.
+s; reported on input line 129.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 137.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 137.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 137.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 
 LaTeX Warning: Citation `jacobson2003critical' on page 1 undefined on input lin
-e 157.
+e 158.
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 624--625
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+
+LaTeX Warning: Citation `stanley2016smith' on page 2 undefined on input line 25
+8.
+
+[2] [3] [4] [5] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 669--670
 
  []
 
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 689--691
+
+Underfull \hbox (badness 10000) in paragraph at lines 734--736
 
  []
 
-
-Overfull \hbox (16.89188pt too wide) detected at line 759
+[7]
+Overfull \hbox (16.89188pt too wide) detected at line 804
 []
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7]
-[8]
+ [8]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 849.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 849.
+(hyperref)                removing `math shift' on input line 894.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 849.
+(hyperref)                removing `subscript' on input line 894.
 
 
-Overfull \hbox (16.13702pt too wide) in paragraph at lines 889--892
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 894.
+
+[9]
+Overfull \hbox (16.13702pt too wide) in paragraph at lines 934--937
 \OT1/ptm/m/n/10.95 (Thus, $[] \OML/ztmcm/m/it/10.95 N \OT1/ztmcm/m/n/10.95 = \O
 MS/ztmcm/m/n/10.95 ^^@ []\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 M[]\OT1/zt
 mcm/m/n/10.95 )$\OT1/ptm/m/n/10.95 . []Youngsu: to be re-moved[]) By in-duc-tio
@@ -948,25 +952,25 @@ n, $[] \OML/ztmcm/m/it/10.95 M[] \OT1/ztmcm/m/n/10.95 = 2 [](\OML/ztmcm/m/it/10
 \OML/ztmcm/m/it/10.95 M[]\OT1/ztmcm/m/n/10.95 ) =
  []
 
-[9] [10]
+[10] [11] [12]
 
-LaTeX Warning: Citation `jacobson2003critical' on page 11 undefined on input li
-ne 1021.
+LaTeX Warning: Citation `jacobson2003critical' on page 13 undefined on input li
+ne 1330.
 
-(/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.bbl [11]) [12]
+[13] (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.bbl) [14]
 (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `SURE2022.out' has not changed.
-(rerunfilecheck)             Checksum: A3E8AE192FC21FF313CE3DD0945BF4B5;3705.
+(rerunfilecheck)             Checksum: 568811F5CB3703C6F75359A4BB54CB7A;3043.
  ) 
 Here is how much of TeX's memory you used:
- 26956 strings out of 480171
- 532741 string characters out of 5894489
- 823926 words of memory out of 5000000
- 44208 multiletter control sequences out of 15000+600000
- 511210 words of font info for 120 fonts, out of 8000000 for 9000
+ 26971 strings out of 480171
+ 532854 string characters out of 5894489
+ 824166 words of memory out of 5000000
+ 44221 multiletter control sequences out of 15000+600000
+ 512317 words of font info for 121 fonts, out of 8000000 for 9000
  220 hyphenation exceptions out of 8191
  85i,16n,90p,785b,1114s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
@@ -981,10 +985,10 @@ l/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 Output written on /home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.pdf
- (12 pages, 165160 bytes).
+ (14 pages, 179297 bytes).
 PDF statistics:
- 300 PDF objects out of 1000 (max. 8388607)
- 261 compressed objects within 3 object streams
- 96 named destinations out of 1000 (max. 500000)
- 141 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 306 PDF objects out of 1000 (max. 8388607)
+ 265 compressed objects within 3 object streams
+ 97 named destinations out of 1000 (max. 500000)
+ 125 words of extra memory for PDF output out of 10000 (max. 10000000)
 

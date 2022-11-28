@@ -234,18 +234,20 @@ if __name__ == "__main__":
         return LoggedMatrixOps.operate(wheel.laplacian, opsList, lambda x: x + 1)
 
 
-    cycleSize = 9
+    cycleSize = 44
     cycle = Graph.cycle(cycleSize)
     cycle.setEdgeState(1, 2, Graph.FWD)
     cycle.setEdgeState(2, 3, Graph.REV)
     cycle.setEdgeState(3, 4, Graph.REV)
+    cycle.setEdgeState(4, 5, Graph.REV)
     logger.info(Utils.prettyCok(cycle.pic()))
     wheel = Graph.wheel(cycleSize + 1, direction=0, spokeDirection=1)
-    wheel.setEdgeState(0, 3, Graph.REV)
-    wheel.setEdgeState(0, 5, Graph.REV)
-    # wheel.setEdgeState(1, 2, Graph.FWD)
-    # wheel.setEdgeState(2, 3, Graph.REV)
-    # wheel.setEdgeState(3, 4, Graph.REV)
+    # wheel.setEdgeState(0, 3, Graph.REV)
+    # wheel.setEdgeState(0, 5, Graph.REV)
+    wheel.setEdgeState(1, 2, Graph.FWD)
+    wheel.setEdgeState(2, 3, Graph.REV)
+    wheel.setEdgeState(3, 4, Graph.REV)
+    wheel.setEdgeState(4, 5, Graph.REV)
 
     logger.info(Utils.prettyCok(wheel.pic()))
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}

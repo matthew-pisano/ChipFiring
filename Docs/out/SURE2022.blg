@@ -4,9 +4,10 @@ The top-level auxiliary file: SURE2022.aux
 The style file: alpha.bst
 Database file #1: Jacobian.bib
 Warning--I didn't find a database entry for "jacobson2003critical"
+Warning--I didn't find a database entry for "stanley2016smith"
 You've used 2 entries,
             2543 wiz_defined-function locations,
-            572 strings with 4691 characters,
+            573 strings with 4707 characters,
 and the built_in function-call counts, 629 in all, are:
 = -- 62
 > -- 16
@@ -45,4 +46,4 @@ warning$ -- 0
 while$ -- 6
 width$ -- 3
 write$ -- 27
-(There was 1 warning)
+(There were 2 warnings)

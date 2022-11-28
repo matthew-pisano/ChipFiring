@@ -133,5 +133,8 @@ already been cleared, converting more 2's if there are any adjacent.  This resul
 21:12:16 [INFO] Total ops: 4214, weighted ops: 21070
 
 
-Arbitrary picard groups of wheel graphs of size n appear to be Z_{(n-1)*a} x Z where a is in the picard group
+For even wheel graphs: arbitrary picard groups of wheel graphs of size n appear to be Z_{(n-1)*a} x Z where a is in the picard group
 of cycle graph n-1 Z_a X Z when all spokes point outward
+
+When odd and n-1 is a multiple of 4, the wheel picard is Z_{(n-1)*a} x Z
+When odd and n-1 is not a multiple of 4, Z_2 x Z_{(n-1)/2*a} x Z
