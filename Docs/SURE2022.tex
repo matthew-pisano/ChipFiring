@@ -132,6 +132,24 @@ The Picard group $\Pic(G)$ of a graph $G$ is a finitely generated abelian group,
 
 \section{Introduction}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bacgrkound %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textcolor{red}{Here we first explain the definition of a chip-firing game with examples.}
+
+
+\textcolor{red}{Explain one may simply use the transpose $A^T$ of a given matrix $A$ to do chip-firing game. Explain here chip-firing with M-matrices as in Section 6 of \cite{klivans2018mathematics}. }
+
+
+\textcolor{red}{Now we specialize the case when a matrix $A$ is a directed Laplacian. Perhaps we need to cite some results in Section 6 of \cite{klivans2018mathematics}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% put our results in context below %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
 The main things that we have done so far:
 \begin{enumerate}
 	\item 
@@ -193,6 +211,8 @@ $(a,b) = \begin{cases}
 \end{cases}$.	
 \end{enumerate}
 \end{nothmc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %\begin{goal}[8/1/2022]$ $
@@ -1023,8 +1043,12 @@ In graphs with exactly two of these paths, a consistent pattern arises that allo
 
 \textcolor{red}{Jaiung: the following conjecture should generalize the results in \cite{biggs1999chip}.}
 
-	\subsection{Patterns in The Jacobian}
-		For wheel graphs, we looked for patterns that arose within the invariant factors of the Jacobian as a general formula was not immediately obvious.  For this strategy, we broke the edges of the wheel graph into their two most obvious groups, those belonging to the rim of the wheel and those of the spokes.  By orienting all the edges of either group the same way and trying all nine combinations, we noticed a well-defined pattern for each as the size of the wheel graph changed.  These patterns fell into four distinct groups.
+
+	For wheel graphs, we looked for patterns that arose within the invariant factors of the Jacobian as a
+	general formula was not immediately obvious.  For this strategy, we broke the edges of the wheel graph into their
+	two most obvious groups, those belonging to the rim of the wheel and those of the spokes.  By orienting all the
+	edges of either group the same way and trying all nine combinations, we noticed a well-defined pattern for each as
+	the size of the wheel graph changed.  These patterns fell into four distinct groups.
 
 		\begin{enumerate}
 			\item When the spoke edges all pointed towards the axel and the rim was not bidirectional, or when
@@ -1034,7 +1058,7 @@ In graphs with exactly two of these paths, a consistent pattern arises that allo
 				a graph of size $n$ had a Jacobian of $\mathbb{Z}_{n-1}$.
 			\item When the spoke edges point away from the axel and the rim was bidirectional and a graph of size
 				$n$ had a Jacobian of $\mathbb{Z}_{n-1} \times \mathbb{Z}_{n-1}$ when $n$ was even
-				and $Z_{\frac{n-1}{2}} x Z_{(n-1) \times 2}$ when $n$ was odd.
+				and $\mathbb{Z}_{\frac{n-1}{2}} \times \mathbb{Z}_{(n-1) \times 2}$ when $n$ was odd.
 			\item When all edges were bidirectional or when the spoke direction was towards the axel and
 				the rim was bidirectional, a graph of size $n$ had a Jacobian of
 				$\mathbb{Z}_{\alpha\phi^{n}} \times \mathbb{Z}_{5\alpha\phi^{n}}$ when the size
@@ -1108,18 +1132,19 @@ I_{n-3} & 0 & 0 & 0 \\
 \end{proposition}
 \begin{proof}
 We use the labeling convention that $v_1$ is the axel and the vertices on the rim are $v_2, \dots, v_{n}$.  
-Note that the rim is an undirected (bidirectional) cycle graph $C_{n-1}$ whose Laplacian has the following Smith normal form.
-\begin{equation*}
-\left[
-	\begin{array}{c|ccc}	
-	I_{n-3} & 0 & 0 \\
-	\hline
-	0 & n-1 & 0 &\\
-	0 & 0 & 0 &
-	\end{array}
-\right]. 
-\end{equation*}
-Since $C_{n-1}$ is a subgraph of $W_n$, to finish the proof it suffices to show that 
+%Note that the rim of $W_n$ in this case is an undirected (bidirectional) cycle graph $C_{n-1}$ whose Laplacian has the following Smith normal form.
+%\begin{equation*}
+%\left[
+%	\begin{array}{c|ccc}	
+%	I_{n-3} & 0 & 0 \\
+%	\hline
+%	0 & n-1 & 0 &\\
+%	0 & 0 & 0 &
+%	\end{array}
+%\right]. 
+%\end{equation*}
+%Since $C_{n-1}$ is a subgraph of $W_n$, 
+Let $L_{W_n}$ be the Laplacian matrix of $W_n$. It is clear that $\det(L_{W_n})=0$. Hence, from Theorem \ref{theorem: gcd theorem}, it suffices to show that 
 \begin{equation*}
 I_{n-1}(L_{W_n}) = \langle (n-1)^2 \rangle~\text{and}~ I_{n-2}(L_{W_n}) = \begin{cases}
 \langle n-1 \rangle & \text{if}~ n ~\text{is even} \\
@@ -1242,19 +1267,19 @@ N = \left[
 \right],
 \end{equation*}
 where $M_{n-2}$ is the matrix in \Cref{obj3}. 
-Note that $\det(M_{n-2}) = n-1$ and this shows that $I_{n-1}(L_{W_n}) = I_{n-1}(N) = \angles{(n-1)^2}$.
+Note that $\det(M_{n-2}) = n-1$ and this shows that $I_{n-1}(L_{W_n}) = I_{n-1}(N) = \angles{\det(N)}=\angles{(n-1)^2}$.
 
-To compute the $n-2$ minors, first note that if the last column is a part of a minor, then it is divisible by $n-2$. 
+To compute the $(n-2)$ minors, first note that if the last column is a part of a minor, then it is divisible by $n-1$. 
 Since $\det(M_{n-2}) = n-1 \in I_{n-2}(N)$, we only need to consider the $n-2$ minors of the first $n-2$ columns of $N$. 
 
 In other words, $I_{n-2}(L_{W_n})$ is generated by $n-1$ 
-and the $(n-2)$-determinents of the matrix which is obtained from $M_{n-2}$ by replacing the $i$th row by $\mathbf{1}_{n-2}$.
+and the $(n-2)$-determinents of the matrix which is obtained from $M_{n-2}$ by replacing the $i^{\textrm{th}}$ row by $\mathbf{1}_{n-2}$.
 
 Note that $M_{n-2}$ is symmetric. 
 By Cramer's rule, these $(n-2)$-minors are the entries of the solution matrix $\mathbf{x}$ of the matrix equation
 \begin{equation*}
 M_{n-2} \mathbf{x} 
-= \det(M_{n-2}) \cdot \mathbf{1_n}^T
+= \det(M_{n-2}) \cdot \mathbf{1}_{n-2}^T
 \end{equation*}
 up to sign.
 This is done in the following lemma, and it completes the proof.
@@ -1279,7 +1304,10 @@ M_n \mathbf{x}
 = (n+1) \mathbf{1_n}^T,
 \end{equation*}
 where $M_n$ is as in $\Cref{obj3}$. 
-Let $x_k$ denote the $k$th entry of $\mathbf{x}$. Then $x_k = a k^n + b k$, where $a = -(n+1)/2$ and $b = (n+1)^2/2$. 
+Let $x_k$ denote the $k^{\textrm{th}}$ entry of $\mathbf{x}$. Then $x_k = a k^2 + b k$, where
+\[
+a = -\frac{(n+1)}{2}, \quad b = \frac{(n+1)^2}{2}.
+\]
 Furthermore, $\gcd(x_1,\dots, x_n)$ is $n+1$ if $n$ is even and $(n+1)/2$ if $n$ is odd. 
 \end{lemma}
 
@@ -1287,8 +1315,11 @@ Furthermore, $\gcd(x_1,\dots, x_n)$ is $n+1$ if $n$ is even and $(n+1)/2$ if $n$
 % Note that since $M_n$ is invertible over $\mathbb{Q}$, the solution exists and unique over $\mathbb{Q}$.
 % Since $\mathbb{Z} \subset \mathbb{Q}$, once we find a solution, it suffices to show that the entries of $\mathbf{x}$ are integers. 
 Note that $\det (M_n) = n+1$ (\Cref{obj3}). 
-Consider a sequence $f(k) = f_k  = ak^2 + bk$. 
-For any $k$, $-f_{k-1} + 2f_k - f_{k+1} = -2a$.
+Consider a sequence $f(k)=f_k  = ak^2 + bk$. 
+For any $k$, we have
+\[
+-f_{k-1} + 2f_k - f_{k+1} = -2a.
+\]
 First, we set $a = -(n+1)/2$. 
 In addition, the equations $2x_1 - x_2 = n+1$ and $-x_{n-1} + 2x_n = n+1$ are equivalent to the conditions $f_0 = f_{n+1} = 0$. 
 These conditions imply $b = (n+1)^2/2$ since $0, -b/a$ are the roots of $f(k)$. 
@@ -1306,30 +1337,20 @@ Finally, we show that $\gcd(f_1, n+1)$ is $n+1$ when $n$ is even and $(n+1)/2$ w
 Recall that $f_1 = \frac{n(n+1)}2$.
 If $n$ is even, then $n+1$ divides $f_1$. 
 Thus, $\gcd(f_1, n+1) = n+1$. 
-If $n$ is odd, then $\gcd(f_1, n+1) = \gcd(\frac{n+1}2 \cdot n, n+1) = \gcd(\frac{n+1}2, n+1) = \frac{n+1}2$. 
-The 2nd last equalty follows from the fact that $\frac{n+1}2$ is an integer and for integers $a,b,c$, $\gcd(ab,c) = \gcd(a,c)$ if $b,c$ are relatively prime. 
+If $n$ is odd, then 
+\[
+\gcd(f_1, n+1) = \gcd(\frac{n+1}2 \cdot n, n+1) = \gcd(\frac{n+1}2, n+1) = \frac{n+1}2.
+\] 
+The $2^\textrm{nd}$ last equality follows from the fact that $\frac{n+1}2$ is an integer and for integers $a,b,c$, $\gcd(ab,c) = \gcd(a,c)$ if $b,c$ are relatively prime. 
 
 Thus $\mathbf{x} = \begin{bmatrix} f_1 & \cdots & f_n \end{bmatrix}^T$ is a solution having the asserted gcd. 
 This completes the proof. 
 \end{proof}
 
-\begin{conj}
-	For wheel graphs of size $n$, when ($n$ is even or $n-1 | 4$) and all spokes point outward, the picard groups appear to follow
-	$\mathbb{Z}_{(n-1) \times a} \times \mathbb{Z}$ when the picard group of the cycle graph of the same orientation as the rim
-	and size $n-1$ is $\mathbb{Z}_a \times \mathbb{Z}$.
-
-	When $n-1 | 2$, the picard groups appear to follow $\mathbb{Z}_2 \times \mathbb{Z}_{(n-1)/2 \times a} \times \mathbb{Z}$.
-\end{conj}
-
-This appears to hold for any arbitrary rim orientation so long as the spokes all point outward.
-
-For example, for a cycle graph $C$ of size $9$ and an orientation such that $\Pic(C) = \mathbb{7} \times \mathbb{Z}$,
-the wheel graph of size $10$ with that same orientation in its rim has a picard group of $\mathbb{63} \times \mathbb{Z}$
-
 
 
 \section{Picard groups of oriented multipartite graphs}
-\textcolor{red}{Jaiung: this paper~\cite{jacobson2003critical} could be relevant here.}
+\textcolor{red}{Jaiung: this paper \cite{jacobson2003critical} could be relevant here.}
 	For our purposes, a multipartite graph is a graph whos vertices can be partitioned between several independent
 	groups, arranged in a linear order.  Vertices have no connections to members of their own group, but are strongly
 	connected to all vertices of their two adjacent groups.
