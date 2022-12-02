@@ -896,7 +896,7 @@ By a \textit{path} of $C_n$, we mean a connected subgraph of $C_n$ in which all 
 In graphs with exactly two of these paths, a consistent pattern arises that allows for the rapid calculation of the Jacobian in only $O(n)$ time compared to the $O(n^4)$ time that calculating the Smith normal form takes. This pattern relies on calculating the number of bidirectional arrows between these two paths on one side. Our experimental computation suggests the following. 
 
 		\begin{conj}\label{conjecture: two path}
-Let $C_n$ be a cycle graph with a fixed orientation. Then, we have $\Jac(G)=\mathbb{Z}_{x-2}$, where $x$ is the number of bidirectional edges clockwise of the counter-clockwise path and counter-clockwise of the clockwise path.
+			Let $C_n$ be a cycle graph with a fixed orientation. Then, we have $\Jac(G)=\mathbb{Z}_{x+2}$, where $x$ is the number of bidirectional edges clockwise of the counter-clockwise path and counter-clockwise of the clockwise path.
 		\end{conj}
 		%\begin{proof}
 		%	We have proven this completely for cycle graphs up to $C_{80}$ when using two continuous paths without any bidirectional arrows separating them on the other size.  This has also held true for many other arbitrary orientations that still meet the two-path definition.	\end{proof}

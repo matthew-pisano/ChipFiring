@@ -218,8 +218,8 @@ if __name__ == "__main__":
     graph = Graph(adjacency)
     graph.visualize(divisor)"""
     Utils.setLogged(True)
-    maxGraph = 6
-    minGraph = 5
+    maxGraph = 11
+    minGraph = 10
     # [plotFactors('cycle', (size, maxGraph), includePaths=(2,), bySize=False) for size in range(minGraph, maxGraph)]
     # logger.info(f"Total ops: {LoggedMatrixOps.opNumber}, weighted ops: {LoggedMatrixOps.weightedOpNumber}")
 
@@ -234,7 +234,7 @@ if __name__ == "__main__":
         return LoggedMatrixOps.operate(wheel.laplacian, opsList, lambda x: x + 1)
 
 
-    cycleSize = 44
+    """cycleSize = 44
     cycle = Graph.cycle(cycleSize)
     cycle.setEdgeState(1, 2, Graph.FWD)
     cycle.setEdgeState(2, 3, Graph.REV)
@@ -249,7 +249,8 @@ if __name__ == "__main__":
     wheel.setEdgeState(3, 4, Graph.REV)
     wheel.setEdgeState(4, 5, Graph.REV)
 
-    logger.info(Utils.prettyCok(wheel.pic()))
+    logger.info(Utils.prettyCok(wheel.pic()))"""
+
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
     # logger.info(cokDict)
     # testBruteForce((3, 40))
@@ -305,18 +306,24 @@ if __name__ == "__main__":
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
         title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
     )"""
-    """cycle = Graph.cycle(7)
-    cycle.setEdgeState(0, 1, 0)
+    """cycleSize = 9
+    cycle = Graph.cycle(cycleSize)
+    cycle.setEdgeState(0, 1, 1)
     cycle.setEdgeState(1, 2, 1)
     cycle.setEdgeState(2, 3, 2)
     cycle.setEdgeState(3, 4, 2)
+    # cycle.setEdgeState(4, 0, 0)
     cycle.setEdgeState(4, 5, 2)
-    cycle.setEdgeState(5, 6, 0)
-    cycle.setEdgeState(6, 0, 0)
+    cycle.setEdgeState(5, 6, 2)
+    cycle.setEdgeState(6, 7, 2)
+    cycle.setEdgeState(7, 8, 2)
+    cycle.setEdgeState(cycleSize-1, 0, 1)
+    # cycle.setEdgeState(5, 6, 0)
+    # cycle.setEdgeState(6, 0, 0)
     cycle.visualize()
     # lap = cycle.laplacian
     # snf = Utils.smithNormalForm(cycle.laplacian)
-    print(f"Cycle Picard of size {4}: {Utils.prettyCok(cycle.pic())}")"""
+    print(f"Cycle Picard of size {cycleSize}: {Utils.prettyCok(cycle.pic())}")"""
     """Utils.setVerbose(True)
     cycle = Graph.cycle(4)
     cycle.setEdgeState(0, 1, 1)
