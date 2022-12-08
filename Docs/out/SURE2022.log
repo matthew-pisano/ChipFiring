@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  29 NOV 2022 20:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.8.28)  5 DEC 2022 17:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -903,47 +903,66 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 
-LaTeX Warning: Citation `jacobson2003critical' on page 1 undefined on input lin
-e 158.
+Overfull \hbox (5.8531pt too wide) in paragraph at lines 149--151
+\OT1/ptm/m/n/10.95 where $\OML/ztmcm/m/it/10.95 g \OT1/ztmcm/m/n/10.95 = \OMS/z
+tmcm/m/n/10.95 j\OML/ztmcm/m/it/10.95 E\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10
+.95 G\OT1/ztmcm/m/n/10.95 )\OMS/ztmcm/m/n/10.95 j ^^@ j\OML/ztmcm/m/it/10.95 V\
+OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 G\OT1/ztmcm/m/n/10.95 )\OMS/ztmcm/m/
+n/10.95 j \OT1/ztmcm/m/n/10.95 + 1$\OT1/ptm/m/n/10.95 , $[]\OT1/ztmcm/m/n/10.95
+ (\OML/ztmcm/m/it/10.95 D\OT1/ztmcm/m/n/10.95 )$ \OT1/ptm/m/n/10.95 for $\OML/z
+tmcm/m/it/10.95 D []\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 G\OT1/ztmcm/m/n
+/10.95 )$ \OT1/ptm/m/n/10.95 is the to-tal num-ber of chips, $\OML/ztmcm/m/it/1
+0.95 K \OT1/ztmcm/m/n/10.95 = [][]([](\OML/ztmcm/m/it/10.95 v\OT1/ztmcm/m/n/10.
+95 ) \OMS/ztmcm/m/n/10.95 ^^@
+ []
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 
-LaTeX Warning: Citation `stanley2016smith' on page 2 undefined on input line 25
-8.
+LaTeX Warning: Citation `klivans2018mathematics' on page 2 undefined on input l
+ine 173.
 
-[2] [3] [4] [5] [6]
-Underfull \hbox (badness 10000) in paragraph at lines 669--670
+
+LaTeX Warning: Citation `jacobson2003critical' on page 2 undefined on input lin
+e 208.
+
+[2]
+
+LaTeX Warning: Citation `stanley2016smith' on page 3 undefined on input line 31
+0.
+
+[3] [4] [5] [6] [7]
+Underfull \hbox (badness 10000) in paragraph at lines 721--722
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 734--736
+Underfull \hbox (badness 10000) in paragraph at lines 786--788
 
  []
 
-[7]
-Overfull \hbox (16.89188pt too wide) detected at line 804
+[8]
+Overfull \hbox (16.89188pt too wide) detected at line 856
 []
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [8]
+ [9]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 894.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 894.
+(hyperref)                removing `math shift' on input line 946.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 894.
+(hyperref)                removing `subscript' on input line 946.
 
-[9]
-Overfull \hbox (16.13702pt too wide) in paragraph at lines 934--937
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 946.
+
+[10]
+Overfull \hbox (16.13702pt too wide) in paragraph at lines 986--989
 \OT1/ptm/m/n/10.95 (Thus, $[] \OML/ztmcm/m/it/10.95 N \OT1/ztmcm/m/n/10.95 = \O
 MS/ztmcm/m/n/10.95 ^^@ []\OT1/ztmcm/m/n/10.95 (\OML/ztmcm/m/it/10.95 M[]\OT1/zt
 mcm/m/n/10.95 )$\OT1/ptm/m/n/10.95 . []Youngsu: to be re-moved[]) By in-duc-tio
@@ -952,24 +971,24 @@ n, $[] \OML/ztmcm/m/it/10.95 M[] \OT1/ztmcm/m/n/10.95 = 2 [](\OML/ztmcm/m/it/10
 \OML/ztmcm/m/it/10.95 M[]\OT1/ztmcm/m/n/10.95 ) =
  []
 
-[10] [11] [12]
+[11] [12] [13]
 
-LaTeX Warning: Citation `jacobson2003critical' on page 13 undefined on input li
-ne 1332.
+LaTeX Warning: Citation `jacobson2003critical' on page 14 undefined on input li
+ne 1385.
 
-[13] (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.bbl) [14]
+[14] (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.bbl) [15]
 (/home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `SURE2022.out' has not changed.
-(rerunfilecheck)             Checksum: 568811F5CB3703C6F75359A4BB54CB7A;3043.
+(rerunfilecheck)             Checksum: BE9928DEDC0EA17EF07BB5F07FAAEE98;2980.
  ) 
 Here is how much of TeX's memory you used:
- 26971 strings out of 480171
- 532854 string characters out of 5894489
- 824166 words of memory out of 5000000
- 44221 multiletter control sequences out of 15000+600000
+ 26980 strings out of 480171
+ 532998 string characters out of 5894489
+ 824356 words of memory out of 5000000
+ 44226 multiletter control sequences out of 15000+600000
  512317 words of font info for 121 fonts, out of 8000000 for 9000
  220 hyphenation exceptions out of 8191
  85i,16n,90p,785b,1114s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -981,14 +1000,15 @@ type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
 msfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbo
-l/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+l/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/font
+s/type1/urw/times/utmri8a.pfb>
 Output written on /home/matthew/Documents/pgrm/chipFiring/Docs/out/SURE2022.pdf
- (14 pages, 179308 bytes).
+ (15 pages, 186749 bytes).
 PDF statistics:
- 306 PDF objects out of 1000 (max. 8388607)
- 265 compressed objects within 3 object streams
- 97 named destinations out of 1000 (max. 500000)
+ 322 PDF objects out of 1000 (max. 8388607)
+ 278 compressed objects within 3 object streams
+ 101 named destinations out of 1000 (max. 500000)
  125 words of extra memory for PDF output out of 10000 (max. 10000000)
 
