@@ -202,6 +202,7 @@ def picTimes(size):
 if __name__ == "__main__":
     start = time.time()
     logger.info(f"=====\nEntering program at {datetime.datetime.fromtimestamp(start).strftime('%H:%M:%S')}\n=====")
+
     """adjacency = [
         [0, 1, 0, 1],
         [1, 0, 0, 0],
@@ -209,14 +210,18 @@ if __name__ == "__main__":
         [0, 0, 0, 0],
     ]"""
     """adjacency = [
-        [0, 1, 1, 0],
-        [0, 0, 1, 0],
-        [1, 0, 0, 1],
-        [1, 0, 0, 0],
+        [0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 0],
     ]
     divisor = Divisor([16, -4, -5, 0])
     graph = Graph(adjacency)
-    graph.visualize(divisor)"""
+    # graph.visualize(divisor)
+    # graph.visualize()
+    Graph.glueByEdge((Graph.cycle(5), 4),
+                       (graph, 0)).visualize()"""
     Utils.setLogged(True)
     maxGraph = 11
     minGraph = 10
@@ -234,7 +239,7 @@ if __name__ == "__main__":
         return LoggedMatrixOps.operate(wheel.laplacian, opsList, lambda x: x + 1)
 
 
-    """cycleSize = 44
+    cycleSize = 8
     cycle = Graph.cycle(cycleSize)
     cycle.setEdgeState(1, 2, Graph.FWD)
     cycle.setEdgeState(2, 3, Graph.REV)
@@ -242,6 +247,7 @@ if __name__ == "__main__":
     cycle.setEdgeState(4, 5, Graph.REV)
     logger.info(Utils.prettyCok(cycle.pic()))
     wheel = Graph.wheel(cycleSize + 1, direction=0, spokeDirection=1)
+    cycle.visualize()
     # wheel.setEdgeState(0, 3, Graph.REV)
     # wheel.setEdgeState(0, 5, Graph.REV)
     wheel.setEdgeState(1, 2, Graph.FWD)
@@ -249,7 +255,7 @@ if __name__ == "__main__":
     wheel.setEdgeState(3, 4, Graph.REV)
     wheel.setEdgeState(4, 5, Graph.REV)
 
-    logger.info(Utils.prettyCok(wheel.pic()))"""
+    logger.info(Utils.prettyCok(wheel.pic()))
 
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
     # logger.info(cokDict)

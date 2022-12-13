@@ -138,3 +138,20 @@ of cycle graph n-1 Z_a X Z when all spokes point outward
 
 When odd and n-1 is a multiple of 4, the wheel picard is Z_{(n-1)*a} x Z
 When odd and n-1 is not a multiple of 4, Z_2 x Z_{(n-1)/2*a} x Z
+
+
+Slide recommendations
+
+mark theorems and conjectures.
+
+Explain meaning of invariant factors, more pictures, less explanation.
+
+Computer many examples and noticed patterns.  Proved later.
+
+Directed Matrix tree theorem for tree.  Reason jac is trivial.
+
+Laplacian represents more general framework.  Reason for looking at directed case
+
+second set of more detailed slides
+
+multiplied invariant factors are pairs.  Represent different groups of combinations of equiv classes
