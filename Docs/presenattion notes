@@ -1,0 +1,17 @@
+sub sections to sub graphs on slide 7
+mention that undirected graphs are always strongly connected -> all edges bidirectional
+
+picard group is group on slide 10.  Can add and subtract vectors
+equivalence class not equivalency
+
+mention that picrard group is finitley generated ableian group.  Jacobian is torsion subgroup. can genrate group from basic classes
+
+slide 11 not rank, integers to the power of rank
+
+slide 14 not strongly connected, layers directionally connected
+
+slide 18 jacobian of tree is also proven using induction.  Jacobian never changes always trivial.  Not matrix tree theorem
+
+slide 20 show slide 21 (picture) first.  Split data into another slide after cycle graph text
+
+slide 22 show picture first

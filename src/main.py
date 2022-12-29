@@ -228,7 +228,7 @@ if __name__ == "__main__":
     # [plotFactors('cycle', (size, maxGraph), includePaths=(2,), bySize=False) for size in range(minGraph, maxGraph)]
     # logger.info(f"Total ops: {LoggedMatrixOps.opNumber}, weighted ops: {LoggedMatrixOps.weightedOpNumber}")
 
-    def cycleWheel(cycleSize: int):
+    def cycleWheelClone(cycleSize: int):
         LoggedMatrixOps.resetLogging()
         cycle = Graph.cycle(cycleSize)
         logger.info(Utils.prettyCok(cycle.pic()))
@@ -239,23 +239,45 @@ if __name__ == "__main__":
         return LoggedMatrixOps.operate(wheel.laplacian, opsList, lambda x: x + 1)
 
 
-    cycleSize = 8
+    def configurator(graph: Graph):
+        n = len(graph)
+        # graph.setEdgeState(n - 7, n - 6, Graph.FWD)
+        graph.setEdgeState(n - 6, n - 5, Graph.FWD)
+        graph.setEdgeState(n - 5, n - 4, Graph.BI)
+        graph.setEdgeState(n-4, n-3, Graph.FWD)
+        graph.setEdgeState(n-3, n-2, Graph.REV)
+        graph.setEdgeState(n-2, n-1, Graph.REV)
+        # graph.setEdgeState(n-1, n-4, Graph.FWD)
+
+
+    cycleSize = 5
+    """
     cycle = Graph.cycle(cycleSize)
-    cycle.setEdgeState(1, 2, Graph.FWD)
-    cycle.setEdgeState(2, 3, Graph.REV)
-    cycle.setEdgeState(3, 4, Graph.REV)
-    cycle.setEdgeState(4, 5, Graph.REV)
+    configurator(cycle)
     logger.info(Utils.prettyCok(cycle.pic()))
     wheel = Graph.wheel(cycleSize + 1, direction=0, spokeDirection=1)
     cycle.visualize()
-    # wheel.setEdgeState(0, 3, Graph.REV)
-    # wheel.setEdgeState(0, 5, Graph.REV)
-    wheel.setEdgeState(1, 2, Graph.FWD)
-    wheel.setEdgeState(2, 3, Graph.REV)
-    wheel.setEdgeState(3, 4, Graph.REV)
-    wheel.setEdgeState(4, 5, Graph.REV)
+    configurator(wheel)
+    wheel.visualize()
+    logger.info(Utils.prettyCok(wheel.pic()))"""
 
+    cycle = Graph.cycle(cycleSize)
+    wheel = Graph.wheel(cycleSize + 1, direction=0, spokeDirection=1)
+    logger.info(Utils.prettyCok(cycle.pic()))
     logger.info(Utils.prettyCok(wheel.pic()))
+    cycle.setEdgeState(0, 1, Graph.FWD)
+    wheel.setEdgeState(1, 2, Graph.FWD)
+    logger.info(Utils.prettyCok(cycle.pic()))
+    logger.info(Utils.prettyCok(wheel.pic()))
+    for i in range(1, cycleSize-2):
+        cycle.setEdgeState(i, i+1, Graph.REV)
+        wheel.setEdgeState(i+1, i+2, Graph.REV)
+        logger.info(i)
+        logger.info(Utils.prettyCok(cycle.pic()))
+        logger.info(Utils.prettyCok(wheel.pic()))
+        cycle.visualize()
+        wheel.visualize()
+
 
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
     # logger.info(cokDict)

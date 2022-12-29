@@ -155,3 +155,7 @@ Laplacian represents more general framework.  Reason for looking at directed cas
 second set of more detailed slides
 
 multiplied invariant factors are pairs.  Represent different groups of combinations of equiv classes
+
+
+
+Revised wheel graphs: of the size of the cycle graph is prime

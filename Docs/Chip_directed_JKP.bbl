@@ -1,0 +1,34 @@
+\begin{thebibliography}{Wag00}
+
+\bibitem[Big99]{biggs1999chip}
+Norman~L Biggs.
+\newblock Chip-firing and the critical group of a graph.
+\newblock {\em Journal of Algebraic Combinatorics}, 9(1):25--45, 1999.
+
+\bibitem[BN07]{baker2007riemann}
+Matthew Baker and Serguei Norine.
+\newblock Riemann--{R}och and {A}bel--{J}acobi theory on a finite graph.
+\newblock {\em Advances in Mathematics}, 215(2):766--788, 2007.
+
+\bibitem[JNR03]{jacobson2003critical}
+Brian Jacobson, Andrew Niedermaier, and Victor Reiner.
+\newblock Critical groups for complete multipartite graphs and {C}artesian
+  products of complete graphs.
+\newblock {\em Journal of Graph Theory}, 44(3):231--250, 2003.
+
+\bibitem[Kli18]{klivans2018mathematics}
+Caroline~J Klivans.
+\newblock {\em The mathematics of chip-firing}.
+\newblock Chapman and Hall/CRC, 2018.
+
+\bibitem[Sta16]{stanley2016smith}
+Richard~P Stanley.
+\newblock Smith normal form in combinatorics.
+\newblock {\em Journal of Combinatorial Theory, Series A}, 144:476--495, 2016.
+
+\bibitem[Wag00]{wagner2000critical}
+David~G Wagner.
+\newblock The critical group of a directed graph.
+\newblock {\em arXiv preprint math/0010241}, 2000.
+
+\end{thebibliography}
