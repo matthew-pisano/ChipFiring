@@ -261,7 +261,7 @@ if __name__ == "__main__":
     wheel.visualize()
     logger.info(Utils.prettyCok(wheel.pic()))"""
 
-    cycle = Graph.cycle(cycleSize)
+    """cycle = Graph.cycle(cycleSize)
     wheel = Graph.wheel(cycleSize + 1, direction=0, spokeDirection=1)
     logger.info(Utils.prettyCok(cycle.pic()))
     logger.info(Utils.prettyCok(wheel.pic()))
@@ -276,7 +276,7 @@ if __name__ == "__main__":
         logger.info(Utils.prettyCok(cycle.pic()))
         logger.info(Utils.prettyCok(wheel.pic()))
         cycle.visualize()
-        wheel.visualize()
+        wheel.visualize()"""
 
 
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
@@ -323,7 +323,11 @@ if __name__ == "__main__":
     """[wheelOrientation(i) for i in range(3, 21)]
     for i in range(0, 21):
         logger.info(f"{i}: {wheelJacs(i)}")"""
-
+    network = Graph.network([2, 4, 6])
+    network.visualize(positions={0: (-1, .5), 1: (-1, -.5), 2: (0, -1), 3: (0, -.5),
+                                 4: (0, .5), 5: (0, 1), 6: (1, -1), 7: (1, 1),
+                                 8: (1, 0), 9: (1, -.5), 10: (1, .5), 11: (.7, 0)})
+    print(f"Picard: {Utils.prettyCok(network.pic(), compact=True)}")
     """n = 800
     cycle = Graph.cycle(n)
     print(f"Cycle Picard of size {n}: {Utils.prettyCok(cycle.pic())}")"""

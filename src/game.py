@@ -293,8 +293,8 @@ class Graph:
             labels[i] = f"{i}"+(f": {divisor[i]}" if divisor else "")
         G = nx.DiGraph()
         G.add_weighted_edges_from(self.edgeSet())
-        # pos = nx.circular_layout(G)
-        pos = nx.planar_layout(G)
+        pos = nx.circular_layout(G)
+        # pos = nx.planar_layout(G)
         if positions:
             for vertex in positions:
                 pos[vertex] = positions[vertex]

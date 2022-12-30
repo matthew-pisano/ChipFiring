@@ -146,9 +146,9 @@ In this paper, we compute Picard groups and Jacobians for several classes of dir
 	\item 
 For a tree $T$, the Jacobian $\Jac(T)$ is trivial for any orientation although the rank of $\Pic(T)$ does not have to be one.
 \item 
-For cycles $C_n$ with $n$ vertices ($n\geq 3$), we prove that for any $0 \leq k \leq n$, there exists an orientation of $C_n$ so that $\Jac(C_n)=\mathbb{Z}_k$. 
+For cycles $C_n$ with $n$ vertices ($n\geq 3$) and for any $0 \leq k \leq n$, we construct an orientation of $C_n$ so that $\Jac(C_n)=\mathbb{Z}_k$. 
 \item 
-For wheel graphs $W_n$ with $n$ vertices, we compute two specific orientations (not all edges are bidirectional).
+For wheel graphs $W_n$ with $n$ vertices, we compute two specific orientations (not all edges are bidirectional), generalizing the undirected case in \cite{biggs1999chip}. 
 \end{enumerate}
 We further provide some computations results and conjectures for directed multipartite graphs.\\
 
@@ -162,10 +162,10 @@ To study the game more systemically, one can write any chip configuration as an 
 called the \textit{Picard group} of $G$. 
 The torsion subgroup of $\Pic(G)$, denoted by $\Jac(G)$, is called the \textit{Jacobian} of $G$.\footnote{Depending on literature, $\Jac(G)$ is also called as a critical group.}
 
-The combinatorial theory of chip-firing games has connections to various areas in mathematics. For instance, from a perspective motivated by algebraic geometry, one may view finite graphs as a discrete model for Riemann surfaces. In this case, chip configurations play the role of divisors on curves. In fact, Baker and Norine \cite{baker2007riemann} formulated and proved a version of Riemann-Roch theorem for finite graphs as follows:
-\[
+The combinatorial theory of chip-firing games has connections to various areas in mathematics. For instance, from a perspective motivated by algebraic geometry, one may view finite graphs as a discrete model for Riemann surfaces. In this case, chip configurations play the role of divisors on curves. We refer the reader to \cite{corry2018divisors} for divisor theory on graphs. Briefly speaking, Baker and Norine \cite{baker2007riemann} formulated and proved a version of Riemann-Roch theorem for finite graphs as follows:
+\begin{equation}\label{eq: rr}
 r(D) - r(K-D) = \deg(D) -g+1,
-\]
+\end{equation}
 where
 \[
 g=|E(G)|-|V(G)|+1, \quad K=\sum_{v \in V(G)} (\deg(v)-2)v \in \Div(G)
@@ -193,14 +193,16 @@ v'=v - (M^t)e_i.
 \end{equation}
 In fact, this has been studied. See \cite[Section 6]{klivans2018mathematics} for details. 
 
-In this paper, we explore the case when a matrix $M$ is the Laplacian matrix of a directed graph (Definition \ref{definition: directed laplacian}). Let's say that an orientation of an undirected graph is proper if at least one of the edges is not bidirectional. To avoid any ambiguity we let $\vec{G}$ be a directed graph whose underlying undirected graph is $G$. The following is a natural question to ask. 
+In this paper, we explore the case when a matrix $M$ is the Laplacian matrix of a directed graph (Definition \ref{definition: directed laplacian}). Chip-firing games on directed graphs were first considered by A.~Bj\"orner and L.~Lov\'asz in \cite{bjorner1992chip}, and later further studied by D.~Wagner \cite{wagner2000critical}. We also note that S.~Backman \cite{backman2017riemann} proved a directed version of Riemann-Roch formula for graphs \eqref{eq: rr}. 
+
+In what follows by a proper orientation of an undirected graph we mean an orientation such that at least one of the edges is not bidirectional. To avoid any ambiguity we let $\vec{G}$ be a directed graph whose underlying undirected graph is $G$. The following is a natural question to ask. 
 
 \begin{que}\label{question: main question}
 Let $G$ be an undirected graph. Are there a proper orientation of $G$ so that
 \begin{equation}\label{eq: question}
 \Jac(\vec{G})=\Jac(G)	
 \end{equation}
-If so, can we explicitly find an orientation of $G$ so that \eqref{eq: question} holds? Can we find asymptotic behavior of the number of orientations of $G$ satisfying \eqref{eq: question}?
+If so, can we explicitly find an orientation of $G$ so that \eqref{eq: question} holds? Finally, can we find asymptotic behavior of the number of orientations of $G$ satisfying \eqref{eq: question} for specific classes of graphs?
 \end{que}
 
 
@@ -208,12 +210,12 @@ If so, can we explicitly find an orientation of $G$ so that \eqref{eq: question}
 With most orientations of $G$, we cannot expect to have $\Pic(\vec{G})=\Pic(G)$, even for trees as the rank of $\Pic(\vec{G})$ is the number of the strong terminal components of $\vec(G)$; for a connected, undirected graph $G$, considered as all edges being bidirectional, there exists only one strong terminal component. 	
 \end{rmk}
 
-We answer the question for directed trees, directed cycles, and directed wheel graphs. We further provide computational results for the asymptotic behavior of such orientations for cycles. 
+We partly answer the above question for directed trees, directed cycles, and directed wheel graphs. We further provide computational results for the asymptotic behavior of such orientations for cycles. Finally, based on experimental data, we conjecture structures of Picard groups for multipartite graphs. 
 
 
 %%%%%%%%%%%%%%%%%% main results %%%%%%%%%%%%%%%%%%%%%%%%
 
-We first consider directed trees. We prove this by mathematical induction by studying how Jacobians change when we add one edge $e$ to a directed tree $T$. There are total three cases; (1) $e$ is incoming, (2) $e$ is outgoing, and (3) $e$ is bidirectional. We prove that as in the case for undirected trees, the Jacobina of a directed tree is trivial.
+We first consider directed trees. We prove this by mathematical induction by studying how Jacobians change when we add one edge $e$ to a directed tree $T$. There are total three cases; (1) $e$ is incoming, (2) $e$ is outgoing, and (3) $e$ is bidirectional. We prove that as in the case for undirected trees, the Jacobian of a directed tree is trivial.
 
 \begin{nothma}(Proposition \ref{proposition: tree proposition})
 Let $T$ be a tree with any orientation. Then $\Jac(T)=\{0\}$. 
@@ -225,18 +227,18 @@ Next, we consider cycles graphs $C_n$. For the undirected case, it is easy to ch
 Let $C_n$ be a cycle graph with $n$ vertices. For any $0 \leq m \leq n$, there exists an orientation of $C_n$ such that $\Jac(C_n)=\mathbb{Z}_m$ with the orientation. Furthermore, we explicitly describe how to find an orientation of $C_n$ to obtain $\mathbb{Z}_m$. 
 \end{nothmb}
 
-Finally, we consider the wheel graphs $W_n$.\footnote{Our notation $W_n$ is the wheel graph with $n$-vertices.} When $W_n$ is undirected, i.e., equipped with all bidirectional edges, Biggs computed the Jacobian of $W_n$ in \cite{biggs1999chip}. For the directional cases, we compute two special cases. Let $W_n$ be the wheel graph with all bidirectional edges, and $W_n'$ with the edges of the rim are bidirecional and all its spoke edges point to the axel. Let $W_n{''}$ be the wheel graph where the edges of the rim are bidirecional and all its spoke edges point away from the axel. See, Example \ref{example: wheel graph orientations} for $W_n$ $W_n'$, and $W_n''$. We prove the following.
+Finally, we consider the wheel graphs $W_n$.\footnote{Our notation $W_n$ is the wheel graph with $n$-vertices.} When $W_n$ is undirected, i.e., equipped with all bidirectional edges, Biggs computed the Jacobian of $W_n$ in \cite{biggs1999chip}. For the directional cases, we compute two special cases. Let $W_n$ be the wheel graph with all bidirectional edges, and $W_n'$ with the edges of the rim are bidirectional and all its spoke edges point to the axel. Let $W_n{''}$ be the wheel graph where the edges of the rim are bidirectional and all its spoke edges point away from the axel. See, Example \ref{example: wheel graph orientations} for $W_n$ $W_n'$, and $W_n''$. We prove the following.
 
 \begin{nothmc}(Propositions \ref{proposition: wheel1} and \ref{proposition: wheel2})
 With the same notation as above, we have the following. 
 \begin{enumerate}
 \item 
-The Lapacian matrices of $W_n$ and $W_n'$ are row equivalent. In particuar, one has 
+The Laplacian matrices of $W_n$ and $W_n'$ are row equivalent. In particular, one has 
 \[
 \Pic (W_n) \simeq \Pic (W_n').
 \]
 \item 
-The smith normal form of the Laplician of $W_n^{''}$ is of the form 
+The smith normal form of the Laplacian of $W_n^{''}$ is of the form 
 \begin{equation*}
 \left[
 \begin{array}{c|ccc}	
@@ -255,15 +257,18 @@ $(a,b) = \begin{cases}
 \end{cases}$.	
 \end{enumerate}
 \end{nothmc}
-
+\vspace{0.2cm}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-This paper is organized as follows. In Section \ref{section: preliminaries}, we review basic definitions and properties. In Section \ref{section: trees}, we prove Theorem A on directed trees. In Section \ref{section: cycles}, we prove Theorem B on directed cycles. Finally, in Section \ref{section: wheel graphs}, we prove Theorem C on directed wheel graphs. In Section \ref{section: conjecture}, we provide some conjectures and experimental data for the interested readers. 
+
+This paper is organized as follows. In Section \ref{section: preliminaries}, we review basic definitions and properties. In Section \ref{section: trees}, we prove Theorem A on directed trees. In Section \ref{section: cycles}, we prove Theorem B on directed cycles. Finally, in Section \ref{section: wheel graphs}, we prove Theorem C on directed wheel graphs. In Section \ref{section: conjecture}, we provide our conjectures on multipartite graphs and some experimental data for asymptotic behaviors for the interested readers. 
 
 \bigskip 
 
 
-\textbf{Acknowledgment}\hspace{0.1cm} This research was supported by Research and Creative Activities (RSCA) at SUNY New Paltz. We would like to thank RSCA for their support. \textcolor{red}{Add here thanks to CSUSB HPC.}
+\textbf{Acknowledgment}\hspace{0.1cm} This research was supported by Research and Creative Activities (RSCA) at SUNY New Paltz. We would like to thank RSCA for their support. The authors also thank to California State University San Bernardino High Performance Computing Program for sharing their computational resources. 
+
+
 
 \section{Preliminaries}\label{section: preliminaries}
 
@@ -278,7 +283,7 @@ A strong component $C$ of $G$ is called \textit{terminal} if there is no arrow f
 \begin{example}
 Consider the following directed graphs:
 \[
-G_1=\left(\begin{tikzcd}
+G_1=\left(\begin{tikzcd}[row sep=0.4cm, column sep=0.4cm]
 	\bullet  \arrow[dr,swap]
 	& \bullet \arrow[d,swap] \\
 	& \bullet\arrow[r,swap] & \bullet \arrow[l] \arrow[r,swap] & \mycirc[red]
@@ -319,6 +324,7 @@ Here are some examples of the Laplacian matrices of directed graphs.
 	0& 0&-1&0 & 1
 \end{bmatrix}
 \end{equation}
+\vspace{0.1cm}
 \begin{equation}
 	T'=\left(\begin{tikzcd}[row sep=0.25cm, column sep=0.25cm]
 		& 1 & \\
@@ -364,7 +370,7 @@ Let $T$ and $T'$ be as in Example \ref{example: laplacian}. One can easily check
 0 & 0_{4\times 4}
 \end{array}\right]
 \]
-In particular, $\Pic(T)=\mathbb{Z}$ and $\Pic(T')=\mathbb{Z}^4$. This shows that different from undirected graphs, the rank of $\Pic(G)$ may be greater than for directed graphs $G$. Since $T$ has one terminal strong component and $T'$ has four terminal strong component, Theorem \ref{theorem: wagner} also provide the ranks of $\Pic(T)$ and $\Pic(T')$. Combined with Proposition \ref{proposition: tree proposition} (stating that $\Jac(T)=\{0\}$ for any directed tree $T$), one obtains the desired Picard groups without computing the Smith normal forms. 
+In particular, $\Pic(T)=\mathbb{Z}$ and $\Pic(T')=\mathbb{Z}^4$. This shows that different from undirected graphs, the rank of $\Pic(G)$ may be greater than one for directed graphs $G$. Since $T$ has one terminal strong component and $T'$ has four terminal strong component, Theorem \ref{theorem: wagner} also provide the ranks of $\Pic(T)$ and $\Pic(T')$. Combined with Proposition \ref{proposition: tree proposition} (stating that $\Jac(T)=\{0\}$ for any directed tree $T$), one obtains the desired Picard groups without computing the Smith normal forms. 
 \end{myeg}
 
 In the following, we review some basic properties of Smith normal forms which will be used throughout the paper.  
@@ -734,7 +740,7 @@ For a directed graph $G$, we let $e_{i \to j}$ be a directed edge whose source (
 \end{mydef}
 
 
-\begin{mydef}
+\begin{mydef}\label{definition: embedding}
 Let $C_n$ be a directed cycle. 
 \begin{enumerate}
 	\item 
@@ -770,7 +776,10 @@ C_{n+1}= \left( \cdots \begin{tikzcd}[column sep=0.4cm]
 \end{enumerate}
 \end{mydef}
 
-\begin{myeg}
+Definition \ref{definition: embedding} will be used to find an orientation of $C_{n+1}$ from a directed $C_n$ so that $\Pic(C_n)$ is isomorphic to $\Pic(C_{n+1})$. Here are some examples of Definition \ref{definition: embedding}, where we color the new vertex and edges in red. 
+
+\begin{myeg}[$C_5 \implies C_6'$]
+
 \[
 C_5=\left( \begin{tikzcd}[row sep=0.2cm, column sep=0.2cm]
 	& & 5  & &  \\ 
@@ -778,14 +787,14 @@ C_5=\left( \begin{tikzcd}[row sep=0.2cm, column sep=0.2cm]
 	& 3 \arrow[rr] & & 2 \arrow[ll]& 
 \end{tikzcd}\right)	
 \implies C_6'= \left( \begin{tikzcd}[row sep=0.2cm, column sep=0.3cm]
-	& 5 \arrow[rr]&  &6 &  \\ 
-	4  \arrow[dr] \arrow[ur] & & & & 1 \arrow[dl] \arrow[ul] \\ 
+	& 5 \arrow[rr,red]&  &\textcolor{red}{6} &  \\ 
+	4  \arrow[dr] \arrow[ur] & & & & 1 \arrow[dl] \arrow[ul,red] \\ 
 	& 3 \arrow[rr] & & 2 \arrow[ll]& 
 \end{tikzcd}\right)	
 \] 
 \end{myeg}
 
-\begin{myeg}
+\begin{myeg}[$C_5 \implies C_6''$]
 \[
 C_5=\left( \begin{tikzcd}[row sep=0.2cm, column sep=0.2cm]
 	& & 5 \arrow[drr] & &  \\ 
@@ -793,7 +802,7 @@ C_5=\left( \begin{tikzcd}[row sep=0.2cm, column sep=0.2cm]
 	& 3 \arrow[rr] & & 2 \arrow[ll]& 
 \end{tikzcd}\right)	
 \implies C_6''= \left( \begin{tikzcd}[row sep=0.2cm, column sep=0.3cm]
-	& 5 \arrow[rr]&  &6\arrow[dr] &  \\ 
+	& 5 \arrow[rr,red]&  & \textcolor{red}{6} \arrow[dr,red] &  \\ 
 	4  \arrow[dr] \arrow[ur] & & & & 1 \arrow[dl]  \\ 
 	& 3 \arrow[rr] & & 2 \arrow[ll]& 
 \end{tikzcd}\right)	
@@ -1031,7 +1040,7 @@ M_n'=\begin{bmatrix}
 0 &L_{C_{n-1}}
 \end{array} \right].
 \]
-Now the $(n-1) \times (n-1)$ bottom right submatrix is that of $C_{n-1}$ with all bidirecional edges and Remark \ref{remark: embedding} proves the claim.
+Now the $(n-1) \times (n-1)$ bottom right submatrix is that of $C_{n-1}$ with all bidirectional edges and Remark \ref{remark: embedding} proves the claim.
 
 %we have the following equivalence of matrices:
 %\begin{align*}
@@ -1082,7 +1091,7 @@ Now the $(n-1) \times (n-1)$ bottom right submatrix is that of $C_{n-1}$ with al
 \end{proof}
 
 \begin{rmk} \label{remark: obj2}
-For $n \ge 3$, the Lapacian of $C_n$ each of its eage is bidirecional, the Laplician of $C_n$ is of the form 
+For $n \ge 3$, the Laplacian of $C_n$ each of its edge is bidirectional, the Laplacian of $C_n$ is of the form 
 $$
 L = 
 \begin{bmatrix}
@@ -1129,7 +1138,7 @@ P_1=\left( \begin{tikzcd}[row sep=0.3cm, column sep=0.3cm]
 \end{tikzcd}\right), \qquad P_2=\left( \begin{tikzcd}[row sep=0.4cm, column sep=0.4cm]
 1 \arrow[r] & 2 \arrow[r] &3 
 \end{tikzcd}\right), \qquad P_3=\left( \begin{tikzcd}[row sep=0.3cm, column sep=0.3cm]
-5 \arrow[r] & 4 \arrow[rr] &  &3 \arrow[ll]
+ 4 \arrow[rr] &  &3 \arrow[ll]
 \end{tikzcd}\right)
 \]
 \end{myeg}
@@ -1144,23 +1153,23 @@ Let $C_n$ be a cycle graph with a fixed orientation. Then, we have $\Jac(G)=\mat
 Consider the following orientations of $C_5$ with two paths. The counter-clockwise path is in red and the clockwise path is in blue.
 The bidirectional edges are shown in black.
 \[
-G_1=\left( \begin{tikzcd}[row sep=0.2cm, column sep=0.15cm]
+G_1=\left( \begin{tikzcd}[row sep=0.4cm, column sep=0.15cm]
 	& & 1 \arrow[drr,blue] \arrow[dll]& &  \\
 	5 \arrow[urr] \arrow[dr,red] & & & & 2 \arrow[dl,blue] \\
 	& 4& & 3 \arrow[ll,blue]& \end{tikzcd} \right),
-\quad G_2=\left( \begin{tikzcd}[row sep=0.2cm, column sep=0.15cm]
+\quad G_2=\left( \begin{tikzcd}[row sep=0.4cm, column sep=0.15cm]
 & & 1 \arrow[drr,blue] \arrow[dll]& &  \\
 5 \arrow[urr] \arrow[dr] & & & & 2 \arrow[dl,blue] \\
 & 4\arrow[rr,red]\arrow[ul] & & 3 &
 \end{tikzcd} \right),
-\quad G_3=\left( \begin{tikzcd}[row sep=0.2cm, column sep=0.15cm]
+\quad G_3=\left( \begin{tikzcd}[row sep=0.4cm, column sep=0.15cm]
 & & 1 \arrow[drr] \arrow[dll]& &  \\
 5 \arrow[urr] \arrow[dr] & & & & 2 \arrow[dl,blue] \arrow[ull] \\
 & 4\arrow[rr,red]\arrow[ul] & & 3 &
 \end{tikzcd} \right)
 \]
 \[
-G_4=\left( \begin{tikzcd}[row sep=0.2cm, column sep=0.15cm]
+G_4=\left( \begin{tikzcd}[row sep=0.4cm, column sep=0.15cm]
 & & 1 \arrow[drr,blue] \arrow[dll,red]& &  \\
 5  \arrow[dr,red] & & & & 2 \arrow[dl,blue] \\
 & 4 & & 3 \arrow[ll,blue]&
@@ -1169,42 +1178,58 @@ G_4=\left( \begin{tikzcd}[row sep=0.2cm, column sep=0.15cm]
 Then, we have $\Jac(G_1)=\mathbb{Z}_3$, $\Jac(G_2)=\mathbb{Z}_4$, $\Jac(G_3)=\mathbb{Z}_5$, and $\Jac(G_4)=\{0\}$.
 \end{myeg}
 
+We will need the following. 
 
-\begin{lemma} \label{obj3}
-For $n \ge 2$, consider the following square matrix $M_n$
-\begin{equation}
+\begin{lemma} \label{lemma: obj3}
+For $n \ge 2$, let $M_n$ be an $n \times n$ matrix whose diagonal entries are $2$ and sub-diagonals are $-1$ as follows:
+\begin{equation}\label{eq: m_n}
 M_n = \begin{bmatrix}
 2 & -1 & 0 & 0& \cdots & \cdots & 0 \\
 -1 & 2 & -1& 0& \cdots &\cdots & 0 \\
 0 & -1 & 2 & -1 & 0& \cdots & 0 \\
-\vdots \\
+\vdots & \vdots & \vdots & \vdots & \vdots& \vdots & \vdots \\
 0 & 0 & \cdots& 0 & -1 & 2 & -1 \\
 0 & 0 &0 & \cdots & 0 &  -1 & 2 
-\end{bmatrix}.
+\end{bmatrix}
 \end{equation}
-This is a matrix whose digonal entries are $2$ and sub-diagonals are $-1$. Then $\det (M_n) = n+1$. 
+
+Then $\det (M_n) = n+1$. 
 \end{lemma}
 
 \begin{proof}
-We induct on $n$. 
-When $n=2$, a direct computation shows that $\det(M_2) = 3$. 
-Suppose the statement is true for all $k \le n-1$. 
-To compute $\det M_n$, 
-we use the Laplace expantion alone the first row.
-That is, $\det M_n = 2 \det (M_{n-1}) + \det(N)$, where $N$ is
+We prove this by mathematical induction. 
+When $n=2$, we have
+\[
+M_2 = \begin{bmatrix}
+	2 & -1 \\
+	-1 & 2
+\end{bmatrix}
+\]
+Hence, we have $\det(M_2) = 3$. 
+
+Now, suppose the statement is true for all $k \le n-1$. 
+To compute $\det (M_n)$, we use the Laplace expansion along the first row, i.e., 
+\[
+\det (M_n) = 2 \det (M_{n-1}) + \det(N),
+\]
+where $N$ is an $(n-1)\times(n-1)$ matrix of the following form:
 \begin{equation}
-N = \left[ \begin{array}{c|c c c c c  }
+N=\left[ \begin{array}{c|c c c c c  }
 -1 &  -1& 0 & \cdots & 0 \\
 \hline 
 0 &  &  M_{n-2}
 \end{array} \right].
 \end{equation}
-(Thus, $\det N = - \det (M_{n-2})$. \youngsu{to be removed})
-By induction, $\det M_n = 2 \det (M_{n-1}) - \det(M_{n-2}) = 2 (n-1+1) - (n-2+1) = 2n - n + 1 = n + 1.$
+In particular, $\det(N)=-\det(M_{n-2})$, and hence by inductive assumption, we have 
+\[
+\det(M_n)=2\det(M_{n-1})+\det(N) = 2((n-1)+1) + (-1)((n-2)+1)=n+1.
+\]
 \end{proof}
 
-\begin{rmk}
-Note that the $(n-1)$ by $(n-1)$ minor of $M_n$ after deleting the last row and last column is $(-1)^{n-1}$. 
+
+
+\begin{rmk}\label{remark: key}
+Note that the $(n-1) \times (n-1)$ minor of $M_n$ after deleting the last row and last column is $(-1)^{n-1}$. 
 Hence the Smith normal form of $M_n$ is 
 \begin{equation}
 \left[ \begin{array}{c|c}
@@ -1216,26 +1241,24 @@ I_{n-1} & 0 \\
 where $I_{n-1}$ is the identity matrix of size $n-1$. 
 \end{rmk}
 
-\begin{lemma} Consider a directed cycle graph $C_n$ on $n$ vertices. 
-Assume that the vertex $v_1$ does not have any outgoing edge, and all other vertices have two outgoing edges. 
+\begin{lemma} \label{lemma: final lemma}
+Fix an orientation of $C_n$. Let $V(C_n)=\{v_1,\dots,v_n\}$. Suppose that the vertex $v_1$ does not have any outgoing edge, and all other vertices have two outgoing edges. 
 Then $\Jac (C_n) = \mathbb{Z}_n$.
 \end{lemma}
 
 \begin{proof}
-The Laplacian of $C_n$ is 
+The Laplacian matrix of $C_n$ is the matrix obtained by replacing the first row of $M_n$ (as in \eqref{eq: m_n}) with the zero row as follows:
 \begin{equation}
-\begin{bmatrix}
-0 & 0 & \cdots \\
--1 & 2 & -1 & \cdots \\
-0 & -1 & 2 & -1 & \cdots \\
-\vdots \\
+L_{C_n}=\begin{bmatrix}
+0 & 0 & \cdots  &\cdots  &0 &0 \\
+-1 & 2 & -1 & \cdots & \cdots & 0 \\
+0 & -1 & 2 & -1 & \cdots & 0\\
+\vdots &  \vdots & \vdots & \vdots & \vdots &\vdots \\
 0 &  \cdots& 0 & -1 & 2 & -1 \\
 -1 &  0 & \cdots & 0 &  -1 & 2 
 \end{bmatrix}. 
 \end{equation}
-By the same argument as in \Cref{lemma: obj2}, 
-\youngsu{we need to state \Cref{lemma: obj2} for the general case}
-This matrix is equivalent to 
+By the same argument as in Remark \ref{remark: obj2}, this matrix is equivalent to 
 \begin{equation}
 \left[ \begin{array}{c|c}
 0 & 0 \\
@@ -1243,12 +1266,20 @@ This matrix is equivalent to
 0 & M_{n-1}
 \end{array} \right],
 \end{equation}
-where $M_{n-1}$ is the matrix in \Cref{obj3}.
-Thus, by the remark above, $\Jac (C_n) = \mathbb{Z}_n$. 
-(One can also use the proof of \Cref{obj4} with \Cref{obj3}.)
+where $M_{n-1}$ is the matrix in Lemma \ref{lemma: obj3}.
+Thus, by Remark \ref{remark: key}, we have
+\[
+\Jac (C_n) = \mathbb{Z}_n.
+\]
+Note that one can also use the proof of Lemma \ref{lemma: obj4} with Lemma \ref{lemma: obj3} to see this. 
+%\youngsu{we need to state Lemma \ref{lemma: obj2} for the general case}
 \end{proof}
 
-The general case follows from this lemma combined with the first and the second parts of the proof of \Cref{obj0} for $\mathbb{Z}_{n-1}$. (I believe Matt's observation about straightning intermediate birational edges corresponses to the reduction in the 2nd case of $d_{n,n}=1$.)
+
+\begin{proof}[Proof of Theorem \ref{theorem: two path}]
+The general case follows from Lemma \ref{lemma: final lemma} combined with the first and the second parts of the proof of Lemma \ref{lemma: obj4} for $\mathbb{Z}_{n-1}$. In particular, the construction stated in Theorem \ref{theorem: two path} corresponds to the reduction in the second case of $d_{n,n}=1$. 
+%(I believe Matt's observation about straightning intermediate birational edges corresponses to the reduction in the 2nd case of $d_{n,n}=1$.)
+\end{proof}
 
 %\subsection{Representing The Rank of the Picard Group for Cycle Graphs}
 %	The following example shows that the rank of $\Pic(C_n)$ (with an orientation) does not have to be $1$;	this directly follows from~\cite[Corollary 3.5]{wagner2000critical}.
@@ -1288,29 +1319,15 @@ The general case follows from this lemma combined with the first and the second 
 
 %\textcolor{red}{Jaiung: the following conjecture should generalize the results in \cite{biggs1999chip}.}
 
+%For wheel graphs, we looked for patterns that arose within the invariant factors of the Jacobian as a general formula was not immediately obvious.  For this strategy, we broke the edges of the wheel graph into their two most obvious groups, those belonging to the rim of the wheel and those of the spokes.  By orienting all the edges of either group the same way and trying all nine combinations, we noticed a well-defined pattern for each as the size of the wheel graph changed.  These patterns fell into four distinct groups.
+%\begin{enumerate}
+%\item When the spoke edges all pointed towards the axel and the rim was not bidirectional, or when the spoke edges were bidirectional, but the rim was not then a graph of size $n$ had a Jacobian of $\mathbb{Z}_{2^{(n-1)}-1}$.
+%\item When the spoke edges all pointed away from the axel and the rim was not bidirectional, a graph of size $n$ had a Jacobian of $\mathbb{Z}_{n-1}$.
+%\item When the spoke edges point away from the axel and the rim was bidirectional and a graph of size $n$ had a Jacobian of $\mathbb{Z}_{n-1} \times \mathbb{Z}_{n-1}$ when $n$ was even and $\mathbb{Z}_{\frac{n-1}{2}} \times \mathbb{Z}_{(n-1) \times 2}$ when $n$ was odd.
+%\item When all edges were bidirectional or when the spoke direction was towards the axel and the rim was bidirectional, a graph of size $n$ had a Jacobian of$\mathbb{Z}_{\alpha\phi^{n}} \times \mathbb{Z}_{5\alpha\phi^{n}}$ when the size was odd where $\alpha \approxeq 0.27555$ and $\mathbb{Z}_{\beta\phi^{n}} \times \mathbb{Z}_{\beta\phi^{n}}$ when the size was even where $\beta \approxeq 0.618035$. In both of these patterns, $\phi$ represents the golden ratio.
+%\end{enumerate}
 
-For wheel graphs, we looked for patterns that arose within the invariant factors of the Jacobian as a
-general formula was not immediately obvious.  For this strategy, we broke the edges of the wheel graph into their
-two most obvious groups, those belonging to the rim of the wheel and those of the spokes.  By orienting all the
-edges of either group the same way and trying all nine combinations, we noticed a well-defined pattern for each as
-the size of the wheel graph changed.  These patterns fell into four distinct groups.
-
-\begin{enumerate}
-\item When the spoke edges all pointed towards the axel and the rim was not bidirectional, or when
-the spoke edges were bidirectional, but the rim was not then a graph of size $n$ had a
-Jacobian of $\mathbb{Z}_{2^{(n-1)}-1}$.
-\item When the spoke edges all pointed away from the axel and the rim was not bidirectional,
-a graph of size $n$ had a Jacobian of $\mathbb{Z}_{n-1}$.
-\item When the spoke edges point away from the axel and the rim was bidirectional and a graph of size
-$n$ had a Jacobian of $\mathbb{Z}_{n-1} \times \mathbb{Z}_{n-1}$ when $n$ was even
-and $\mathbb{Z}_{\frac{n-1}{2}} \times \mathbb{Z}_{(n-1) \times 2}$ when $n$ was odd.
-\item When all edges were bidirectional or when the spoke direction was towards the axel and
-the rim was bidirectional, a graph of size $n$ had a Jacobian of
-$\mathbb{Z}_{\alpha\phi^{n}} \times \mathbb{Z}_{5\alpha\phi^{n}}$ when the size
-was odd where $\alpha \approxeq 0.27555$ and $\mathbb{Z}_{\beta\phi^{n}} \times \mathbb{Z}_{\beta\phi^{n}}$
-when the size was even where $\beta \approxeq 0.618035$. In both of these patterns,
-$\phi$ represents the golden ratio.
-\end{enumerate}
+In this section, we use the following notation for orientations of wheel graphs. 
 
 \begin{mydef}[{Wheel graph}]
 By a wheel graph $W_n$, we mean a graph obtained by connecting a single universal vertex to all vertices of a cycle $C_{n-1}$, which we consider as a directed graph with all bidirectional edges. 
@@ -1318,7 +1335,7 @@ By a wheel graph $W_n$, we mean a graph obtained by connecting a single universa
 	\item 
 By $W_n'$, we mean a wheel with an oriented as follows: the edges of the rim are bidirectional and all its spoke edges point to the axel.
 \item 
-By $W_n''$, we mean a wheel with an oriented as follows: the edges of the rim are bidirecional and all its spoke edges point away from the axel.
+By $W_n''$, we mean a wheel with an oriented as follows: the edges of the rim are bidirectional and all its spoke edges point away from the axel.
 \end{enumerate}
 \end{mydef}
 
@@ -1326,15 +1343,15 @@ By $W_n''$, we mean a wheel with an oriented as follows: the edges of the rim ar
 
 \begin{myeg}\label{example: wheel graph orientations}
 \[
-W_7=\begin{tikzcd}[row sep=0.4cm, column sep=0.4cm]
+W_7=\begin{tikzcd}[row sep=0.5cm, column sep=0.5cm]
 	\bullet \arrow[dr] \arrow[d]\arrow[rr]& &\bullet \arrow[d] \arrow[ll] \arrow[dl]\\
 	\bullet \arrow[r]\arrow[u]\arrow[d]& \bullet \arrow[l] \arrow[ru] \arrow[lu] \arrow[dl] \arrow[dr] \arrow[r]& \bullet\arrow[d] \arrow[l] \arrow[u]\\
 	\bullet \arrow[rr] \arrow[u] \arrow[ru] & &\bullet \arrow[u] \arrow[ul] \arrow[ll]
-\end{tikzcd} \qquad W_4'=\begin{tikzcd}[row sep=0.4cm, column sep=0.4cm]
+\end{tikzcd} \qquad W_4'=\begin{tikzcd}[row sep=0.5cm, column sep=0.5cm]
 	& \bullet  \arrow[ldd] \arrow[rdd] \arrow[d] & \\
 	& \bullet & \\
 	\bullet \arrow[ru]\arrow[rr] \arrow[ruu] & & \bullet \arrow[lu] \arrow[luu] \arrow[ll]
-\end{tikzcd} \qquad W_4''=\begin{tikzcd}[row sep=0.4cm, column sep=0.4cm]
+\end{tikzcd} \qquad W_4''=\begin{tikzcd}[row sep=0.5cm, column sep=0.5cm]
 & \bullet  \arrow[ldd] \arrow[rdd]  & \\
 & \bullet \arrow[u] \arrow[dl] \arrow[dr] & \\
 \bullet \arrow[rr] \arrow[ruu] & & \bullet  \arrow[luu] \arrow[ll]
@@ -1343,14 +1360,14 @@ W_7=\begin{tikzcd}[row sep=0.4cm, column sep=0.4cm]
 \end{myeg}
 
 \begin{proposition}\label{proposition: wheel1}
-Let $W_n$ be the wheel graph with bidirectional edges, and let $W_n'$ be the wheel graph such that the edges of the rim are bidirectional and all its spoke edges point to the axel. 
-Then $L_{W_n}'$ and $L_{W_n}$ are row equivalent. In particular, one has $\Pic (W_n) \cong \Pic (W_n')$.
+%Let $W_n$ be the wheel graph with bidirectional edges, and let $W_n'$ be the wheel graph such that the edges of the rim are bidirectional and all its spoke edges point to the axel. 
+Let $L_{W_n}$ (resp.~$L_{W_n'}$) be the Laplacian matrix of $W_n$ (resp.~$W_n'$). Then, $L_{W_n}$ and $L_{W_n'}$ are row equivalent. In particular, one has $\Pic (W_n) \simeq \Pic (W_n')$.
 \end{proposition}
 
 \begin{proof}
-We use the labeling convention that $v_1$ is the axel and the vertices on the rim are $v_2, \dots, v_{n}$. One can directly see that the Laplacian matrices of $W_n$ and $W_n'$ are row equivalent. To be precise, from the Laplacian $L_{W_n'}$, one can obtain the Laplacian $L_{W_n}$ by subtracting all other rows from the first row by using the fact that the $\mathbf{1_n} \cdot L_{w_n} = 0$:
+We use the labeling convention that $v_1$ is the axel and the vertices on the rim are $v_2, \dots, v_{n}$. One can directly see that the Laplacian matrices of $W_n$ and $W_n'$ are row equivalent. To be precise, from the Laplacian $L_{W_n'}$, one can obtain the Laplacian $L_{W_n}$ by subtracting all other rows from the first row by using the fact that $\mathbf{1_n} \cdot L_{w_n} = 0$:
 \begin{equation*}
-L_{W_n'} = 
+L_{W_n'} = \scalemath{0.85}{
 \left[
 \begin{array}{c|ccccccc}
 0 & 0 & 0 & \cdots & \cdots & \cdots & \cdots & 0 \\
@@ -1359,13 +1376,12 @@ L_{W_n'} =
 -1 & - 1& 3 & -1 & \cdots & \cdots & 0 & 0 \\
 -1 & 0 & - 1& 3 & -1 & \cdots & 0 & 0 \\
 -1 & 0 & 0 & - 1& 3 & -1 & \cdots & 0 \\
--1 & \vdots & \vdots \\
+-1 & \vdots & \vdots &\vdots & \vdots&\vdots &\vdots & \vdots\\
 -1 & 0 & 0 & 0 & \cdots & -1& 3 & -1 \\
 -1 & -1 & 0 & 0 & \cdots& 0 & -1 & 3 
 \end{array}
-\right]
-%%%%
-L_{W_n} =
+\right]}, \quad 
+L_{W_n} =\scalemath{0.85}{
 \left[
 \begin{array}{c|cccccccc}
 n-1 & -1 & -1 & \cdots & \cdots & \cdots & \cdots & -1 \\
@@ -1374,11 +1390,11 @@ n-1 & -1 & -1 & \cdots & \cdots & \cdots & \cdots & -1 \\
 -1 & - 1& 3 & -1 & \cdots & \cdots & 0 & 0 \\
 -1 & 0 & - 1& 3 & -1 & \cdots & 0 & 0 \\
 -1 & 0 & 0 & - 1& 3 & -1 & \cdots & 0 \\
--1 & \vdots & \vdots \\
+-1 & \vdots & \vdots &\vdots & \vdots&\vdots &\vdots & \vdots\\
 -1 & 0 & 0 & 0 & \cdots & -1& 3 & -1 \\
 -1 & -1 & 0 & 0 & \cdots& 0 & -1 & 3 
 \end{array}
-\right]
+\right]}
 \end{equation*}
 
 %where the top row of $L_{w_n}$ is the negative of the sum of the remaining rows. (Use the fact that the $\mathbf{1_n} \cdot L_{w_n} = 0$. )
@@ -1387,7 +1403,7 @@ n-1 & -1 & -1 & \cdots & \cdots & \cdots & \cdots & -1 \\
 % The sum of the rows of $L_{C_{n-1}} = 0$. 
 \end{proof}
 
-\youngsu{This approach probably works for complete graphs where all edges are bidirectional except for one vertex.}
+%\youngsu{This approach probably works for complete graphs where all edges are bidirectional except for one vertex.}
 
 \begin{proposition}\label{proposition: wheel2}
 The Smith normal form of the Laplacian of $W_n''$ is of the following form 
@@ -1427,58 +1443,112 @@ I_{n-1}(L_{W_n}) = \langle (n-1)^2 \rangle~\text{and}~ I_{n-2}(L_{W_n}) = \begin
 \langle (n-1)/2\rangle & \text{if}~ n ~\text{is odd}.
 \end{cases}
 \end{equation*}
-We reduce its Laplacian matrix $L_{W_n}$ as follows:
+We reduce the Laplacian matrix $L_{W_n}$. Let $r_1,\dots,r_n$ (resp.~$c_1,\dots,c_n$) be the rows (resp.~columns) of $L_{W_n}$. First, by replacing $c_1$ with $c_1+\cdots+c_n$ and then $r_n$ with $r_2+\cdots +r_n$, we obtain the following matrix:
+\begin{equation}
+\left[	\begin{array}{c|ccccccc}
+		0 & 1 & 1 & \cdots & \cdots & \cdots & \cdots & 1 \\
+	\hline
+	0  & 2 & -1 & 0 & \cdots & \cdots & 0 & -1 \\
+	0  & - 1& 2 & -1 & \cdots & \cdots & 0 & 0 \\
+	0  & 0 & - 1& 2 & -1 & \cdots & 0 & 0 \\
+	0 & 0 & 0 & - 1& 2 & -1 & \cdots & 0 \\
+	0  & \vdots & \vdots &\vdots & \vdots& \vdots& \vdots& \vdots\\
+	0  & 0 & 0 & 0 & \cdots & -1& 2 & -1 \\
+	0  & 0 & 0 & 0 & \cdots& 0 & 0 & 0
+	\end{array} \right]
+\end{equation}
+Finally, by replacing $c_n$ with $c_2+\cdots+c_n$, we obtain the following matrix:
+\begin{equation}
+\left[\begin{array}{c|ccccccc}
+	0  & 1 & 1 & \cdots & \cdots & \cdots & 1 & n-1 \\
+	\hline
+	0  & 2 & -1 & 0 & \cdots & \cdots & 0 & 0 \\
+	0  & - 1& 2 & -1 & \cdots & \cdots & 0 & 0 \\
+	0  & 0 & - 1& 2 & -1 & \cdots & 0 & 0 \\
+	0  & 0 & 0 & - 1& 2 & -1 & \cdots & 0 \\
+		0  & \vdots & \vdots &\vdots & \vdots& \vdots& \vdots& \vdots\\
+	0  & 0 & 0 & 0 & \cdots & -1& 2 & 0 \\
+	0 & 0 & 0 & 0 & \cdots& 0 & 0 & 0
+\end{array} \right]
+\end{equation}
+\noindent Thus, to compute the Smith normal form of $L_{W_n}$, it suffices to find the Smith normal form of the following matrix.
+\begin{equation*}
+	N = \left[
+	\begin{array}{c|c}
+		\mathbf{1}_{n-2} & n-1 \\
+		\hline
+		M_{n-2} & \mathbf{0}_{n-1}
+	\end{array}
+	\right],
+\end{equation*}
+where $M_{n-2}$ is the matrix in Lemma \ref{lemma: obj3}. 
+Note that $\det(M_{n-2}) = n-1$ and this shows that
 \[
-L_{W_n}=\scalemath{0.85}{\begin{bmatrix}
-n-1 & | & -1 & -1 & \cdots & \cdots & \cdots & \cdots & -1 \\
-\hline
-0 & | & 2 & -1 & 0 & \cdots & \cdots & 0 & -1 \\
-0 & | & - 1& 2 & -1 & \cdots & \cdots & 0 & 0 \\
-0 & | & 0 & - 1& 2 & -1 & \cdots & 0 & 0 \\
-0 & | & 0 & 0 & - 1& 2 & -1 & \cdots & 0 \\
-0 & | & \vdots & \vdots \\
-0 & | & 0 & 0 & 0 & \cdots & -1& 2 & -1 \\
-0 & | & -1 & 0 & 0 & \cdots& 0 & -1 & 2 
-\end{bmatrix} 
-\stackrel{c_1 \to c_1 + \cdots + c_n}\longrightarrow \begin{bmatrix}
-0 & | & -1 & -1 & \cdots & \cdots & \cdots & \cdots & -1 \\
-\hline
-0 & | & 2 & -1 & 0 & \cdots & \cdots & 0 & -1 \\
-0 & | & - 1& 2 & -1 & \cdots & \cdots & 0 & 0 \\
-0 & | & 0 & - 1& 2 & -1 & \cdots & 0 & 0 \\
-0 & | & 0 & 0 & - 1& 2 & -1 & \cdots & 0 \\
-0 & | & \vdots & \vdots \\
-0 & | & 0 & 0 & 0 & \cdots & -1& 2 & -1 \\
-0 & | & -1 & 0 & 0 & \cdots& 0 & -1 & 2 
-\end{bmatrix} }
-\]
-\vspace{0.2cm}
-\[
-\scalemath{0.85}{ \stackrel{r_n \to r_2 + \cdots + r_{n}}\longrightarrow
-\begin{bmatrix}
-0 & | & 1 & 1 & \cdots & \cdots & \cdots & \cdots & 1 \\
-\hline
-0 & | & 2 & -1 & 0 & \cdots & \cdots & 0 & -1 \\
-0 & | & - 1& 2 & -1 & \cdots & \cdots & 0 & 0 \\
-0 & | & 0 & - 1& 2 & -1 & \cdots & 0 & 0 \\
-0 & | & 0 & 0 & - 1& 2 & -1 & \cdots & 0 \\
-0 & | & \vdots & \vdots \\
-0 & | & 0 & 0 & 0 & \cdots & -1& 2 & -1 \\
-0 & | & 0 & 0 & 0 & \cdots& 0 & 0 & 0
-\end{bmatrix}
-\stackrel{c_n \to c_2 + \cdots + c_{n}}\longrightarrow
-\begin{bmatrix}
-0 & | & 1 & 1 & \cdots & \cdots & \cdots & 1 & n-1 \\
-\hline
-0 & | & 2 & -1 & 0 & \cdots & \cdots & 0 & 0 \\
-0 & | & - 1& 2 & -1 & \cdots & \cdots & 0 & 0 \\
-0 & | & 0 & - 1& 2 & -1 & \cdots & 0 & 0 \\
-0 & | & 0 & 0 & - 1& 2 & -1 & \cdots & 0 \\
-0 & | & \vdots & \vdots \\
-0 & | & 0 & 0 & 0 & \cdots & -1& 2 & 0 \\
-0 & | & 0 & 0 & 0 & \cdots& 0 & 0 & 0
-\end{bmatrix} }
-\]
+I_{n-1}(L_{W_n}) = I_{n-1}(N) =\angles{\det(N)}=\angles{(n-1)^2}.
+\] 
+To compute the $(n-2)$ minors, first note that if the last column is a part of a minor, then it is divisible by $(n-1)$. 
+Since $\det(M_{n-2}) = (n-1) \in I_{n-2}(N)$, we only need to consider the $(n-2)$ minors of the first $(n-2)$ columns of $N$. In other words, $I_{n-2}(L_{W_n})$ is generated by $(n-1)$ 
+and the $(n-2)$-determinants of the matrix which is obtained from $M_{n-2}$ by replacing the $i^{\textrm{th}}$ row by $\mathbf{1}_{n-2}$.
+
+Note that $M_{n-2}$ is symmetric. 
+By Cramer's rule, these $(n-2)$-minors are the entries of the solution matrix $\mathbf{x}$ of the matrix equation
+\begin{equation*}
+	M_{n-2} \mathbf{x} 
+	= \det(M_{n-2}) \cdot \mathbf{1}_{n-2}^T
+\end{equation*}
+up to sign.
+This is done in the following lemma, and it completes the proof.
+%\[
+%L_{W_n}=\scalemath{0.85}{\begin{bmatrix}
+%n-1 & | & -1 & -1 & \cdots & \cdots & \cdots & \cdots & -1 \\
+%\hline
+%0 & | & 2 & -1 & 0 & \cdots & \cdots & 0 & -1 \\
+%0 & | & - 1& 2 & -1 & \cdots & \cdots & 0 & 0 \\
+%0 & | & 0 & - 1& 2 & -1 & \cdots & 0 & 0 \\
+%0 & | & 0 & 0 & - 1& 2 & -1 & \cdots & 0 \\
+%0 & | & \vdots & \vdots \\
+%0 & | & 0 & 0 & 0 & \cdots & -1& 2 & -1 \\
+%0 & | & -1 & 0 & 0 & \cdots& 0 & -1 & 2 
+%\end{bmatrix} 
+%\stackrel{c_1 \to c_1 + \cdots + c_n}\longrightarrow \begin{bmatrix}
+%0 & | & -1 & -1 & \cdots & \cdots & \cdots & \cdots & -1 \\
+%\hline
+%0 & | & 2 & -1 & 0 & \cdots & \cdots & 0 & -1 \\
+%0 & | & - 1& 2 & -1 & \cdots & \cdots & 0 & 0 \\
+%0 & | & 0 & - 1& 2 & -1 & \cdots & 0 & 0 \\
+%0 & | & 0 & 0 & - 1& 2 & -1 & \cdots & 0 \\
+%0 & | & \vdots & \vdots \\
+%0 & | & 0 & 0 & 0 & \cdots & -1& 2 & -1 \\
+%0 & | & -1 & 0 & 0 & \cdots& 0 & -1 & 2 
+%\end{bmatrix} }
+%\]
+%\vspace{0.2cm}
+%\[
+%\scalemath{0.85}{ \stackrel{r_n \to r_2 + \cdots + r_{n}}\longrightarrow
+%\begin{bmatrix}
+%0 & | & 1 & 1 & \cdots & \cdots & \cdots & \cdots & 1 \\
+%\hline
+%0 & | & 2 & -1 & 0 & \cdots & \cdots & 0 & -1 \\
+%0 & | & - 1& 2 & -1 & \cdots & \cdots & 0 & 0 \\
+%0 & | & 0 & - 1& 2 & -1 & \cdots & 0 & 0 \\
+%0 & | & 0 & 0 & - 1& 2 & -1 & \cdots & 0 \\
+%0 & | & \vdots & \vdots \\
+%0 & | & 0 & 0 & 0 & \cdots & -1& 2 & -1 \\
+%0 & | & 0 & 0 & 0 & \cdots& 0 & 0 & 0
+%\end{bmatrix}
+%\stackrel{c_n \to c_2 + \cdots + c_{n}}\longrightarrow
+%\begin{bmatrix}
+%0 & | & 1 & 1 & \cdots & \cdots & \cdots & 1 & n-1 \\
+%\hline
+%0 & | & 2 & -1 & 0 & \cdots & \cdots & 0 & 0 \\
+%0 & | & - 1& 2 & -1 & \cdots & \cdots & 0 & 0 \\
+%0 & | & 0 & - 1& 2 & -1 & \cdots & 0 & 0 \\
+%0 & | & 0 & 0 & - 1& 2 & -1 & \cdots & 0 \\
+%0 & | & \vdots & \vdots \\
+%0 & | & 0 & 0 & 0 & \cdots & -1& 2 & 0 \\
+%0 & | & 0 & 0 & 0 & \cdots& 0 & 0 & 0
+%\end{bmatrix} }
+%\]
 %\begin{align}
 %L_{W_n} = \begin{bmatrix}
 %n-1 & | & 1 & 1 & \cdots & \cdots & \cdots & \cdots & 1 \\
@@ -1530,38 +1600,12 @@ n-1 & | & -1 & -1 & \cdots & \cdots & \cdots & \cdots & -1 \\
 %0 & | & 0 & 0 & 0 & \cdots& 0 & 0 & 0
 %\end{bmatrix}.
 %\end{align}
-\vspace{0.2cm}
+%\vspace{0.2cm}
 
-\noindent Thus, to compute the Smith normal form of $L_{W_n}$, it suffices to find the Smith normal form of the following matrix.
-\begin{equation*}
-N = \left[
-\begin{array}{c|c}
-\mathbf{1}_{n-2} & n-1 \\
-\hline
-M_{n-2} & \mathbf{0}_{n-1}
-\end{array}
-\right],
-\end{equation*}
-where $M_{n-2}$ is the matrix in \Cref{obj3}. 
-Note that $\det(M_{n-2}) = n-1$ and this shows that $I_{n-1}(L_{W_n}) = I_{n-1}(N) = \angles{\det(N)}=\angles{(n-1)^2}$.
 
-To compute the $(n-2)$ minors, first note that if the last column is a part of a minor, then it is divisible by $n-1$. 
-Since $\det(M_{n-2}) = n-1 \in I_{n-2}(N)$, we only need to consider the $n-2$ minors of the first $n-2$ columns of $N$. 
-
-In other words, $I_{n-2}(L_{W_n})$ is generated by $n-1$ 
-and the $(n-2)$-determinents of the matrix which is obtained from $M_{n-2}$ by replacing the $i^{\textrm{th}}$ row by $\mathbf{1}_{n-2}$.
-
-Note that $M_{n-2}$ is symmetric. 
-By Cramer's rule, these $(n-2)$-minors are the entries of the solution matrix $\mathbf{x}$ of the matrix equation
-\begin{equation*}
-M_{n-2} \mathbf{x} 
-= \det(M_{n-2}) \cdot \mathbf{1}_{n-2}^T
-\end{equation*}
-up to sign.
-This is done in the following lemma, and it completes the proof.
 \end{proof}
 
-\begin{lemma}\label{M_nCremer}
+\begin{lemma}\label{lemma: M_nCremer}
 % Let $M_n$ as in \Cref{obj3}. That is
 % \begin{equation*}
 % 	M_n = \begin{bmatrix}
@@ -1579,19 +1623,18 @@ M_n \mathbf{x}
 = \det(M_n) \mathbf{1_n}^T
 = (n+1) \mathbf{1_n}^T,
 \end{equation*}
-where $M_n$ is as in $\Cref{obj3}$. 
+where $M_n$ is as in Lemma \ref{lemma: obj3}. 
 Let $x_k$ denote the $k^{\textrm{th}}$ entry of $\mathbf{x}$. Then $x_k = a k^2 + b k$, where
 \[
 a = -\frac{(n+1)}{2}, \quad b = \frac{(n+1)^2}{2}.
 \]
-Furthermore, $\gcd(x_1,\dots, x_n)$ is $n+1$ if $n$ is even and $(n+1)/2$ if $n$ is odd. 
+Furthermore, $\gcd(x_1,\dots, x_n)$ is $(n+1)$ if $n$ is even and $(n+1)/2$ if $n$ is odd. 
 \end{lemma}
 
 \begin{proof}
 % Note that since $M_n$ is invertible over $\mathbb{Q}$, the solution exists and unique over $\mathbb{Q}$.
 % Since $\mathbb{Z} \subset \mathbb{Q}$, once we find a solution, it suffices to show that the entries of $\mathbf{x}$ are integers. 
-Note that $\det (M_n) = n+1$ (\Cref{obj3}). 
-Consider a sequence $f(k)=f_k  = ak^2 + bk$. 
+Note that $\det (M_n) = n+1$ by Lemma \ref{lemma: obj3}. Consider a sequence $f(k)=f_k  = ak^2 + bk$. 
 For any $k$, we have
 \[
 -f_{k-1} + 2f_k - f_{k+1} = -2a.
@@ -1604,7 +1647,7 @@ We compute the gcd of $f_1,\dots, f_n$.
 First, we claim that $\gcd(f_1,\dots, f_n) = \gcd(f_1, n+1)$. 
 Since $\gcd(f_1,\dots, f_n)$ divides $2f_1-f_2 = n+1$, 
 it suffices to show that $\gcd(f_1, n+1)$ divides $f_2,\dots, f_n$. 
-This folows by induction since for $k = 2, \dots, n$, 
+This follows by induction since for $k = 2, \dots, n$, 
 $f_k = 2 f_{k-1} - f_{k-2} - (n+1)$.
 Here we use the fact that $f_0 = 0$. 
 Since $f_1 =  -(n+1)/2 + (n+1)^2/2 = \frac{n(n+1)}2$ is an integer, the expressions $f_k = -2 f_{k-1} + f_{k-2}$ also proves that $f_1, \dots, f_n$ are integers. 
@@ -1625,66 +1668,98 @@ This completes the proof.
 
 
 
-
-
-
-
 \section{Conjectures and Future directions} \label{section: conjecture}
 
-\subsection{Directed cycles}
+%\subsection{Directed cycles}
 
-\begin{conj}
-For any cycle graph $C_n$, the orientation with no paths always has a Jacobian of $\mathbb{Z}_n$.
-Either of the single path orientations have a trivial Jacobian.
-The set of all orientations with two paths always contains all single invariant factors
-$\mathbb{Z}_2\dots\mathbb{Z}_n$.  For all graphs at least up to $C_{10}$ and likely well beyond that
-point, the sets that contain all other paths do not contain all of the single invariant factors. \textcolor{red}{Jaiung: I think this should not be difficult....}
-\end{conj}
+%\begin{conj}
+%For any cycle graph $C_n$, the orientation with no paths always has a Jacobian of $\mathbb{Z}_n$. Either of the single path orientations have a trivial Jacobian.The set of all orientations with two paths always contains all single invariant factors $\mathbb{Z}_2\dots\mathbb{Z}_n$.  For all graphs at least up to $C_{10}$ and likely well beyond thatpoint, the sets that contain all other paths do not contain all of the single invariant factors. \textcolor{red}{Jaiung: I think this should not be difficult....}
+%\end{conj}
 
-It should be noted that for four paths and upward, the sets that contain these paths often also contain
-Jacobians of $\mathbb{Z}_3$ and $\mathbb{Z}_4$.  The number of each of these increases with the size of the
-graph, so it is possible that these sets will contain all of the single invariant factors for very
-large cycle graphs.
+%It should be noted that for four paths and upward, the sets that contain these paths often also contain Jacobians of $\mathbb{Z}_3$ and $\mathbb{Z}_4$.  The number of each of these increases with the size of the graph, so it is possible that these sets will contain all of the single invariant factors for very large cycle graphs.
 
-\subsection{Picard groups of oriented multipartite graphs}
-\textcolor{red}{Jaiung: this paper \cite{jacobson2003critical} could be relevant here.}
-For our purposes, a multipartite graph is a graph whos vertices can be partitioned between several independent
-groups, arranged in a linear order.  Vertices have no connections to members of their own group, but are strongly
-connected to all vertices of their two adjacent groups.
+\subsection{Picard groups of directed multipartite graphs}
+%\textcolor{red}{Jaiung: this paper \cite{jacobson2003critical} could be relevant here.}
 
-The structure of the graphs that we investigate are intentionally designed to resemble artificial neural networks.
-To further facilitate this comparison, we direct all edges \textit{forward} such that, after numbering the groupings
-of these vertices in some order, edges always point towards the next highest numbered grouping.
-
-We were able to find notable patterns in both a \textit{Perceptron} style model with two layers and a
-\textit{Hidden Layer} model with three layers.
-
-\subsubsection{Picard groups for two layers}
-For two layers in the form of $f \rightarrow s$ where $f$ and $s$ are the number of nodes in the first and
-second layers, respectively, $\Pic(G) = \mathbb{Z}_{s}^{f-1} \times \mathbb{Z}^s$.
-
-\subsubsection{Picard groups for three layers}
-For three layers in the form of $f \rightarrow s \rightarrow t$ where $f$, $s$, and $t$ are the number of nodes
-in the first, second, and third layers, respectively the Picard group is significantly more complex.
-
+By a directed multipartite graph\footnote{The structure of the graphs that we investigate are intentionally designed to resemble artificial neural networks.}, we mean a graph $G$ such that there exists a partition of vertices $V(G)=V_1 \sqcup \cdots \sqcup V_r$ such that\
 \begin{enumerate}
-	\item When ($s$ is odd, $s$ is not a factor of $t$ and $f <= s$) or
-	($t$ is odd, $s$ is even, and $f <= s$) or
-	$\Pic(G) = Z_{t}^{s-f-1} \times Z_{s \times t}^{f} \times Z^t$
-	
-	\item When ($s$ is odd, $s$ is not a factor of $t$ and $f > s$) or
-	($t$ is odd, $s$ is even and $f > s$),
-	$\Pic(G) = Z_{s}^{f-s+1} \times Z_{s \times t}^{s-1} \times Z^t$
-	
-	\item When ($s$ is odd and $s$ is a factor of $t$) or ($t$ is even, $s$ is even, and $s$ is a factor of $t$),
-	$\Pic(G) = Z_{s}^{f-1} \times Z_{t} \times Z_{s \times t} \times Z^t$
-	
-	\item When ($t$ is even, $s$ is even, and $s$ is a not factor of $t$),
-	$\Pic(G) = Z_{2}^{f-1} \times Z_{t}^{s-f-1} \times Z_{s \times t/2}^{f-1} \times Z_{s \times t} \times Z^t$
+	\item 
+There is no edge between vertices in $V_i$ for all $i=1,\dots,r$, 
+\item 
+For each $i \in \{1,\dots,r\}$, and $u \in V_i$, $v \in V_{i+1}$, we have $e_{u\to v} \in E(G)$. 
 \end{enumerate}
 
+%To further facilitate this comparison, we direct all edges \textit{forward} such that, after numbering the groupingsof these vertices in some order, edges always point towards the next highest numbered grouping.
 
-\subsection{Experimental Results}
+We were able to find notable patterns in both a \emph{Perceptron} style model with two layers and a
+\emph{Hidden Layer} model with three layers.
+
+\begin{conj}[Picard groups multipartite graphs for two layers, i.e, bipartite graphs] 
+Let $G$ be the multipartite graph with two layers in the form of $f \rightarrow s$ where $a$ and $b$ are the number of vertices in the first and
+second layers, respectively. Then, one has
+\[
+\Pic(G) = \mathbb{Z}_{b}^{a-1} \times \mathbb{Z}^b.
+\]
+\end{conj}
+
+For three layers, the Picard group is significantly more complex. Based on our experimental results, we conjecture the following.
+
+\begin{conj}[Picard groups multipartite graphs for three layers]
+Let $G$ be the multipartite graph with three lays in the form of $a \rightarrow b \rightarrow c$ where $a$, $b$, and $c$ are the number of vertices
+in the first, second, and third layers, respectively. Suppose that $a,b,c >1$.
+\begin{enumerate}
+	\item 
+Suppose that $a,b,c$ satisfy one of the following two conditions:
+\begin{enumerate}
+	\item 
+$b$ is odd, $b \nmid c$, and $a \leq b$, or 	
+	\item 
+$c$ is odd, $b$ is even, and $a \leq b$.
+\end{enumerate}
+Then, one has
+\[
+\Pic(G) = \mathbb{Z}_{c}^{b-a-1} \times \mathbb{Z}_{bc}^{a} \times \mathbb{Z}^c.		
+\]
+\item 
+Suppose that $a,b,c$ satisfy one of the following two conditions:
+\begin{enumerate}
+	\item 
+	$b$ is odd, $b \nmid c$, and $a > b$, or 	
+	\item 
+	$c$ is odd, $b$ is even and $a > b$.
+\end{enumerate}
+Then, one has
+	\[
+\Pic(G) = \mathbb{Z}_{b}^{a-b+1} \times \mathbb{Z}_{bc}^{b-1} \times \mathbb{Z}^c.	
+	\]
+\item 
+Suppose that $a,b,c$ satisfy one of the following two conditions:
+\begin{enumerate}
+	\item 
+	$b$ is odd and $b \mid c$, or 	
+	\item 
+$c$ is even, $b$ is even, and $b \mid c$.
+\end{enumerate}
+Then, one has
+\[
+\Pic(G) = \mathbb{Z}_{b}^{c-1} \times \mathbb{Z}_{c} \times \mathbb{Z}_{bc} \times \mathbb{Z}^c
+\]
+\item 
+Suppose that $c$ is even, $b$ is even, and $b \nmid c$, and $b>a$. Then, one has
+\[
+\Pic(G) = \mathbb{Z}_{2}^{a-1} \times \mathbb{Z}_{c}^{b-a-1} \times \mathbb{Z}_{(bc)/2}^{a-1} \times \mathbb{Z}_{bc} \times \mathbb{Z}^c
+\]
+\end{enumerate}
+\end{conj}
+
+
+\subsection{Invariant factors and path numbers}
+
+\textcolor{red}{Jaiung: Here we explain the invariant factors and path numbers. I do not know precisely which conjecture or data that we have.}
+
+\begin{conj}
+	content...
+\end{conj}
 
 \bibliography{Jacobian}
 \bibliographystyle{alpha}
@@ -1907,15 +1982,15 @@ Let $T$ be a tree with any orientation. Then $\Jac(T)=\{0\}$.
 Let $C_n$ be a cycle graph with $n$ vertices. For any $0 \leq m \leq n$, there exists an orientation of $C_n$ such that $\Jac(C_n)=\mathbb{Z}_m$ with the orientation. Furthermore, we explicitly describe how to find an orientation of $C_n$ to obtain $\mathbb{Z}_m$. 
 \end{nothmb}
 
-For all bidirectional edges, Biggs computed the Jacobian of a wheel graph in \cite{biggs1999chip}. For the directional cases, we compute two special cases. Let $W_n$ be the wheel graph on $n$-vertices with bidirectional edges, and $W_n'$ with the edges of the rim are bidirecional and all its spoke edges point to the axel. Let $W_n{''}$ be the wheel graph on $n$-vertices where the edges of the rim are bidirecional and all its spoke edges point away from the axel. 
+For all bidirectional edges, Biggs computed the Jacobian of a wheel graph in \cite{biggs1999chip}. For the directional cases, we compute two special cases. Let $W_n$ be the wheel graph on $n$-vertices with bidirectional edges, and $W_n'$ with the edges of the rim are bidirectional and all its spoke edges point to the axel. Let $W_n{''}$ be the wheel graph on $n$-vertices where the edges of the rim are bidirectional and all its spoke edges point away from the axel. 
 
 \begin{nothmc}
 With the same notation as above, we have the following. 
 \begin{enumerate}
 \item 
-The Lapacian matrices of $W_n$ and $W_n'$ are row equivalent. In particuar, one has $\Pic (W_n) \cong \Pic (W_n')$.	
+The Laplacian matrices of $W_n$ and $W_n'$ are row equivalent. In particular, one has $\Pic (W_n) \cong \Pic (W_n')$.	
 \item 
-The smith normal form of the Laplician of $W_n^{''}$ is of the form 
+The smith normal form of the Laplacian of $W_n^{''}$ is of the form 
 \begin{equation*}
 \left[
 \begin{array}{c|ccc}	
@@ -1972,10 +2047,10 @@ $(a,b) = \begin{cases}
 
 %In our ongoing project, we study Picard groups and Jacobians for directed trees, cycles, and pseudotrees.Even in these seemingly simple cases, we find some new phenomenon. For instance, for the undirected cycle $C_n$,$\Jac (C_n)=\mathbb{Z}_n$, however, we prove that in the directed case, for any given $0 \le m \leq n$, one can always find an orientation of $C_n$ in such a way that $\Jac (C_n)$ is $\mathbb{Z}_m$.	By closely examining trees and cycles, and how Picard groups and Jacobians change with (suitably defined)	vertex and edge gluing, we obtain several results for pseudotrees.
 
-\bigskip
+%\bigskip
 
 
-\textbf{Acknowledgment}\hspace{0.1cm} This research was supported by Research and Creative Activities (RSCA) at SUNY New Paltz. We would like to thank RSCA for their support. \textcolor{red}{Add here thanks to CSUSB HPC.}
+%\textbf{Acknowledgment}\hspace{0.1cm} This research was supported by Research and Creative Activities (RSCA) at SUNY New Paltz. We would like to thank RSCA for their support. \textcolor{red}{Add here thanks to CSUSB HPC.}
 
 \section{Preliminaries}
 
@@ -2404,7 +2479,7 @@ we have $\Jac(G_1)=0$, $\Jac(G_2)=\mathbb{Z}_2$, and $\Jac(G_3)=\mathbb{Z}_3$.
 %The number of paths in the cycle graph also plays a role in if it can represent all single term Jacobians up to $\mathbb{Z}_n$.
 
 
-\begin{lem} \label{obj0}
+\begin{lem} \label{lemma: obj0}
 Fix an orientation of $C_n$. If not every edge of $C_n$ (with a fixed orientation) is bidirectional, there is an orientation of $C_{n+1}$ such that $\Pic (C_n) \cong \Pic (C_{n+1})$. 
 \end{lem}
 
@@ -2626,8 +2701,8 @@ This justifies the last equivalence in the proof above.
 \end{rmk}
 
 \begin{proof}[Proof of the Conjecture \ref{conjecture: single term}]
-We induct on the number of edges. The base case is when $n = 3$ which is Example \ref{example: example c3}. For $n > 3$, by Lemma \ref{obj4}, we have orientations of $C_n$ with $\Jac(C_n) = \mathbb{Z}_n$ and $\mathbb{Z}_{n-1}$. 
-Now the rest follows from Lemma \ref{obj0}. 
+We induct on the number of edges. The base case is when $n = 3$ which is Example \ref{example: example c3}. For $n > 3$, by Lemma \ref{lemma: obj4}, we have orientations of $C_n$ with $\Jac(C_n) = \mathbb{Z}_n$ and $\mathbb{Z}_{n-1}$. 
+Now the rest follows from Lemma \ref{lemma: obj0}. 
 %``This needs to be argued more carefully using maps between the set of the Jacobians for $C_n$ except for one.''
 \end{proof}
 
