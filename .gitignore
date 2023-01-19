@@ -2,4 +2,5 @@ src/venv
 .idea
 logs
 Docs/*.tex
-Chip_directed*
+Docs/out/*
+Docs/out/SURE2022*
