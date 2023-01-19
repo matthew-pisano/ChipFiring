@@ -15,3 +15,26 @@ slide 18 jacobian of tree is also proven using induction.  Jacobian never change
 slide 20 show slide 21 (picture) first.  Split data into another slide after cycle graph text
 
 slide 22 show picture first
+
+
+slide 7 emphasize usefulness of terminal strong components.  Only appears in directed graphs.
+
+slide 8 and 9 linear algebra is useful to dresvie games.  Writing things in vectors facilitates this therefore divisors
+
+slide 9 equiv relation useful because it helps to generalize similar divisors that can be gotten form one another
+
+slide 10 lending and borroing moves do not changes chips, reason why we can describe degree of eq class and divisors.  Jacobian is useful beacuse it is torsion subgroup.  Splitting off Jabobian makes picard group computation easier
+
+slide 12 size is ambiguous.  Number of vertices.  Combuting picard bgoup from snf.  Reason for using linear algrabe to describe
+
+describe paths in sepaerate slide.
+
+Get ride of fnding picard gorup in title
+
+fix arrangelemt of last slides
+
+make conjedtures and theorems more obvious.  More like headings.  More like textbook
+
+work on cue cards or something similar
+
+slide 11 structure of picard grouo comes from abelina structure theorem

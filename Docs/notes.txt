@@ -158,4 +158,7 @@ multiplied invariant factors are pairs.  Represent different groups of combinati
 
 
 
-Revised wheel graphs: of the size of the cycle graph is prime
+Revised wheel graphs: if the size of the cycle graph is prime the jacobian is Z_{(n-1)*a} x Z where a is in the picard group
+of cycle graph n-1 Z_a X Z when all spokes point outward.  Sometimes wheel Jacobian is made up of multiple factors.
+Check if that is governed by any known rules of invariant factor multiplication.  This seems to happen for every multiple of
+the prime factors of a
