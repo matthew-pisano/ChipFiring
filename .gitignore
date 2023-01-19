@@ -1,3 +1,5 @@
 src/venv
 .idea
 logs
+Docs/*.tex
+Chip_directed*
