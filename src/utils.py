@@ -1,7 +1,6 @@
 from __future__ import annotations
 import logging
-import os.path
-import time
+import math
 import typing
 import numpy as np
 import sys
@@ -370,3 +369,10 @@ class LoggedMatrixOps:
                     cls.scaleRow(operated, mimic, transform(op[1]), op[3])
         cls.ops = opsTmp
         return operated
+
+
+def circular_layout(graph):
+    pos = {}
+    for i in range(0, len(graph)):
+        pos[i] = math.cos(i*2*math.pi/len(graph)), math.sin(i*2*math.pi/len(graph))
+    return pos

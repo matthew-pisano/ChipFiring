@@ -1,4 +1,7 @@
 from __future__ import annotations
+
+import logging
+import math
 from dataclasses import dataclass, asdict
 import multiprocessing
 import time
@@ -239,6 +242,94 @@ def bruteCheckGraphs(graph: Graph, includeBi=True, skipRotations=False):
         f" after {round((time.time() - timer), 3)}s")
     logger.info("--------")
     return False
+
+def bruteCheckNetworks():
+
+    def euclideanGCF(x, y):
+        while y:
+            x, y = y, x % y
+        return abs(x)
+
+    def matchesPatten(pattern: tuple[list, int], pic: tuple[list, int]):
+        while 1 in pattern[0]:
+            pattern[0].remove(1)
+        pattern[0].sort()
+        pic[0].sort()
+        return pattern[0] == pic[0] and pattern[1] == pic[1]
+
+    def conjectureCheck(f: int, s: int, t: int, pic: tuple[list, int], skip: tuple=(), showMissing=True):
+        conj = "NONE"
+        pattern = pic
+        gcf = euclideanGCF(s, t)
+        if f < s and gcf == 1:
+            conj = "6.4"
+            if conj in skip:
+                return True, True
+            pattern = ([t]*(s-f-1)+[s*t]*f, t)
+
+        if f >= s and gcf == 1:
+            conj = "6.5"
+            if conj in skip:
+                return True, True
+            pattern = ([s]*(f-s+1)+[s*t]*(s-1), t)
+
+        if gcf > 1 and f < s:
+            conj = "6.6"
+            if conj in skip:
+                return True, True
+            pattern = ([gcf]*(f-1)+[t]*(s-f-1)+[s*t/gcf]*(f-1)+[s*t], t)
+
+        if gcf > 1 and f == s and s % t == 0:
+            conj = "6.7"
+            if conj in skip:
+                return True, True
+            pattern = ([gcf]*(f-2)+[s]*(f-1)+[s*t], t)
+
+        if gcf > 1 and f >= s and s % t == 0:
+            conj = "6.8"
+            if conj in skip:
+                return True, True
+            pattern = ([gcf]*(s-2)+[s]*(f-1)+[s*t], t)
+
+        if gcf > 1 and f == s and s % t != 0:
+            conj = "6.9"
+            if conj in skip:
+                return True, True
+            pattern = ([gcf]*(s-2)+[s]+[s*t/gcf]*(f-2)+[s*t], t)
+
+        if gcf > 1 and f >= s and s % t != 0:
+            conj = "6.10"
+            if conj in skip:
+                return True, True
+            pattern = ([gcf]*(s-2)+[s]*(f-s+1)+[s*t/gcf]*(s-2)+[s*t], t)
+
+        match = matchesPatten(pattern, pic)
+        if conj != "NONE" or showMissing:
+            logger.log(logging.INFO if match else logging.ERROR, f"Network matches {conj} {(f, s, t)} and"
+                 f" PIC(G) does{'' if match else ' NOT'} match pattern")
+        if not match:
+            logger.error(f"Picard: {Utils.prettyCok(([], pic[0], pic[1]), compact=True)}"
+                f", Pattern: {Utils.prettyCok(([], pattern[0], pattern[1]), compact=True)}")
+
+        return match, conj == "NONE"
+
+    limit = 17
+    numFailures = 0
+    numMissing = 0
+    total = 0
+    for f in range(1, limit):
+        for s in range(1, limit):
+            for t in range(1, limit):
+                network = Graph.network([f, s, t])
+                pic = network.pic()
+                result = conjectureCheck(f, s, t, pic[1:], skip=(), showMissing=False)
+                numFailures += 0 if result[0] else 1
+                numMissing += 1 if result[1] else 0
+                total += 1
+
+    logger.info(f"Test completed with {numFailures} failures ({round(numFailures/total*100, 3)}%).")
+    logger.info(f"Test completed with {numMissing} graphs not matching any conjectures ({round(numMissing/total*100, 3)}%).")
+    logger.info(f"Total checked: {total}")
 
 
 def fireCycle(graph: Graph, divisor: Divisor, mutate=False):

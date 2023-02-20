@@ -1,6 +1,8 @@
 import datetime
 import logging
 
+import matplotlib.pyplot as plt
+
 from algorithms import *
 import time
 
@@ -261,7 +263,7 @@ if __name__ == "__main__":
     wheel.visualize()
     logger.info(Utils.prettyCok(wheel.pic()))"""
 
-    cycle = Graph.cycle(cycleSize)
+    """cycle = Graph.cycle(cycleSize)
     wheel = Graph.wheel(cycleSize + 1, direction=0, spokeDirection=1)
     logger.info(Utils.prettyCok(cycle.pic()))
     logger.info(Utils.prettyCok(wheel.pic()))
@@ -276,7 +278,7 @@ if __name__ == "__main__":
         logger.info(Utils.prettyCok(cycle.pic()))
         logger.info(Utils.prettyCok(wheel.pic()))
         # cycle.visualize()
-        # wheel.visualize()
+        # wheel.visualize()"""
 
 
     # cokDict = {i: allStats(Graph.cycle(i), skipRotations=False) for i in range(8, 9)}
@@ -334,21 +336,17 @@ if __name__ == "__main__":
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
         title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
     )"""
-    """cycleSize = 9
+    bruteCheckNetworks()
+    """cycleSize = 18
+    edges = [2, 2, 2, 2, 2, 0, 0, 0, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1]
     cycle = Graph.cycle(cycleSize)
-    cycle.setEdgeState(0, 1, 1)
-    cycle.setEdgeState(1, 2, 1)
-    cycle.setEdgeState(2, 3, 2)
-    cycle.setEdgeState(3, 4, 2)
-    # cycle.setEdgeState(4, 0, 0)
-    cycle.setEdgeState(4, 5, 2)
-    cycle.setEdgeState(5, 6, 2)
-    cycle.setEdgeState(6, 7, 2)
-    cycle.setEdgeState(7, 8, 2)
-    cycle.setEdgeState(cycleSize-1, 0, 1)
+    for i in range(len(edges)-1):
+        cycle.setEdgeState(i, i+1, edges[i])
+    cycle.setEdgeState(cycleSize-1, 0, edges[-1])
+
     # cycle.setEdgeState(5, 6, 0)
     # cycle.setEdgeState(6, 0, 0)
-    cycle.visualize()
+    cycle.visualize(title=Utils.prettyCok(cycle.pic()))
     # lap = cycle.laplacian
     # snf = Utils.smithNormalForm(cycle.laplacian)
     print(f"Cycle Picard of size {cycleSize}: {Utils.prettyCok(cycle.pic())}")"""

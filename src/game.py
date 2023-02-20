@@ -294,6 +294,7 @@ class Graph:
         G = nx.DiGraph()
         G.add_weighted_edges_from(self.edgeSet())
         pos = nx.circular_layout(G)
+        pos = circular_layout(G)
         # pos = nx.planar_layout(G)
         if positions:
             for vertex in positions:
