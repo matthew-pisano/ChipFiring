@@ -336,7 +336,12 @@ if __name__ == "__main__":
     """Graph.glueByEdge(Graph.cycle(5), Graph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]), vertex1=4, vertex2=0).visualize(
         title="A Pseudo-Tree Graph", positions={0: [-.5, 0], 4: [.5, 0], 1: [-.9, .5], 3: [.9, .5], 5: [0, -.5]}
     )"""
-    bruteCheckNetworks()
+    network = Graph.network([5, 6, 3])
+    network.setEdgeState(0, 5, weight=0)
+    pic = network.pic()
+    network.visualize()
+    print(Utils.prettyCok(pic, compact=True))
+    # bruteCheckNetworks()
     """cycleSize = 18
     edges = [2, 2, 2, 2, 2, 0, 0, 0, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1]
     cycle = Graph.cycle(cycleSize)
